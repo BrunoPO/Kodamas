@@ -1,13 +1,12 @@
 using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
-using UnityEngine.Networking;
 
 
 namespace UnityStandardAssets._2D
 {
     [RequireComponent(typeof (PlatformerCharacter2D))]
-	public class Platformer2DUserControl : NetworkBehaviour
+	public class Platformer2DUserControl : MonoBehaviour
     {
         private PlatformerCharacter2D m_Character;
         private bool m_Jump;
@@ -18,12 +17,7 @@ namespace UnityStandardAssets._2D
         }
 
 		private void Start(){
-			if (!isLocalPlayer) {
-				Destroy (this);
-				return;
-			} else {
-				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
-			}
+			Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 		}
 
         private void Update()
