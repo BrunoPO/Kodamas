@@ -18,7 +18,7 @@ namespace UnityStandardAssets._2D
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
-        private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+        public bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
         private void Awake()
         {
@@ -51,17 +51,17 @@ namespace UnityStandardAssets._2D
         }
 
 		private void Update(){
-			if (m_Anim.GetFloat ("Speed") > 0.15f) {
-				if (m_Rigidbody2D.velocity.x < 0 && m_FacingRight) {
+			//if (m_Anim.GetFloat ("Speed") > 0.001f) {
+			if (m_Rigidbody2D.velocity.x < 0.001f && m_FacingRight) {
 					// ... flip the player.
 					Flip ();
 				}
 				// Otherwise if the input is moving the player left and the player is facing right...
-				else if (m_Rigidbody2D.velocity.x > 0 && !m_FacingRight) {
+				else if (m_Rigidbody2D.velocity.x > 0.001f && !m_FacingRight) {
 						// ... flip the player.
 						Flip ();
 				}
-			}
+			//}
 		}
 
 
