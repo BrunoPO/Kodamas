@@ -104,6 +104,7 @@ Assets/2D/Scripts/CameraFollow.cs
 Assets/2D/Scripts/Platformer2DUserControl.cs
 Assets/2D/Scripts/PlatformerCharacter2D.cs
 Assets/2D/Scripts/Restarter.cs
+Assets/BallCollision.cs
 Assets/Camera/AbstractTargetFollower.cs
 Assets/Camera/AutoCam.cs
 Assets/Camera/PivotBasedCameraRig.cs
@@ -120,6 +121,7 @@ Assets/CrossPlatformInput/Scripts/TouchPad.cs
 Assets/CrossPlatformInput/Scripts/VirtualInput.cs
 Assets/Fire.cs
 Assets/PlatControlNet.cs
+Assets/Radar.cs
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/unity/System.Runtime.Serialization.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/unity/System.Xml.Linq.dll
 -r:/opt/Unity/Editor/Data/Mono/lib/mono/unity/UnityScript.dll

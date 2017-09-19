@@ -28,8 +28,16 @@ namespace UnityStandardAssets._2D
 
         private void Update()
         {
-            if (!m_Jump){
-                // Read the jump input in Update so button presses aren't missed.
+			//Debug Slow Time
+			if (Input.GetButtonDown("Fire2")) {
+				if (Time.timeScale == 1.0F)
+					Time.timeScale = 0.3F;
+				else
+					Time.timeScale = 1.0F;
+				Time.fixedDeltaTime = 0.02F * Time.timeScale;
+			}
+
+            if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
 
             }
@@ -49,6 +57,7 @@ namespace UnityStandardAssets._2D
 					ob.transform.parent = this.transform.parent;
 					ob.GetComponent<Fire> ().enabled = true;
 					ob.layer = 9;
+					ob.tag = "Ball";
 					ob.GetComponent<Fire> ().Ball (3);
 					ob = null;
 				}
@@ -110,8 +119,10 @@ namespace UnityStandardAssets._2D
 				if (h != 0 || v != 0) {
 					p.x += lastParamBall.x;
 					p.y += lastParamBall.y;
-					Ball.transform.position = p;
-					Ball.transform.rotation = Quaternion.Euler(0, 0, lastParamBall.z);
+					if(Ball != null){
+						Ball.transform.position = p;
+						Ball.transform.rotation = Quaternion.Euler(0, 0, lastParamBall.z);
+					}
 				}
 				if (h != 0) {
 					if (h < 0 && m_Character.m_FacingRight)

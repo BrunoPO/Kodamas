@@ -47,7 +47,7 @@ namespace UnityStandardAssets._2D
         }
 
 		private void Update(){
-			print("Rigid.x: "+m_Rigidbody2D.velocity.normalized.x);
+		    //print("Rigid.x: "+m_Rigidbody2D.velocity.normalized.x);
 			if (m_Rigidbody2D.velocity.normalized.x < 0 && m_FacingRight) {
 				// ... flip the player.
 				Flip ();
