@@ -117,7 +117,7 @@ namespace UnityStandardAssets._2D
 					if (h < 0 && m_Character.m_FacingRight)
 						m_Character.Move (-0.1f, false, m_Jump);
 					else if (h > 0 && !m_Character.m_FacingRight)
-						m_Character.Move (-0.1f, false, m_Jump);
+						m_Character.Move (0.1f, false, m_Jump);
 					else 
 						m_Character.Move (0f, false, m_Jump);
 				} 
