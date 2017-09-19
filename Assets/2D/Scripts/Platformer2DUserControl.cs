@@ -62,6 +62,9 @@ namespace UnityStandardAssets._2D
 					ob = Instantiate (SoulStone) as GameObject;
 					ob.name = "Ball";
 					ob.transform.parent = this.transform;
+					p.x += (m_Character.m_FacingRight) ? 1f : -1f;
+					ob.transform.position = p;
+					ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
 				}
 				if (h < 0 && v < 0) {
 					lastParamBall.x= -1f;

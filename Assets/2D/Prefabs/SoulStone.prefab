@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 58190816861302666}
   - component: {fileID: 114617620581183150}
   - component: {fileID: 60965093631076134}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SoulStone
   m_TagString: Respawn
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092874576488382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.08, y: 2.32, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fired: 0
+  Commented: 0
 --- !u!212 &212759090072093700
 SpriteRenderer:
   m_ObjectHideFlags: 1

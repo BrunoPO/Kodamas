@@ -33,7 +33,6 @@ namespace UnityStandardAssets._2D
         private void FixedUpdate()
         {
             m_Grounded = false;
-
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             // This can be done using layers instead but Sample Assets will not overwrite your project settings.
             Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
@@ -43,25 +42,21 @@ namespace UnityStandardAssets._2D
                     m_Grounded = true;
             }
             m_Anim.SetBool("Ground", m_Grounded);
-
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-
-
         }
 
 		private void Update(){
-			//if (m_Anim.GetFloat ("Speed") > 0.001f) {
-			if (m_Rigidbody2D.velocity.x < 0.001f && m_FacingRight) {
+			print("Rigid.x: "+m_Rigidbody2D.velocity.normalized.x);
+			if (m_Rigidbody2D.velocity.normalized.x < 0 && m_FacingRight) {
+				// ... flip the player.
+				Flip ();
+			}
+			// Otherwise if the input is moving the player left and the player is facing right...
+			else if (m_Rigidbody2D.velocity.normalized.x > 0 && !m_FacingRight) {
 					// ... flip the player.
 					Flip ();
-				}
-				// Otherwise if the input is moving the player left and the player is facing right...
-				else if (m_Rigidbody2D.velocity.x > 0.001f && !m_FacingRight) {
-						// ... flip the player.
-						Flip ();
-				}
-			//}
+			}
 		}
 
 

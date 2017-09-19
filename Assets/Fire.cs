@@ -5,19 +5,16 @@ using UnityEngine;
 public class Fire : MonoBehaviour {
 	private float i = 2;
 	private float peso = 3; 
-	public bool fired = false;
+	public bool fired = false,Commented=true;
 	private float horin,vert;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if(fired){
 			trageto ();
 		}
 	}
+
 	void OnTriggerStay2D(Collider2D col) {
 		Debug.DrawRay(transform.position, col.transform.position-transform.position, Color.white);
 		Quaternion r = transform.rotation;
@@ -28,8 +25,9 @@ public class Fire : MonoBehaviour {
 
 		transform.rotation = r;
 		//Ball.transform.rotation = Quaternion.Euler(0, 0, lastParamBall.z);
-		print (col.transform.position);
+		if(Commented) print (col.transform.position);
 	}
+
 	private void trageto(){
 		//print ("i:"+i+"seno:"+Mathf.Sin(Mathf.PI/i));
 		float velo = Mathf.Sin(Mathf.PI/i);
@@ -39,6 +37,7 @@ public class Fire : MonoBehaviour {
 		if(i<10)
 			i += 0.5f;
 	}
+
 	public void Ball(float peso){
 		fired=true;
 		this.peso = peso;
