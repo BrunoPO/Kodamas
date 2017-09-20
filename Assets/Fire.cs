@@ -2,90 +2,74 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fire : MonoBehaviour {
-	private Animator ani;
-	private Rigidbody2D rigid;
-	public bool fired = false,Commented=true,onTheGround=false;
-	private float horin,vert,indexSeno,peso;
-	private int groundTime;
-	void Start(){
-		ani = GetComponent<Animator>();
-		rigid = GetComponent<Rigidbody2D>();
-	}
-	// Update is called once per frame
-	void Update () {
-		if(fired){
-			trageto ();
+namespace UnityStandardAssets._2D{
+	public class Fire : MonoBehaviour {
+		private Animator ani;
+		private Rigidbody2D rigid;
+		public bool fired = false,Commented=true,onTheGround=false;
+		private float horin,vert,indexSeno=0.5f,peso=0;
+		void Start(){
+			ani = GetComponent<Animator>();
+			rigid = GetComponent<Rigidbody2D>();
+		}
+		// Update is called once per frame
+		void Update () {
+			if(fired){
+				trageto ();
+			}
+
+			//Controle sobre o limite do cenário para que as bolas vão até o infinito;
+			if (transform.position.x > 45 || transform.position.x < -45 || transform.position.y < -35 || transform.position.y > 35)
+				Destroy (this.gameObject);
 		}
 
-		//Controle sobre o limite do cenário para que as bolas vão até o infinito;
-		if (transform.position.x > 45 || transform.position.x < -45 || transform.position.y < -35 || transform.position.y > 35)
-			Destroy (this.gameObject);
-	}
-
-	//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
-	void OnCollisionEnter2D(Collision2D coll) {
-		print ("Colidiu This:"+this.name+" tag:"+this.tag+", Com:"+coll.collider.name+" Tag:"+coll.collider.tag);
-		if (coll.gameObject.tag == "Player") {
-			if (onTheGround)
-				print ("Player.Balls++");
-			else
-				print("Player Kill");
-			Destroy (this.gameObject);
-		}else if(coll.gameObject.tag == "Ball" || coll.gameObject.tag == "Ground"){
-			onTheGround = true;
-			this.tag = "Respawn";
-			rigid.gravityScale = 10;
+		private void trageto(){
+			float velo = Mathf.Sin(Mathf.PI/indexSeno);
+			if (peso != 0 && !onTheGround) {
+				transform.position += transform.right * velo * peso / 10;
+			}
+			if(indexSeno<10)
+				indexSeno += 0.5f;
 		}
-	}
 
-	//Controle da bola depois dela já estar no chão
-	void OnCollisionStay2D(Collision2D coll){
-		if (onTheGround && coll.collider.tag == "Ground" && groundTime > 10) {
+		//Controle da bola depois dela já estar no chão
+		public void flutuarNoChao(){
+			//print("Tentando Flutuar"+transform.up+peso);
 			if (rigid.gravityScale != 0.2f)
 				rigid.gravityScale = 0.2f;
 			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
-			transform.position += transform.up * peso / 10;
-		} else {
-			groundTime++;
+			rigid.AddForce (transform.up * peso * 10);
+			//transform.position += transform.up * peso /2;
 		}
-	}
 
-	//Controle do radar para rotacionar em direção ao alvo(Ball,Player)
-	void OnTriggerStay2D(Collider2D col) {
-		if (!(col.tag == "Player" || col.tag == "Ball"))
-			return;
-		if (!fired  || onTheGround)
-			return;
-		
-		//Debug para identificar quais inimigos foram encontrados;
-		Debug.DrawRay(transform.position, col.transform.position-transform.position, Color.white);
-		Vector3 dif;
-		Quaternion r = transform.rotation;
-		if (indexSeno < 10)
-			indexSeno = 5;
-		r.SetFromToRotation (transform.position, col.transform.position-transform.position);
-		dif = (r.eulerAngles - transform.rotation.eulerAngles)/100;
-		dif += transform.rotation.eulerAngles;
-		transform.rotation = Quaternion.Euler(dif);
-		if(Commented) print (col.transform.position);
-	}
+		public void rotacionar(Collider2D col){
+			//Debug para identificar quais inimigos foram encontrados;
+			Debug.DrawRay(transform.position, col.transform.position-transform.position, Color.white);
+			Vector3 dif;
+			Quaternion r = transform.rotation;
+			if (indexSeno < 10)
+				indexSeno = 5;
+			r.SetFromToRotation (transform.position, col.transform.position-transform.position);
+			dif = (r.eulerAngles - transform.rotation.eulerAngles)/100;
+			dif += transform.rotation.eulerAngles;
+			transform.rotation = Quaternion.Euler(dif);
+			if(Commented) print (col.transform.position);
+		}
 
-	private void trageto(){
-		//print ("i:"+i+"seno:"+Mathf.Sin(Mathf.PI/i));
-		float velo = Mathf.Sin(Mathf.PI/indexSeno);
-		if (peso != 0 && !onTheGround) {
-			transform.position += transform.right * velo * peso / 10;
-		} /*else if (onTheGround) {
-			print("Not going any where");
-		}*/
-		if(indexSeno<10)
-			indexSeno += 0.5f;
-	}
+		public void Ball(float peso){
+			print (peso);
+			fired=true;
+			this.gameObject.layer = 9;
+			this.tag = "Ball";
+			GameObject child = this.transform.GetChild (0).gameObject;
+			child.layer = 9;
+			child.tag = "Ball";
+			child = this.transform.GetChild (1).gameObject;
+			child.layer = 9;
+			child.tag = "Ball";
 
-	public void Ball(float peso){
-		fired=true;
-		ani.SetBool("Fired",true);
-		this.peso = peso;
+			ani.SetBool("Fired",true);
+			this.peso = peso;
+		}
 	}
 }

@@ -8,12 +8,13 @@ namespace UnityStandardAssets._2D
     [RequireComponent(typeof (PlatformerCharacter2D))]
 	public class Platformer2DUserControl : MonoBehaviour
     {
+		private int balls=3;
         private PlatformerCharacter2D m_Character;
         private bool m_Jump,atck;
 		private Transform Ball;
 		private GameObject ob;
 		public GameObject SoulStone;
-		Vector3 lastParamBall;//v,h,rotation
+		Vector3 lastParamBall;//(v,h,rotation)
 		public bool Commented = false;
 
 
@@ -23,7 +24,15 @@ namespace UnityStandardAssets._2D
 
 		private void Start(){
 			Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
-			lastParamBall.z = 0f;
+			lastParamBall= new Vector3(1f,0f,0);
+		}
+
+		public bool getBall(){
+			if(balls<6){
+				balls++;
+				return true;
+			}
+			return false;
 		}
 
         private void Update()
@@ -56,12 +65,11 @@ namespace UnityStandardAssets._2D
 					if(Commented) print (ob.transform.parent);
 					ob.transform.parent = this.transform.parent;
 					ob.GetComponent<Fire> ().enabled = true;
-					ob.layer = 9;
-					ob.tag = "Ball";
 					ob.GetComponent<Fire> ().Ball (3);
 					ob = null;
+					balls--;
 				}
-			}else{
+			}else if(balls>0){
 				float moveh;
 				Ball = this.transform.Find("Ball");
 				Vector3 p = transform.position;
@@ -74,49 +82,47 @@ namespace UnityStandardAssets._2D
 					p.x += (m_Character.m_FacingRight) ? 1f : -1f;
 					ob.transform.position = p;
 					ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
+					return;
 				}
 				if (h < 0 && v < 0) {
-					lastParamBall.x= -1f;
-					lastParamBall.y = -1f;
-					lastParamBall.z = 225f;
-					if(Commented) print ("Esq Baixo");
-				}else if(h > 0 && v < 0){
-					lastParamBall.x = 1f;
-					lastParamBall.y = -1f;
-					lastParamBall.z = 315f;
-					if(Commented) print ("Dir Baixo");
-				}else if(h < 0 && v > 0){
-					lastParamBall.x = -1f;
-					lastParamBall.y = 1f;
-					lastParamBall.z = 135f;
-					if(Commented) print ("Esq Cima");
-				}else if(h > 0 && v > 0){
-					lastParamBall.x = 1f;
-					lastParamBall.y = 1f;
-					lastParamBall.z = 45f;
-					if(Commented) print ("Dir Cima");
-				}else if(h > 0){
-					lastParamBall.x = 1f;
-					lastParamBall.y = 0f;
-					lastParamBall.z = 0;
-					if(Commented) print ("Dir ");
-				}else if(h < 0){
-					lastParamBall.x = -1f;
-					lastParamBall.y = 0f;
-					lastParamBall.z = 180f;
-					if(Commented) print ("Esq");
-				}else if(v < 0){
-					lastParamBall.x = 0f;
-					lastParamBall.y = -1f;
-					lastParamBall.z = 270f;
-					if(Commented) print ("Baixo");
-				}else if(v > 0){
-					lastParamBall.x = 0f;
-					lastParamBall.y = 1f;
-					lastParamBall.z = 90f;
-					if(Commented) print ("Cima");
+					lastParamBall = new Vector3 (-1f, -1f, 225f);
+					if (Commented)
+						print ("Esq Baixo");
+				} else if (h > 0 && v < 0) {
+					lastParamBall = new Vector3 (1f, -1f, 315f);
+					if (Commented)
+						print ("Dir Baixo");
+				} else if (h < 0 && v > 0) {
+					lastParamBall = new Vector3 (-1f, 1f, 135f);
+					if (Commented)
+						print ("Esq Cima");
+				} else if (h > 0 && v > 0) {
+					lastParamBall = new Vector3 (1f, 1f, 45f);
+					if (Commented)
+						print ("Dir Cima");
+				} else if (h > 0) {
+					lastParamBall = new Vector3 (1f, 0f, 0);
+					if (Commented)
+						print ("Dir ");
+				} else if (h < 0) {
+					lastParamBall = new Vector3 (-1f, 0f, 180f);
+					if (Commented)
+						print ("Esq");
+				} else if (v < 0) {
+					lastParamBall = new Vector3 (0f, -1f, 270f);
+					if (Commented)
+						print ("Baixo");
+				} else if (v > 0) {
+					lastParamBall = new Vector3 (0f, 1f, 90f);
+					if (Commented)
+						print ("Cima");
+				} else if (m_Character.m_FacingRight) {
+					lastParamBall = new Vector3 (1f, 0f, 0);
+				} else {
+					lastParamBall = new Vector3 (-1f, 0f, 0);
 				}
-				if (h != 0 || v != 0) {
+
+				if (h != 0 || v != 0 || this.GetComponent<Rigidbody2D>().velocity != Vector2.zero) {
 					p.x += lastParamBall.x;
 					p.y += lastParamBall.y;
 					if(Ball != null){
