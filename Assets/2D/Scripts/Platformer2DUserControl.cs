@@ -119,7 +119,7 @@ namespace UnityStandardAssets._2D
 				} else if (m_Character.m_FacingRight) {
 					lastParamBall = new Vector3 (1f, 0f, 0);
 				} else {
-					lastParamBall = new Vector3 (-1f, 0f, 0);
+					lastParamBall = new Vector3 (-1f, 0f, 180f);
 				}
 
 				if (h != 0 || v != 0 || this.GetComponent<Rigidbody2D>().velocity != Vector2.zero) {
