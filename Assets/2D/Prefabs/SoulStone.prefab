@@ -238,6 +238,7 @@ MonoBehaviour:
   fired: 0
   Commented: 0
   onTheGround: 0
+  effect: {fileID: 1920620554709356, guid: 4644f9927868149a097bfcaed8561d83, type: 2}
 --- !u!212 &212759090072093700
 SpriteRenderer:
   m_ObjectHideFlags: 1

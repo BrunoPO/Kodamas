@@ -8,6 +8,7 @@ namespace UnityStandardAssets._2D{
 		private Rigidbody2D rigid;
 		public bool fired = false,Commented=true,onTheGround=false;
 		private float horin,vert,indexSeno=0.5f,peso=0;
+		public GameObject effect;
 		void Start(){
 			ani = GetComponent<Animator>();
 			rigid = GetComponent<Rigidbody2D>();
@@ -67,6 +68,14 @@ namespace UnityStandardAssets._2D{
 			child = this.transform.GetChild (1).gameObject;
 			child.layer = 9;
 			child.tag = "Ball";
+
+			GameObject ob = Instantiate (effect) as GameObject;
+			ob.name = "Effect";
+			ob.transform.position = this.transform.position;
+			print (this.transform.rotation.z);
+			ob.transform.rotation = this.transform.rotation;
+			ob.GetComponent<Animator>().SetBool("Fired",true);
+			ob.transform.parent = this.transform.parent;
 
 			ani.SetBool("Fired",true);
 			this.peso = peso;
