@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4442973922614580}
   - component: {fileID: 212759090072093700}
   - component: {fileID: 95682528946188436}
-  - component: {fileID: 114617620581183150}
   - component: {fileID: 50635939267965906}
   - component: {fileID: 58761995861518638}
+  - component: {fileID: 114459283430779622}
   m_Layer: 12
   m_Name: SoulStone
   m_TagString: Respawn
@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Commented: 0
+  paiHash: 0
 --- !u!114 &114131249714948958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Commented: 0
---- !u!114 &114617620581183150
+--- !u!114 &114459283430779622
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -232,11 +233,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1092874576488382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a198f6b6b77204b929bea5cdae422938, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c09af180f2b0410897ec7a7ce510c3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fired: 0
-  Commented: 0
+  Commented: 1
   onTheGround: 0
   effect: {fileID: 1920620554709356, guid: 4644f9927868149a097bfcaed8561d83, type: 2}
 --- !u!212 &212759090072093700

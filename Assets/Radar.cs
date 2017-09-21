@@ -5,6 +5,7 @@ namespace UnityStandardAssets._2D{
 	public class Radar : MonoBehaviour {
 		public bool Commented = false;
 		private GameObject pai;
+		public int paiHash;
 
 		void Start(){
 			pai = this.transform.parent.gameObject;
@@ -12,11 +13,11 @@ namespace UnityStandardAssets._2D{
 
 		//Controle do radar para rotacionar em direção ao alvo(Ball,Player)
 		void OnTriggerStay2D(Collider2D col) {
-			if (!(col.tag == "Player" || col.tag == "Ball"))
+			if (!(col.tag == "Player" || col.tag == "Ball" ) || col.gameObject.GetHashCode()!=paiHash)
 				return;
-			if (!pai.GetComponent<Fire> ().fired  || pai.GetComponent<Fire> ().onTheGround)
+			if (!pai.GetComponent<Stone> ().fired  || pai.GetComponent<Stone> ().onTheGround)
 				return;
-			pai.GetComponent<Fire> ().rotacionar(col);
+			pai.GetComponent<Stone> ().rotacionar(col);
 		}
 	}
 }

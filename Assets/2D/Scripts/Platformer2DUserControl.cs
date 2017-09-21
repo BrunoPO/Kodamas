@@ -64,8 +64,8 @@ namespace UnityStandardAssets._2D
 				if (ob != null) {
 					if(Commented) print (ob.transform.parent);
 					ob.transform.parent = this.transform.parent;
-					ob.GetComponent<Fire> ().enabled = true;
-					ob.GetComponent<Fire> ().Ball (3);
+					ob.GetComponent<Stone> ().enabled = true;
+					ob.GetComponent<Stone>().Fire (3,this.gameObject.GetHashCode());
 					ob = null;
 					balls--;
 				}

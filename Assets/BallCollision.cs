@@ -9,42 +9,58 @@ public class BallCollision : MonoBehaviour {
 		private int groundTime=0;
 		private GameObject pai;
 		private bool end = false;
+		public int paiHash=0;
 		void Start(){
 			pai = this.transform.parent.gameObject;
 		}
 		//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
 		void OnTriggerEnter2D(Collider2D coll) {
 			if(coll.tag != "Ground")
-				print ("Colidiu This:"+this.name+" tag:"+this.tag+", Com:"+coll.name+" Tag:"+coll.tag);
+				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag+"Hash:"+coll.gameObject.GetHashCode());
 			if (end)
 				return;
 			if (coll.tag == "Player") {
-				if (pai.GetComponent<Fire> ().onTheGround) {
-					end = coll.GetComponent<Platformer2DUserControl>().getBall ();
+				if (pai.GetComponent<Stone> ().onTheGround) {//Balls++
+					end = coll.GetComponent<Platformer2DUserControl> ().getBall ();
 					if (end) {
 						Destroy (pai.gameObject);
-						//print ("Player.Balls++");
 					}
-				} else {
+				} else if (coll.gameObject.GetHashCode () != paiHash) {
 					print ("Player Kill");
 					Destroy (pai.gameObject);
+				} else {//Balls++
+					end = coll.GetComponent<Platformer2DUserControl> ().getBall ();
+					if (end) {
+						Destroy (pai.gameObject);
+					}
 				}
-			}else if(pai.tag != "Respawn" && (coll.gameObject.tag == "Ball" || coll.gameObject.tag == "Ground")){
-				pai.GetComponent<Fire> ().onTheGround = true;
-				pai.tag = "Respawn";
-				pai.layer = 12;
-				this.tag = "Respawn";
-				this.gameObject.layer = 13;
-				pai.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
-				pai.GetComponent<Rigidbody2D>().gravityScale = 5;
+			}else if(pai.tag != "Respawn" ){
+				if (coll.gameObject.tag == "Ball") {
+					if (coll.GetComponent<Stone> ().paiHash != paiHash) {
+						Fall ();
+					}
+				}else if(coll.gameObject.tag == "Ground"){
+					Fall ();
+				}
+
+
 			}
 		}
 
+		void Fall(){
+			pai.GetComponent<Stone> ().onTheGround = true;
+			pai.tag = "Respawn";
+			pai.layer = 12;
+			this.tag = "Respawn";
+			this.gameObject.layer = 13;
+			pai.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
+			pai.GetComponent<Rigidbody2D>().gravityScale = 5;
+		}
 
 		void OnTriggerStay2D(Collider2D coll){
-			//print(coll.tag+" "+groundTime+" "+pai.GetComponent<Fire> ().onTheGround);
-			if (coll.tag == "Ground" && groundTime > 10 && pai.GetComponent<Fire> ().onTheGround) {
-				pai.GetComponent<Fire> ().flutuarNoChao();
+			//print(coll.tag+" "+groundTime+" "+pai.GetComponent<Stone> ().onTheGround);
+			if (coll.tag == "Ground" && groundTime > 10 && pai.GetComponent<Stone> ().onTheGround) {
+				pai.GetComponent<Stone> ().flutuarNoChao();
 			} else if(groundTime<11){
 				groundTime++;
 			}

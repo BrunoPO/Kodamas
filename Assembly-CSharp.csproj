@@ -71,10 +71,10 @@
      <Compile Include="Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
-     <Compile Include="Assets\Fire.cs" />
      <Compile Include="Assets\particulaStone.cs" />
      <Compile Include="Assets\PlatControlNet.cs" />
      <Compile Include="Assets\Radar.cs" />
+     <Compile Include="Assets\Stone.cs" />
      <None Include="Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/opt/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D{
-	public class Fire : MonoBehaviour {
+	public class Stone : MonoBehaviour {
 		private Animator ani;
 		private Rigidbody2D rigid;
 		public bool fired = false,Commented=true,onTheGround=false;
 		private float horin,vert,indexSeno=0.5f,peso=0;
 		public GameObject effect;
+		public int paiHash=0;
 		void Start(){
 			ani = GetComponent<Animator>();
 			rigid = GetComponent<Rigidbody2D>();
@@ -62,27 +63,33 @@ namespace UnityStandardAssets._2D{
 			if(Commented) print (col.transform.position);
 		}
 
-		public void Ball(float peso){
-			print (peso);
+		public void Fire(float peso,int paiHash){
+
 			fired=true;
+			this.paiHash = paiHash;
+			//Configurando Ball para interagir com o ambiente
 			this.gameObject.layer = 9;
 			this.tag = "Ball";
 			GameObject child = this.transform.GetChild (0).gameObject;
-			child.layer = 9;
-			child.tag = "Ball";
-			child = this.transform.GetChild (1).gameObject;
+			child.GetComponent<Radar>().paiHash = paiHash;
 			child.layer = 9;
 			child.tag = "Ball";
 
+			child = this.transform.GetChild (1).gameObject;
+			child.GetComponent<BallCollision>().paiHash = paiHash;
+			child.layer = 9;
+			child.tag = "Ball";
+
+			//Criando e configurando efeito para ficar no ambiente
 			GameObject ob = Instantiate (effect) as GameObject;
 			ob.name = "Effect";
 			ob.transform.position = this.transform.position;
-			print (this.transform.rotation.z);
 			ob.transform.rotation = this.transform.rotation;
 			ob.GetComponent<Animator>().SetBool("Fired",true);
 			ob.transform.parent = this.transform.parent;
 
-			ani.SetBool("Fired",true);
+			ani.SetBool("Fired",true);//Solved Bug
+			//Bug Prefab isn't enable at begin so Start wouln't run and because of that ani wouln't inicialize
 			this.peso = peso;
 		}
 	}
