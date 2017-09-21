@@ -1,13 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/2D/Scripts/Platformer2DUserControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Fire.cs">
     <Files>
       <File FileName="Assets/2D/Scripts/PlatformerCharacter2D.cs" Line="1" Column="1" />
       <File FileName="Assets/2D/Scripts/Camera2DFollow.cs" Line="1" Column="1" />
-      <File FileName="Assets/2D/Scripts/Platformer2DUserControl.cs" Line="122" Column="48" />
-      <File FileName="Assets/Fire.cs" Line="67" Column="50" />
+      <File FileName="Assets/2D/Scripts/Platformer2DUserControl.cs" Line="84" Column="6" />
       <File FileName="Assets/Radar.cs" Line="1" Column="1" />
       <File FileName="Assets/BallCollision.cs" Line="1" Column="1" />
+      <File FileName="Assets/Fire.cs" Line="76" Column="52" />
+      <File FileName="Assets/particulaStone.cs" Line="19" Column="41" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

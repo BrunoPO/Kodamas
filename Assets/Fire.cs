@@ -18,7 +18,12 @@ namespace UnityStandardAssets._2D{
 			if(fired){
 				trageto ();
 			}
-
+			Vector2 velo = rigid.velocity;
+			if (velo.y!=0) print (velo.y);
+			if(velo.y<-19.0f){
+				velo.y = -15.0f;
+				rigid.velocity = velo;
+			}
 			//Controle sobre o limite do cenário para que as bolas vão até o infinito;
 			if (transform.position.x > 45 || transform.position.x < -45 || transform.position.y < -35 || transform.position.y > 35)
 				Destroy (this.gameObject);

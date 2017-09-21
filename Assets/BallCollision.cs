@@ -35,7 +35,8 @@ public class BallCollision : MonoBehaviour {
 				pai.layer = 12;
 				this.tag = "Respawn";
 				this.gameObject.layer = 13;
-				pai.GetComponent<Rigidbody2D>().gravityScale = 10;
+				pai.transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
+				pai.GetComponent<Rigidbody2D>().gravityScale = 5;
 			}
 		}
 
