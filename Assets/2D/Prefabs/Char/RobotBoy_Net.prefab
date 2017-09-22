@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 400000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
@@ -33,7 +33,7 @@ GameObject:
   - component: {fileID: 114490175847374108}
   - component: {fileID: 114453255700602382}
   - component: {fileID: 114037163242266292}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RobotBoy_Net
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 400004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CeilingCheck
   m_TagString: Untagged
   m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
@@ -75,8 +75,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.55, y: 1.04, z: 0}
-  m_LocalScale: {x: 1.771533, y: 1.7715304, z: 1}
+  m_LocalPosition: {x: -4.32, y: 3.79, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
   - {fileID: 400004}
@@ -191,6 +191,7 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_FacingRight: 1
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -255,6 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e1523073f5349d88dfb4117562b1f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
+  Commented: 0
 --- !u!114 &114453255700602382
 MonoBehaviour:
   m_ObjectHideFlags: 1
