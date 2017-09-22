@@ -51,19 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\2D\Scripts\Camera2DFollow.cs" />
-     <Compile Include="Assets\2D\Scripts\CameraFollow.cs" />
-     <Compile Include="Assets\2D\Scripts\Platformer2DUserControl.cs" />
-     <Compile Include="Assets\2D\Scripts\PlatformerCharacter2D.cs" />
-     <Compile Include="Assets\2D\Scripts\Restarter.cs" />
-     <Compile Include="Assets\BallCollision.cs" />
-     <Compile Include="Assets\BallCollisionNet.cs" />
-     <Compile Include="Assets\BallCollisionNet2.cs" />
-     <Compile Include="Assets\BallParticleDestroy.cs" />
-     <Compile Include="Assets\BallParticleDestroyNet.cs" />
-     <Compile Include="Assets\Camera\AbstractTargetFollower.cs" />
-     <Compile Include="Assets\Camera\AutoCam.cs" />
-     <Compile Include="Assets\Camera\PivotBasedCameraRig.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
@@ -75,12 +62,25 @@
      <Compile Include="Assets\CrossPlatformInput\Scripts\TiltInput.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
-     <Compile Include="Assets\particulaStone.cs" />
-     <Compile Include="Assets\PlatControlNet.cs" />
-     <Compile Include="Assets\Radar.cs" />
-     <Compile Include="Assets\RadarNet.cs" />
-     <Compile Include="Assets\Stone.cs" />
-     <Compile Include="Assets\StoneNet.cs" />
+     <Compile Include="Assets\Scripts\Camera\AbstractTargetFollower.cs" />
+     <Compile Include="Assets\Scripts\Camera\AutoCam.cs" />
+     <Compile Include="Assets\Scripts\Camera\Camera2DFollow.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
+     <Compile Include="Assets\Scripts\Camera\PivotBasedCameraRig.cs" />
+     <Compile Include="Assets\Scripts\Char\Platformer2DUserControl.cs" />
+     <Compile Include="Assets\Scripts\Char\PlatformerCharacter2D.cs" />
+     <Compile Include="Assets\Scripts\ParticulaStone\particulaStone.cs" />
+     <Compile Include="Assets\Scripts\ParticulaStone\PlatControlNet.cs" />
+     <Compile Include="Assets\Scripts\Scene\Restarter.cs" />
+     <Compile Include="Assets\Scripts\Stone\BallCollision.cs" />
+     <Compile Include="Assets\Scripts\Stone\BallCollisionNet.cs" />
+     <Compile Include="Assets\Scripts\Stone\BallCollisionNet2.cs" />
+     <Compile Include="Assets\Scripts\Stone\BallParticleDestroy.cs" />
+     <Compile Include="Assets\Scripts\Stone\BallParticleDestroyNet.cs" />
+     <Compile Include="Assets\Scripts\Stone\Radar.cs" />
+     <Compile Include="Assets\Scripts\Stone\RadarNet.cs" />
+     <Compile Include="Assets\Scripts\Stone\Stone.cs" />
+     <Compile Include="Assets\Scripts\Stone\StoneNet.cs" />
      <None Include="Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/opt/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

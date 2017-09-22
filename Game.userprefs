@@ -1,18 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/PlatControlNet.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ParticulaStone/PlatControlNet.cs">
     <Files>
-      <File FileName="Assets/2D/Scripts/PlatformerCharacter2D.cs" Line="1" Column="1" />
-      <File FileName="Assets/2D/Scripts/Camera2DFollow.cs" Line="1" Column="1" />
-      <File FileName="Assets/Radar.cs" Line="1" Column="1" />
-      <File FileName="Assets/BallCollision.cs" Line="1" Column="1" />
-      <File FileName="Assets/2D/Scripts/Platformer2DUserControl.cs" Line="1" Column="1" />
-      <File FileName="Assets/Stone.cs" Line="1" Column="1" />
-      <File FileName="Assets/PlatControlNet.cs" Line="173" Column="6" />
-      <File FileName="Assets/StoneNet.cs" Line="85" Column="4" />
-      <File FileName="Assets/particulaStone.cs" Line="18" Column="35" />
-      <File FileName="Assets/BallParticleDestroy.cs" Line="15" Column="4" />
-      <File FileName="Assets/BallParticleDestroyNet.cs" Line="5" Column="1" />
+      <File FileName="Assets/Scripts/ParticulaStone/PlatControlNet.cs" Line="28" Column="35" />
+      <File FileName="Assets/Scripts/ParticulaStone/particulaStone.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
