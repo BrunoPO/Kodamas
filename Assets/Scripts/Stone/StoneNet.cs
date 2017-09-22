@@ -8,7 +8,6 @@ namespace UnityStandardAssets._2D{
 		private Animator ani;
 		private Rigidbody2D rigid;
 		public bool Commented=true,onTheGround = false;
-	
 		private float horin,vert,indexSeno=0.5f,peso=0;
 		public GameObject effect;
 		public int paiHash=0;
@@ -17,6 +16,7 @@ namespace UnityStandardAssets._2D{
 		public bool kill=false;
 		[SyncVar]
 		public bool fired = false;
+
 		void Start(){
 			ani = GetComponent<Animator>();
 			rigid = GetComponent<Rigidbody2D>();
@@ -75,8 +75,8 @@ namespace UnityStandardAssets._2D{
 			if(Commented) print (col.transform.position);
 		}
 
-		public void Fire(float peso,int paiHash,int Hash){
-			print(" "+paiHash+" "+Hash);
+		public void Fire(float peso,int Hash){
+			//print(" "+paiHash+" "+Hash);
 			this.paiHash = Hash;
 			fired=true;
 			//Configurando Ball para interagir com o ambiente

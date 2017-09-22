@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 95682528946188436}
   - component: {fileID: 50635939267965906}
   - component: {fileID: 58761995861518638}
-  - component: {fileID: 114459283430779622}
+  - component: {fileID: 114954489359884180}
   m_Layer: 12
   m_Name: SoulStone
   m_TagString: Respawn
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4509946206948852}
   - component: {fileID: 60165580788987140}
-  - component: {fileID: 114131249714948958}
+  - component: {fileID: 114782217252980108}
   m_Layer: 12
   m_Name: Radar
   m_TagString: Respawn
@@ -57,7 +57,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4624966507908262}
   - component: {fileID: 58436647566298062}
-  - component: {fileID: 114021535826273878}
+  - component: {fileID: 114515944183892116}
   m_Layer: 12
   m_Name: Colision
   m_TagString: Respawn
@@ -200,7 +200,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114021535826273878
+--- !u!114 &114515944183892116
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -208,12 +208,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1619320443958432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c28975ae20e42408783f45d00c98ba67, type: 3}
+  m_Script: {fileID: 11500000, guid: c84110819d9e34f269311da1d3cc80d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Commented: 0
   paiHash: 0
---- !u!114 &114131249714948958
+--- !u!114 &114782217252980108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -221,11 +221,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1521687109700540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99cb66a39fc0c4552b82f7999d9be197, type: 3}
+  m_Script: {fileID: 11500000, guid: c5b39cea929f94e8fbfb22a7c8c9bb93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Commented: 0
---- !u!114 &114459283430779622
+  paiHash: 0
+--- !u!114 &114954489359884180
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -233,13 +234,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1092874576488382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c09af180f2b0410897ec7a7ce510c3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 50f092d60bf6942fc9371a66cf7aa5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fired: 0
   Commented: 1
   onTheGround: 0
   effect: {fileID: 1920620554709356, guid: 4644f9927868149a097bfcaed8561d83, type: 2}
+  paiHash: 0
 --- !u!212 &212759090072093700
 SpriteRenderer:
   m_ObjectHideFlags: 1

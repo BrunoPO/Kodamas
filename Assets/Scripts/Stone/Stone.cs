@@ -10,12 +10,17 @@ namespace UnityStandardAssets._2D{
 		private float horin,vert,indexSeno=0.5f,peso=0;
 		public GameObject effect;
 		public int paiHash=0;
+		public bool kill = false;
+
 		void Start(){
 			ani = GetComponent<Animator>();
 			rigid = GetComponent<Rigidbody2D>();
 		}
 		// Update is called once per frame
 		void Update () {
+			if (kill) {
+				Destroy (this.gameObject);
+			}
 			if(fired){
 				trageto ();
 			}
@@ -80,17 +85,14 @@ namespace UnityStandardAssets._2D{
 			child.layer = 9;
 			child.tag = "Ball";
 
-			//Criando e configurando efeito para ficar no ambiente
-			GameObject ob = Instantiate (effect) as GameObject;
-			ob.name = "Effect";
-			ob.transform.position = this.transform.position;
-			ob.transform.rotation = this.transform.rotation;
-			ob.GetComponent<Animator>().SetBool("Fired",true);
-			ob.transform.parent = this.transform.parent;
-
+			ani = GetComponent<Animator>();
 			ani.SetBool("Fired",true);//Solved Bug
 			//Bug Prefab isn't enable at begin so Start wouln't run and because of that ani wouln't inicialize
 			this.peso = peso;
+		}
+
+		public void DestroySelf(){
+			kill = true;
 		}
 	}
 }

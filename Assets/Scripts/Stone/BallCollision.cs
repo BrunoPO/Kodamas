@@ -15,8 +15,11 @@ public class BallCollision : MonoBehaviour {
 		}
 		//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
 		void OnTriggerEnter2D(Collider2D coll) {
-			if(coll.tag != "Ground")
-				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag+"Hash:"+coll.gameObject.GetHashCode());
+			if(coll.tag == "Player")
+				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag+"Hash:"+coll.transform.GetHashCode());
+			else
+				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag);
+
 			if (end)
 				return;
 			if (coll.tag == "Player") {

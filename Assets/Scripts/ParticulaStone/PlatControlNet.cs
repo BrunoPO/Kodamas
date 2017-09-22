@@ -16,7 +16,7 @@ namespace UnityStandardAssets._2D
 		public bool Commented = false;
 
 		[SyncVar]
-		public int balls=3;
+		public int balls=3;//To Private
 
 
 		private void Awake(){
@@ -78,7 +78,7 @@ namespace UnityStandardAssets._2D
 					return;
 				}
 
-				Direcao(h, v);
+				lastParamBall = Direcao(h, v);
 
 				if (h != 0 || v != 0 || this.GetComponent<Rigidbody2D>().velocity != Vector2.zero) {
 					p.x += lastParamBall.x;
@@ -102,44 +102,37 @@ namespace UnityStandardAssets._2D
 			
 
 		}
-		void Direcao(float h, float v){
+		Vector3 Direcao(float h, float v){
 			if (h < 0 && v < 0) {
-				lastParamBall = new Vector3 (-1f, -1f, 225f);
-				if (Commented)
-					print ("Esq Baixo");
+				if (Commented) print ("Esq Baixo");
+				return new Vector3 (-1f, -1f, 225f);
 			} else if (h > 0 && v < 0) {
+				if (Commented) print ("Dir Baixo");
 				lastParamBall = new Vector3 (1f, -1f, 315f);
-				if (Commented)
-					print ("Dir Baixo");
 			} else if (h < 0 && v > 0) {
-				lastParamBall = new Vector3 (-1f, 1f, 135f);
-				if (Commented)
-					print ("Esq Cima");
+				if (Commented) print ("Esq Cima");
+				return new Vector3 (-1f, 1f, 135f);
 			} else if (h > 0 && v > 0) {
-				lastParamBall = new Vector3 (1f, 1f, 45f);
-				if (Commented)
-					print ("Dir Cima");
+				if (Commented) print ("Dir Cima");
+				return new Vector3 (1f, 1f, 45f);
 			} else if (h > 0) {
-				lastParamBall = new Vector3 (1f, 0f, 0);
-				if (Commented)
-					print ("Dir ");
+				if (Commented) print ("Dir ");
+				return new Vector3 (1f, 0f, 0);
 			} else if (h < 0) {
-				lastParamBall = new Vector3 (-1f, 0f, 180f);
-				if (Commented)
-					print ("Esq");
+				if (Commented) print ("Esq");
+				return new Vector3 (-1f, 0f, 180f);
 			} else if (v < 0) {
-				lastParamBall = new Vector3 (0f, -1f, 270f);
-				if (Commented)
-					print ("Baixo");
+				if (Commented) print ("Baixo");
+				return new Vector3 (0f, -1f, 270f);
 			} else if (v > 0) {
-				lastParamBall = new Vector3 (0f, 1f, 90f);
-				if (Commented)
-					print ("Cima");
+				if (Commented) print ("Cima");
+				return new Vector3 (0f, 1f, 90f);
 			} else if (m_Character.m_FacingRight) {
-				lastParamBall = new Vector3 (1f, 0f, 0);
-			} else {
-				lastParamBall = new Vector3 (-1f, 0f, 180f);
+				return new Vector3 (1f, 0f, 0);
 			}
+
+			return new Vector3 (-1f, 0f, 180f);
+
 		}
 
 		public bool getBall(){
@@ -164,7 +157,7 @@ namespace UnityStandardAssets._2D
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
 			//inst.transform.parent = this.transform.parent;
 			inst.GetComponent<StoneNet> ().enabled = true;
-			inst.GetComponent<StoneNet>().Fire (3,this.gameObject.GetHashCode(),Hash);
+			inst.GetComponent<StoneNet>().Fire (3,Hash);
 			CmdBallsMinus ();
 			NetworkServer.Spawn (inst);
 

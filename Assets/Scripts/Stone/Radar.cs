@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+
 namespace UnityStandardAssets._2D{
 	public class Radar : MonoBehaviour {
+		
 		public bool Commented = false;
 		private GameObject pai;
 		public int paiHash;
