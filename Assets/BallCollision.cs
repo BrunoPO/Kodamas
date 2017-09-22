@@ -36,14 +36,14 @@ public class BallCollision : MonoBehaviour {
 				}
 			}else if(pai.tag != "Respawn" ){
 				if (coll.gameObject.tag == "Ball") {
-					if (coll.GetComponent<Stone> ().paiHash != paiHash) {
+					if (coll.GetComponent<Stone> () == null) {//Código para debug de colisão se bola inimiga não tiver script
+						Fall ();
+					}else if (coll.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
 						Fall ();
 					}
-				}else if(coll.gameObject.tag == "Ground"){
+				}else if(coll.gameObject.tag == "Ground"){//Stone acerta o chão
 					Fall ();
 				}
-
-
 			}
 		}
 

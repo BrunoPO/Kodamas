@@ -13,10 +13,17 @@ namespace UnityStandardAssets._2D{
 
 		//Controle do radar para rotacionar em direção ao alvo(Ball,Player)
 		void OnTriggerStay2D(Collider2D col) {
-			if (!(col.tag == "Player" || col.tag == "Ball" ) || col.gameObject.GetHashCode()!=paiHash)
+			//só passar se for player ou bola
+			if (!(col.tag == "Player" || col.tag == "Ball" ))
 				return;
 			if (!pai.GetComponent<Stone> ().fired  || pai.GetComponent<Stone> ().onTheGround)
 				return;
+			
+			if(col.gameObject.GetComponent<Stone> () != null){
+				if (col.gameObject.GetHashCode () != paiHash)
+					return;
+			}
+			
 			pai.GetComponent<Stone> ().rotacionar(col);
 		}
 	}
