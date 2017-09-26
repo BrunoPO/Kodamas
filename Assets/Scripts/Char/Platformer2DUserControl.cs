@@ -15,9 +15,9 @@ namespace UnityStandardAssets._2D
 		public GameObject SoulStone;
 		Vector3 lastParamBall;//(v,h,rotation)
 		public bool Commented = false;
-
-		public int balls=3;//To Private
-
+		private int autoAttackCounter=20;
+		public bool autoAttack = false;
+		private Vector3 IniPoint;
 
         private void Awake(){
             m_Character = GetComponent<PlatformerCharacter2D>();
@@ -26,6 +26,17 @@ namespace UnityStandardAssets._2D
 		private void Start(){
 			Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 			//lastParamBall= new Vector3(1f,0f,0);
+			IniPoint = transform.position;
+		}
+
+		/*public Vector3 getIniPoint(){
+			return IniPoint;
+		}*/
+
+		public void ResetChar(){
+			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+			transform.position = IniPoint;
+			GetComponent<CharAttributes>().resetBalls();
 		}
 
         private void Update()
@@ -41,14 +52,27 @@ namespace UnityStandardAssets._2D
 
             if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-
             }
-			atck=CrossPlatformInputManager.GetButton("Fire3");
-			if(Commented) print (atck);
 
-            bool crouch = Input.GetKey(KeyCode.LeftControl);
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
+			bool crouch = Input.GetKey(KeyCode.LeftControl);
+			float h = CrossPlatformInputManager.GetAxis("Horizontal");
 			float v = CrossPlatformInputManager.GetAxis("Vertical");
+
+			if (!autoAttack) {
+				atck = CrossPlatformInputManager.GetButton ("Fire3");
+				if (Commented)
+					print (atck);
+			} else if (!atck && autoAttackCounter>=100) {
+				autoAttackCounter = 0;
+				atck = true;
+				m_Jump = false;crouch = false;h = 0;v = 0;
+			} else {
+				atck = false;
+				autoAttackCounter++;
+				m_Jump = false;crouch = false;h = 0;v = 0;
+			}
+
+            
 			//if(Commented) print(v + " " + h);
 
             // Pass all parameters to the character control script.
@@ -59,7 +83,7 @@ namespace UnityStandardAssets._2D
 					CmdSpwnBall (ob.transform.position,ob.transform.rotation,gameObject.GetHashCode());
 					Destroy (ob);
 				}
-			}else if(balls>0){
+			}else if(GetComponent<CharAttributes>().balls>0){
 				float moveh;
 				Ball = this.transform.Find("Ball");
 				Vector3 p = transform.position;
@@ -130,25 +154,12 @@ namespace UnityStandardAssets._2D
 
 		}
 
-		public bool getBall(){
-			if(balls<6){
-				CmdBallsPlus();
-				return true;
-			}
-			return false;
-		}
-		void CmdBallsMinus(){
-			balls--;
-		}
-		void CmdBallsPlus(){
-			balls++;
-		}
 		void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
 			inst.transform.parent = transform.parent;
 			inst.GetComponent<Stone> ().enabled = true;
 			inst.GetComponent<Stone>().Fire (3,Hash);
-			CmdBallsMinus ();
+			GetComponent<CharAttributes>().CmdBallsMinus();
 			//NetworkServer.Spawn (inst);
 
 			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;

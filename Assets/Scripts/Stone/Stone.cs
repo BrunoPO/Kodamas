@@ -25,7 +25,7 @@ namespace UnityStandardAssets._2D{
 				trageto ();
 			}
 			Vector2 velo = rigid.velocity;
-			if (velo.y!=0) print (velo.y);
+			//if (velo.y!=0) print (velo.y);
 			if(velo.y<-19.0f){
 				velo.y = -15.0f;
 				rigid.velocity = velo;

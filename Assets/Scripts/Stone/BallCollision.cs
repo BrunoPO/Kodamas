@@ -24,15 +24,16 @@ public class BallCollision : MonoBehaviour {
 				return;
 			if (coll.tag == "Player") {
 				if (pai.GetComponent<Stone> ().onTheGround) {//Balls++
-					end = coll.GetComponent<Platformer2DUserControl> ().getBall ();
+					end = coll.GetComponent<CharAttributes> ().getBall ();
 					if (end) {
 						Destroy (pai.gameObject);
 					}
 				} else if (coll.gameObject.GetHashCode () != paiHash) {
-					print ("Player Kill");
+					print ("Player Killed");
+					coll.GetComponent<CharAttributes> ().CmdKilled ();
 					Destroy (pai.gameObject);
 				} else {//Balls++
-					end = coll.GetComponent<Platformer2DUserControl> ().getBall ();
+					end = coll.GetComponent<CharAttributes> ().getBall ();
 					if (end) {
 						Destroy (pai.gameObject);
 					}

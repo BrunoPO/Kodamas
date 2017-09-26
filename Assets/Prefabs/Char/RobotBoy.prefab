@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 6100000}
   - component: {fileID: 114631142567348056}
   - component: {fileID: 114874572396703484}
+  - component: {fileID: 114781320743624610}
   m_Layer: 8
   m_Name: RobotBoy
   m_TagString: Player
@@ -72,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.187, y: 2.3, z: 0}
+  m_LocalPosition: {x: 8.6, y: 3.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -235,13 +236,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxSpeed: 10
-  m_JumpForce: 400
+  m_JumpForce: 800
   m_CrouchSpeed: 0.36
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 1024
   m_FacingRight: 1
+--- !u!114 &114781320743624610
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad8dc1cb19ec14f5e829ba31948f1566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balls: 3
+  life: 5
+  unlimitedBalls: 0
 --- !u!114 &114874572396703484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,3 +270,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SoulStone: {fileID: 1092874576488382, guid: b03e81ee15db6425983cea48f28b9afb, type: 2}
   Commented: 0
+  autoAttack: 0
