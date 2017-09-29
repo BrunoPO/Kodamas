@@ -999,6 +999,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114781320743624610, guid: a5462d1250a814578932f2da6e2284d1,
+        type: 2}
+      propertyPath: isLocalPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114631142567348056, guid: a5462d1250a814578932f2da6e2284d1,
+        type: 2}
+      propertyPath: isNet
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114631142567348056, guid: a5462d1250a814578932f2da6e2284d1,
+        type: 2}
+      propertyPath: forcaSprint
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
   m_IsPrefabParent: 0

@@ -71,12 +71,12 @@ namespace UnityStandardAssets._2D{
 
 		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
-			inst.GetComponent<StoneNet> ().enabled = true;
-			inst.GetComponent<StoneNet>().Fire (3,Hash);
-			GetComponent<CharAttributesNet>().CmdBallsMinus();
+			inst.GetComponent<Stone> ().enabled = true;
+			inst.GetComponent<Stone>().Fire (3,Hash);
+			GetComponent<CharAttributes>().CmdBallsMinus();
 			//NetworkServer.Spawn (inst);
 
-			GameObject inst2 = Instantiate (inst.GetComponent<StoneNet>().effect,posi,rotation) as GameObject;
+			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;
 			inst2.name = "Effect";
 			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
 			//NetworkServer.Spawn (inst2);

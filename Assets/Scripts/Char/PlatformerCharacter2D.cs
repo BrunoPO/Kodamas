@@ -11,26 +11,33 @@ namespace UnityStandardAssets._2D
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
 		[SerializeField] private LayerMask m_WhatIsGround;
 		[SerializeField] private LayerMask m_WhatIsWall;
-		[SerializeField] public bool isNet;
+		[Range(0, 100)] [SerializeField] private int forcaSprint = 50;
 
+		//[HideInInspector] 
+		private bool isNet;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
         private bool m_Grounded;            // Whether or not the player is grounded.
-		private bool m_OnWall;   			// Whether or not the player is grounded.
+		private bool m_OnWall;   			// Whether or not the player is on wall.
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
 		private int counterSprint;
-		public int waitSprint = 100;
-		public float forcaSprint = 100;
 		private Collider2D[] colliders;
 		private Collider2D[] collidersOnChest;
-		private CharAttributesNet attributesNet;
-		private CharAttributes attributes;
+		private CharAttributesNet attributesNet; //var with refence to Attributes on the Net
+		private CharAttributes attributes;	//var with refence to Attributes on the Local
 
-		private void Start(){
-			
+		private void Awake(){
+			// Setting up references.
+			m_GroundCheck = transform.Find("GroundCheck");
+			m_CeilingCheck = transform.Find("CeilingCheck");
+			m_Anim = GetComponent<Animator>();
+			m_Rigidbody2D = GetComponent<Rigidbody2D>();
+			counterSprint = forcaSprint;
+
+			isNet = (GetComponent<CharAttributesNet> () != null);
 			if(isNet)
 				attributesNet = GetComponent<CharAttributesNet> ();
 			else
@@ -63,16 +70,7 @@ namespace UnityStandardAssets._2D
 			transform.rotation = Quaternion.Euler(rot);
 		}
 
-        private void Awake()
-        {
-            // Setting up references.
-            m_GroundCheck = transform.Find("GroundCheck");
-            m_CeilingCheck = transform.Find("CeilingCheck");
-            m_Anim = GetComponent<Animator>();
-            m_Rigidbody2D = GetComponent<Rigidbody2D>();
-			counterSprint = waitSprint;
-
-        }
+        
 
 
         private void FixedUpdate()
@@ -126,12 +124,12 @@ namespace UnityStandardAssets._2D
                 }
             }
 
-			if (sprint && counterSprint >= waitSprint) {
+			if (sprint && counterSprint >= forcaSprint) {
 				counterSprint = 0;
 			}
 
-			if (counterSprint < (waitSprint * 0.7)) {//Redução da velocidade do sprint
-				move *= 5*(waitSprint-counterSprint)/waitSprint;
+			if (counterSprint < (forcaSprint * 0.7)) {//Redução da velocidade do sprint
+				move *= 5*(forcaSprint-counterSprint)/forcaSprint;
 			}
 
 			counterSprint++;

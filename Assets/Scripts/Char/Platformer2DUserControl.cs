@@ -23,7 +23,8 @@ namespace UnityStandardAssets._2D
 
 		private void Awake(){
 			m_Character = GetComponent<PlatformerCharacter2D>();
-			isNet = m_Character.isNet;
+			isNet = (GetComponent<CharAttributesNet> () != null);
+			//isNet = m_Character.isNet;
 			m_AttributesNet = GetComponent<CharAttributesNet> ();
 			m_Attributes = GetComponent<CharAttributes> ();
 		}
@@ -108,12 +109,14 @@ namespace UnityStandardAssets._2D
 					if(Commented) print (ob.transform.parent);
 					print ("Aqui" + getHash());
 					Vector3 position = (ob.transform.position + transform.position) / 2;//Alter position na hora de lançar
-					if(isNet)
-						m_AttributesNet.CmdSpwnBall (position,ob.transform.rotation,getHash());
-					else
-						m_Attributes.CmdSpwnBall (position,ob.transform.rotation,getHash());
-
+					Quaternion rotation = ob.transform.rotation;
 					Destroy (ob);
+					if(isNet)
+						m_AttributesNet.CmdSpwnBall (position,rotation,getHash());
+					else
+						m_Attributes.CmdSpwnBall (position,rotation,getHash());
+
+
 				}
 			}else if(getBalls()>0){
 				Ball = this.transform.Find("Ball");
