@@ -84,11 +84,7 @@ namespace UnityStandardAssets._2D
 					Flip ();
 				}
 			}
-             /* for (int i = 0; i < colliders.Length; i++)
-            {
-                if (colliders[i].gameObject != gameObject)
-                    m_Grounded = true;
-            }*/
+
 			
 			m_Grounded = false;
 			m_OnWall = false;
@@ -115,18 +111,6 @@ namespace UnityStandardAssets._2D
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
 
-		/*private void Update(){
-		    //print("Rigid.x: "+m_Rigidbody2D.velocity.normalized.x);
-			if (m_Rigidbody2D.velocity.normalized.x < 0 && m_FacingRight) {
-				// ... flip the player.
-				Flip ();
-			}
-			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (m_Rigidbody2D.velocity.normalized.x > 0 && !m_FacingRight) {
-					// ... flip the player.
-					Flip ();
-			}
-		}*/
 
 
 

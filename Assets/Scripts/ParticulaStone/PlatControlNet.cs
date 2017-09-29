@@ -2,16 +2,16 @@
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.Networking;
+//using Unity.Attributes;
 
 namespace UnityStandardAssets._2D
 {
 	[RequireComponent(typeof (PlatformerCharacter2D))]
-	public class PlatControlNet : NetworkBehaviour{
+	public class PlatControlNet : MonoBehaviour{
 		private PlatformerCharacter2D m_Character;
 		private bool m_Jump,atck;
 		private Transform Ball;
 		private GameObject ob;
-		public GameObject SoulStone;
 		private Vector3 lastParamBall;//(v,h,rotation)
 		public bool Commented = false;
 		private int autoAttackCounter=20;
@@ -19,35 +19,26 @@ namespace UnityStandardAssets._2D
 		private Vector3 IniPoint;
 		private CharAttributesNet m_Attributes;
 
+		private GameObject SoulStone;
+
 		private void Awake(){
 			m_Attributes = GetComponent<CharAttributesNet> ();
 			m_Character = GetComponent<PlatformerCharacter2D>();
 		}
 
 		private void Start(){
-			if (isLocalPlayer) {
-				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
-			}
 			IniPoint = transform.position;
+			SoulStone = m_Attributes.SoulStone;
+			print (SoulStone);
 		}
 
 		public void ResetChar(){
 			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
 			transform.position = IniPoint;
-			GetComponent<CharAttributesNet>().CmdResetAttributes();
+			m_Attributes.CmdResetAttributes();
 		}
 
 		private void Update() {
-
-			if(GetComponent<CharAttributesNet> ().m_Killed)
-				GetComponent<Animator> ().SetBool ("Died", true);
-			else
-				GetComponent<Animator> ().SetBool ("Died", false);
-
-
-			if (!isLocalPlayer)
-				return;
-			
 				if (Input.GetKeyDown("\\")) {
 					if (Time.timeScale == 1.0F)
 						Time.timeScale = 0.3F;
@@ -86,7 +77,7 @@ namespace UnityStandardAssets._2D
 				if (ob != null) {
 					if(Commented) print (ob.transform.parent);
 					print ("Aqui" + gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ());
-					CmdSpwnBall (ob.transform.position,ob.transform.rotation,gameObject.GetComponent<NetworkIdentity>().netId.GetHashCode());
+					m_Attributes.CmdSpwnBall (ob.transform.position,ob.transform.rotation,gameObject.GetComponent<NetworkIdentity>().netId.GetHashCode());
 					Destroy (ob);
 				}
 			}else if(m_Attributes.balls>0){
@@ -113,7 +104,7 @@ namespace UnityStandardAssets._2D
 						Ball.transform.rotation = Quaternion.Euler(0, 0, lastParamBall.z);
 					}
 				}
-				if (h != 0 && isLocalPlayer) {
+				if (h != 0 ) {
 					if (h < 0 && m_Attributes.m_FacingRight)
 						m_Character.Move (-0.1f, false, m_Jump,sprint);
 					else if (h > 0 && !m_Attributes.m_FacingRight)
@@ -127,6 +118,7 @@ namespace UnityStandardAssets._2D
 			
 
 		}
+
 		Vector3 Direcao(float h, float v){
 			if (h < 0 && v < 0) {
 				if (Commented) print ("Esq Baixo");
@@ -160,21 +152,6 @@ namespace UnityStandardAssets._2D
 
 		}
 
-		[Command]
-		void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
-			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
-			//inst.transform.parent = this.transform.parent;
-			inst.GetComponent<StoneNet> ().enabled = true;
-			inst.GetComponent<StoneNet>().Fire (3,Hash);
-			GetComponent<CharAttributesNet>().CmdBallsMinus();
-			NetworkServer.Spawn (inst);
 
-			GameObject inst2 = Instantiate (inst.GetComponent<StoneNet>().effect,posi,rotation) as GameObject;
-			inst2.name = "Effect";
-			//inst2.transform.parent = t.parent;
-			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
-			NetworkServer.Spawn (inst2);
-			//ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
-		}
 	}
 }

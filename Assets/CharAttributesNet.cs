@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 namespace UnityStandardAssets._2D{
 	public class CharAttributesNet : NetworkBehaviour {
 		private Animator m_anim;
+		public bool unlimitedBalls = false;
+		public GameObject SoulStone;
 
 		[SyncVar]
 		public int balls=3;//To Private
@@ -13,16 +15,21 @@ namespace UnityStandardAssets._2D{
 		public int life=5;//To Private
 		[SyncVar]
 		public bool m_FacingRight = true;
-
 		[SyncVar]
 		public bool m_Killed = false;
 
-
-
 		void Start(){
+			if (isLocalPlayer) {
+				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
+			}
 			m_anim = GetComponent<Animator> ();
 		}
-		public bool unlimitedBalls = false;
+		private void Update(){
+			if(m_Killed)
+				GetComponent<Animator> ().SetBool ("Died", true);
+			else
+				GetComponent<Animator> ().SetBool ("Died", false);
+		}
 
 		public bool getBall(){
 			if(balls<6){
@@ -31,12 +38,6 @@ namespace UnityStandardAssets._2D{
 			}
 			return false;
 		}
-		/*public void Flip(){
-			CmdFlip();
-		}*/
-		/*public void BallsMinus(){
-			CmdBallsMinus();
-		}*/
 
 		[Command]
 		public void CmdFacingRightInvert(){
@@ -76,7 +77,6 @@ namespace UnityStandardAssets._2D{
 			CmdLifeMinus();
 		}
 
-		
 		public void InvertFlip(){
 			if(!isServer)
 				m_FacingRight = !m_FacingRight;
@@ -90,6 +90,23 @@ namespace UnityStandardAssets._2D{
 				return;*/
 			// Switch the way the player is labelled as facing.
 			m_FacingRight = !m_FacingRight;
+		}
+
+		[Command]
+		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
+			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
+			//inst.transform.parent = this.transform.parent;
+			inst.GetComponent<StoneNet> ().enabled = true;
+			inst.GetComponent<StoneNet>().Fire (3,Hash);
+			GetComponent<CharAttributesNet>().CmdBallsMinus();
+			NetworkServer.Spawn (inst);
+
+			GameObject inst2 = Instantiate (inst.GetComponent<StoneNet>().effect,posi,rotation) as GameObject;
+			inst2.name = "Effect";
+			//inst2.transform.parent = t.parent;
+			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
+			NetworkServer.Spawn (inst2);
+			//ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
 		}
 
 	}

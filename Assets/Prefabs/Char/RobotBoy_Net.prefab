@@ -238,7 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97d5a83a04ab74bff8ac46fa6d4fec82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
   Commented: 0
   autoAttack: 0
 --- !u!114 &114453255700602382
@@ -292,11 +291,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b86107b23c949c3950e31f0e1a1259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlimitedBalls: 1
+  SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
   balls: 3
   life: 5
   m_FacingRight: 1
   m_Killed: 0
-  unlimitedBalls: 1
 --- !u!114 &114528272479123258
 MonoBehaviour:
   m_ObjectHideFlags: 1
