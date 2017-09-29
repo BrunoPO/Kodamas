@@ -73,7 +73,6 @@
      <Compile Include="Assets\Scripts\Char\Platformer2DUserControl.cs" />
      <Compile Include="Assets\Scripts\Char\PlatformerCharacter2D.cs" />
      <Compile Include="Assets\Scripts\ParticulaStone\particulaStone.cs" />
-     <Compile Include="Assets\Scripts\ParticulaStone\PlatControlNet.cs" />
      <Compile Include="Assets\Scripts\Scene\Restarter.cs" />
      <Compile Include="Assets\Scripts\Stone\BallCollision.cs" />
      <Compile Include="Assets\Scripts\Stone\BallCollisionNet.cs" />

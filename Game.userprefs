@@ -3,18 +3,18 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ParticulaStone/PlatControlNet.cs">
     <Files>
       <File FileName="Assets/CharAttributes.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Camera/Camera2DFollow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Camera/Camera2DFollow.cs" Line="28" Column="21" />
       <File FileName="Assets/Scripts/Char/PlatformerCharacter2D.cs" Line="87" Column="4" />
-      <File FileName="Assets/Scripts/ParticulaStone/PlatControlNet.cs" Line="38" Column="38" />
-      <File FileName="Assets/Scripts/Char/Platformer2DUserControl.cs" Line="9" Column="54" />
-      <File FileName="Assets/CharAttributesNet.cs" Line="90" Column="14" />
+      <File FileName="Assets/Scripts/ParticulaStone/PlatControlNet.cs" Line="10" Column="29" />
+      <File FileName="Assets/Scripts/Char/Platformer2DUserControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/CharAttributesNet.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Stone/BallCollision.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Stone/BallCollisionNet.cs" Line="30" Column="32" />
+      <File FileName="Assets/Scripts/Stone/BallCollisionNet.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Stone/Stone.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Stone/StoneNet.cs" Line="4" Column="22" />
+      <File FileName="Assets/Scripts/Stone/StoneNet.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Stone/Radar.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Stone/RadarNet.cs" Line="1" Column="1" />
-      <File FileName="Assets/RobotDieScript.cs" Line="24" Column="66" />
+      <File FileName="Assets/RobotDieScript.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

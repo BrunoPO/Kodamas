@@ -26,31 +26,31 @@ namespace UnityStandardAssets._2D
 		public float forcaSprint = 100;
 		private Collider2D[] colliders;
 		private Collider2D[] collidersOnChest;
+		private CharAttributesNet attributesNet;
+		private CharAttributes attributes;
 
+		private void Start(){
+			
+			if(isNet)
+				attributesNet = GetComponent<CharAttributesNet> ();
+			else
+				attributes = GetComponent<CharAttributes> ();
+		}
 		private bool isFacingRight(){
 			if (isNet) {
-				return GetComponent<CharAttributesNet> ().m_FacingRight;
+				return attributesNet.m_FacingRight;
 			} else {
-				return GetComponent<CharAttributes> ().m_FacingRight;
+				return attributes.m_FacingRight;
 			}
 		}
-		/*private void FacingRightInvert(){
-			if (isNet) {
-				GetComponent<CharAttributesNet> ().CmdFacingRightInvert ();
-			} else {
-				GetComponent<CharAttributes> ().m_FacingRight = !GetComponent<CharAttributes> ().m_FacingRight;
-			}
-		}*/
-
 		private void InvertFacing(){
 			if (isNet) {
-				GetComponent<CharAttributesNet> ().InvertFlip();
+				attributesNet.InvertFlip();
 			} else {
-				print("No On");
+				attributes.InvertFlip();
 				//GetComponent<CharAttributes> ().m_FacingRight = !GetComponent<CharAttributes> ().m_FacingRight;
 			}
 		}
-
 		public void Flip()
 		{
 
@@ -77,12 +77,11 @@ namespace UnityStandardAssets._2D
 
         private void FixedUpdate()
         {
-			if(isNet){
-				if(transform.rotation.eulerAngles.y == 0 && !GetComponent<CharAttributesNet> ().m_FacingRight){
-					Flip ();
-				}else if(transform.rotation.eulerAngles.y == 180 && GetComponent<CharAttributesNet> ().m_FacingRight){
-					Flip ();
-				}
+			
+			if(transform.rotation.eulerAngles.y == 0 && !isFacingRight()){
+				Flip ();
+			}else if(transform.rotation.eulerAngles.y == 180 && isFacingRight()){
+				Flip ();
 			}
 
 			

@@ -437,7 +437,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 380989397}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.37, y: 7.6, z: -10}
+  m_LocalPosition: {x: -0.85, y: 7.48, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -455,10 +455,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 380989402}
-  damping: 1
-  lookAheadFactor: 3
+  damping: 0
+  lookAheadFactor: 0
   lookAheadReturnSpeed: 0.5
   lookAheadMoveThreshold: 0.1
+  Min: {x: -10, y: 0}
+  Max: {x: 12.4, y: 16.8}
 --- !u!1 &738584460
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,11 +969,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -8.44
+      value: -2.48
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 8.33
+      value: 7.34
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -996,15 +998,6 @@ Prefab:
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_RootOrder
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114631142567348056, guid: a5462d1250a814578932f2da6e2284d1,
-        type: 2}
-      propertyPath: m_MaxSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 21200000, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
-      propertyPath: m_FlipX
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5462d1250a814578932f2da6e2284d1, type: 2}

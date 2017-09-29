@@ -33,7 +33,7 @@ GameObject:
   - component: {fileID: 114453255700602382}
   - component: {fileID: 114528272479123258}
   - component: {fileID: 114511070306618108}
-  - component: {fileID: 114372863505717606}
+  - component: {fileID: 114029158072921466}
   m_Layer: 8
   m_Name: RobotBoy_Net
   m_TagString: Player
@@ -227,7 +227,7 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100002}
   m_IsPrefabParent: 1
---- !u!114 &114372863505717606
+--- !u!114 &114029158072921466
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97d5a83a04ab74bff8ac46fa6d4fec82, type: 3}
+  m_Script: {fileID: 11500000, guid: f45528989213c4753931d019a3c1fa0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Commented: 0

@@ -31,6 +31,10 @@ namespace UnityStandardAssets._2D{
 				GetComponent<Animator> ().SetBool ("Died", false);
 		}
 
+		public int getHash(){
+			return gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ();
+		}
+
 		public bool getBall(){
 			if(balls<6){
 				CmdBallsPlus();
