@@ -107,11 +107,11 @@ namespace UnityStandardAssets._2D
 				if (ob != null) {
 					if(Commented) print (ob.transform.parent);
 					print ("Aqui" + getHash());
-
+					Vector3 position = (ob.transform.position + transform.position) / 2;//Alter position na hora de lançar
 					if(isNet)
-						m_AttributesNet.CmdSpwnBall (ob.transform.position,ob.transform.rotation,getHash());
+						m_AttributesNet.CmdSpwnBall (position,ob.transform.rotation,getHash());
 					else
-						m_Attributes.CmdSpwnBall (ob.transform.position,ob.transform.rotation,getHash());
+						m_Attributes.CmdSpwnBall (position,ob.transform.rotation,getHash());
 
 					Destroy (ob);
 				}

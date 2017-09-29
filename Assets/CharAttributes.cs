@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D{
 	public class CharAttributes : MonoBehaviour {
-		private Animator m_anim;
 		public bool unlimitedBalls = false;
 		public GameObject SoulStone;
+		public bool isLocalPlayer;
 
 		public int balls=3;//To Private
 		public int life=5;//To Private
@@ -14,8 +14,12 @@ namespace UnityStandardAssets._2D{
 		public bool m_Killed = false;
 
 		void Start(){
-			Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
-			m_anim = GetComponent<Animator> ();
+			if (isLocalPlayer) {
+				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
+			} else {
+				GetComponent<Platformer2DUserControl>().enabled = false;
+				//GetComponent<PlatformerCharacter2D>().enabled = false;
+			}
 		}
 		private void Update(){
 			if(m_Killed)
@@ -67,7 +71,6 @@ namespace UnityStandardAssets._2D{
 
 		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
-			//inst.transform.parent = this.transform.parent;
 			inst.GetComponent<StoneNet> ().enabled = true;
 			inst.GetComponent<StoneNet>().Fire (3,Hash);
 			GetComponent<CharAttributesNet>().CmdBallsMinus();
@@ -75,10 +78,8 @@ namespace UnityStandardAssets._2D{
 
 			GameObject inst2 = Instantiate (inst.GetComponent<StoneNet>().effect,posi,rotation) as GameObject;
 			inst2.name = "Effect";
-			//inst2.transform.parent = t.parent;
 			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
 			//NetworkServer.Spawn (inst2);
-			//ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
 		}
 
 	}

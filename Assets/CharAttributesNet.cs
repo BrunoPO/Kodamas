@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 namespace UnityStandardAssets._2D{
 	public class CharAttributesNet : NetworkBehaviour {
-		private Animator m_anim;
 		public bool unlimitedBalls = false;
 		public GameObject SoulStone;
 
@@ -21,8 +20,10 @@ namespace UnityStandardAssets._2D{
 		void Start(){
 			if (isLocalPlayer) {
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
+			} else {
+				GetComponent<Platformer2DUserControl>().enabled = false;
+				//GetComponent<PlatformerCharacter2D>().enabled = false;
 			}
-			m_anim = GetComponent<Animator> ();
 		}
 		private void Update(){
 			if(m_Killed)
@@ -90,16 +91,12 @@ namespace UnityStandardAssets._2D{
 
 		[Command]
 		private void CmdInvertFlip(){
-			/*if (!isLocalPlayer)
-				return;*/
-			// Switch the way the player is labelled as facing.
 			m_FacingRight = !m_FacingRight;
 		}
 
 		[Command]
 		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
-			//inst.transform.parent = this.transform.parent;
 			inst.GetComponent<StoneNet> ().enabled = true;
 			inst.GetComponent<StoneNet>().Fire (3,Hash);
 			GetComponent<CharAttributesNet>().CmdBallsMinus();
@@ -107,7 +104,6 @@ namespace UnityStandardAssets._2D{
 
 			GameObject inst2 = Instantiate (inst.GetComponent<StoneNet>().effect,posi,rotation) as GameObject;
 			inst2.name = "Effect";
-			//inst2.transform.parent = t.parent;
 			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
 			NetworkServer.Spawn (inst2);
 			//ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
