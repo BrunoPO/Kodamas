@@ -75,14 +75,12 @@
      <Compile Include="Assets\Scripts\ParticulaStone\particulaStone.cs" />
      <Compile Include="Assets\Scripts\Scene\Restarter.cs" />
      <Compile Include="Assets\Scripts\Stone\BallCollision.cs" />
-     <Compile Include="Assets\Scripts\Stone\BallCollisionNet.cs" />
-     <Compile Include="Assets\Scripts\Stone\BallCollisionNet2.cs" />
      <Compile Include="Assets\Scripts\Stone\BallParticleDestroy.cs" />
      <Compile Include="Assets\Scripts\Stone\BallParticleDestroyNet.cs" />
      <Compile Include="Assets\Scripts\Stone\Radar.cs" />
-     <Compile Include="Assets\Scripts\Stone\RadarNet.cs" />
      <Compile Include="Assets\Scripts\Stone\Stone.cs" />
-     <Compile Include="Assets\Scripts\Stone\StoneNet.cs" />
+     <Compile Include="Assets\StoneAttributes.cs" />
+     <Compile Include="Assets\StoneAttributesNet.cs" />
      <None Include="Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/opt/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

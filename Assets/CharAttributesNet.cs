@@ -36,17 +36,12 @@ namespace UnityStandardAssets._2D{
 			return gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ();
 		}
 
-		public bool getBall(){
+		public bool gainBall(){
 			if(balls<6){
 				CmdBallsPlus();
 				return true;
 			}
 			return false;
-		}
-
-		[Command]
-		public void CmdFacingRightInvert(){
-			
 		}
 
 		[Command]
@@ -63,7 +58,6 @@ namespace UnityStandardAssets._2D{
 		public void CmdLifeMinus(){
 			life--;
 		}
-
 		[Command]
 		public void CmdKilled(){
 			print("Called Killed");
@@ -97,12 +91,12 @@ namespace UnityStandardAssets._2D{
 		[Command]
 		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
-			inst.GetComponent<StoneNet> ().enabled = true;
-			inst.GetComponent<StoneNet>().Fire (3,Hash);
+			inst.GetComponent<Stone> ().enabled = true;
+			inst.GetComponent<Stone>().Fire (3,Hash);
 			GetComponent<CharAttributesNet>().CmdBallsMinus();
 			NetworkServer.Spawn (inst);
 
-			GameObject inst2 = Instantiate (inst.GetComponent<StoneNet>().effect,posi,rotation) as GameObject;
+			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;
 			inst2.name = "Effect";
 			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
 			NetworkServer.Spawn (inst2);

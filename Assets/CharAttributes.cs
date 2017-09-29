@@ -31,7 +31,7 @@ namespace UnityStandardAssets._2D{
 			return gameObject.GetHashCode();
 		}
 
-		public bool getBall(){
+		public bool gainBall(){
 			if(balls<6){
 				CmdBallsPlus();
 				return true;

@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b86107b23c949c3950e31f0e1a1259, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlimitedBalls: 1
+  unlimitedBalls: 0
   SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
   balls: 3
   life: 5
@@ -318,8 +318,6 @@ MonoBehaviour:
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 2048
-  isNet: 1
-  waitSprint: 100
   forcaSprint: 100
 --- !u!114 &114874929841632770
 MonoBehaviour:

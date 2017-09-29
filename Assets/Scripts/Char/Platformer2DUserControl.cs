@@ -29,23 +29,35 @@ namespace UnityStandardAssets._2D
 			m_Attributes = GetComponent<CharAttributes> ();
 		}
 
+		public bool gainBall(){
+			if (isNet)
+				return m_AttributesNet.gainBall();
+			else
+				return m_Attributes.gainBall();
+		}
 		private bool isFacingRight(){
 			if (isNet)
 				return m_AttributesNet.m_FacingRight;
 			else
 				return m_Attributes.m_FacingRight;
 		}
-		private int getBalls(){
+		public int getBalls(){
 			if (isNet)
 				return m_AttributesNet.balls;
 			else
 				return m_Attributes.balls;
 		}
-		private int getHash(){
+		public int getHash(){
 			if (isNet)
 				return m_AttributesNet.getHash();
 			else
 				return m_Attributes.getHash();
+		}
+		public void Killed(){
+			if (isNet)
+				m_AttributesNet.CmdKilled();
+			else
+				m_Attributes.CmdKilled();
 		}
 
 

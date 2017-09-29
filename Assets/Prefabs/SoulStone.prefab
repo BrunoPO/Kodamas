@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 50635939267965906}
   - component: {fileID: 58761995861518638}
   - component: {fileID: 114954489359884180}
+  - component: {fileID: 114682406498498060}
   m_Layer: 12
   m_Name: SoulStone
   m_TagString: Respawn
@@ -72,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092874576488382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.85, y: 2.27, z: 0}
+  m_LocalPosition: {x: 4.3939395, y: 3.511341, z: 0}
   m_LocalScale: {x: 0.12, y: 0.12, z: 1}
   m_Children:
   - {fileID: 4509946206948852}
@@ -213,6 +214,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Commented: 0
   paiHash: 0
+--- !u!114 &114682406498498060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092874576488382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f70eb7b418b364336b3f126ce419be37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kill: 0
+  fired: 0
 --- !u!114 &114782217252980108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -237,12 +251,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f092d60bf6942fc9371a66cf7aa5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fired: 0
   Commented: 0
   onTheGround: 0
   effect: {fileID: 1920620554709356, guid: 4644f9927868149a097bfcaed8561d83, type: 2}
   paiHash: 0
-  kill: 0
+  m_attributesNet: {fileID: 0}
+  m_attributes: {fileID: 0}
 --- !u!212 &212759090072093700
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -274,9 +288,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7e3b5c40e24374d41800f97116d2e9ed, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.93103456, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

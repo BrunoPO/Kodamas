@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D{
-public class BallCollision : MonoBehaviour {
+	public class BallCollision : MonoBehaviour {
 		public bool Commented = false;
 		private Rigidbody2D rigid;
 		private int groundTime=0;
@@ -16,33 +16,36 @@ public class BallCollision : MonoBehaviour {
 		//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
 		void OnTriggerEnter2D(Collider2D coll) {
 			if(coll.tag == "Player")
-				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag+"Hash:"+coll.transform.GetHashCode());
+				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag+"Hash:"+coll.GetComponent<Platformer2DUserControl> ().getHash());
 			else
 				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag);
 
 			if (end)
 				return;
 			if (coll.tag == "Player") {
-				if (pai.GetComponent<Stone> ().onTheGround) {//Balls++
-					end = coll.GetComponent<CharAttributes> ().getBall ();
+				if (pai.GetComponent<Stone> ().onTheGround) {//Balls++ Ball on the ground
+					end = coll.gameObject.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {
-						Destroy (pai.gameObject);
+						pai.GetComponent<Stone> ().DestroySelf ();
 					}
-				} else if (coll.gameObject.GetHashCode () != paiHash) {
-					print ("Player Killed");
-					coll.GetComponent<CharAttributes> ().CmdKilled ();
-					Destroy (pai.gameObject);
-				} else {//Balls++
-					end = coll.GetComponent<CharAttributes> ().getBall ();
+				} else if (coll.GetComponent<Platformer2DUserControl> ().getHash() != paiHash) {
+					print ("Player Kill");
+					coll.GetComponent<Platformer2DUserControl> ().Killed();
+					pai.GetComponent<Stone> ().DestroySelf ();
+				} else {//Balls++ Ball on the air
+					end = coll.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {
-						Destroy (pai.gameObject);
+						pai.GetComponent<Stone> ().DestroySelf ();
 					}
 				}
 			}else if(pai.tag != "Respawn" ){
 				if (coll.gameObject.tag == "Ball") {
-					if (coll.GetComponent<Stone> () == null) {//Código para debug de colisão se bola inimiga não tiver script
+					/*if (coll.GetComponent<StoneNet> () == null) {//Código para debug de colisão se bola inimiga não tiver script
 						Fall ();
-					}else if (coll.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
+					}else */
+					if (coll == null || coll.GetComponent<Stone>() == null)
+						return;
+					if (coll.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
 						Fall ();
 					}
 				}else if(coll.gameObject.tag == "Ground" || coll.gameObject.tag == "Wall"){//Stone acerta o chão

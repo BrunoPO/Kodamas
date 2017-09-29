@@ -25,7 +25,8 @@ GameObject:
   - component: {fileID: 58195714646115748}
   - component: {fileID: 114402956841035958}
   - component: {fileID: 114141534565928816}
-  - component: {fileID: 114529501040367962}
+  - component: {fileID: 114865358835152142}
+  - component: {fileID: 114790175071910364}
   m_Layer: 12
   m_Name: SoulStoneNet
   m_TagString: Respawn
@@ -42,8 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4258549811283718}
   - component: {fileID: 58007333134323734}
-  - component: {fileID: 114887599231376978}
-  - component: {fileID: 114713523628880792}
+  - component: {fileID: 114831601782552512}
   m_Layer: 12
   m_Name: Colision
   m_TagString: Respawn
@@ -60,8 +60,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4081091030109406}
   - component: {fileID: 60993304219197976}
-  - component: {fileID: 114513846050104300}
-  - component: {fileID: 114865958654610118}
+  - component: {fileID: 114246059423409138}
   m_Layer: 12
   m_Name: Radar
   m_TagString: Respawn
@@ -102,7 +101,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655894725787062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.85, y: 2.27, z: 0}
+  m_LocalPosition: {x: 3.4, y: 2.81, z: 0}
   m_LocalScale: {x: 0.12, y: 0.12, z: 1}
   m_Children:
   - {fileID: 4081091030109406}
@@ -236,6 +235,19 @@ MonoBehaviour:
     i15: 58
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
+--- !u!114 &114246059423409138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1812339439697198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b39cea929f94e8fbfb22a7c8c9bb93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Commented: 0
+  paiHash: 0
 --- !u!114 &114402956841035958
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -257,39 +269,7 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 0.5
---- !u!114 &114513846050104300
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1812339439697198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 22
-    i1: 252
-    i2: 170
-    i3: 168
-    i4: 144
-    i5: 104
-    i6: 100
-    i7: 134
-    i8: 58
-    i9: 233
-    i10: 202
-    i11: 208
-    i12: 195
-    i13: 149
-    i14: 6
-    i15: 58
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &114529501040367962
+--- !u!114 &114790175071910364
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -297,73 +277,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1655894725787062}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1f523c92ed6d4e2b8228c096eb88277, type: 3}
+  m_Script: {fileID: 11500000, guid: 50f092d60bf6942fc9371a66cf7aa5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Commented: 1
   onTheGround: 0
   effect: {fileID: 1771191898292616, guid: a6d1235b2d7514c3e8df205a594068bb, type: 2}
   paiHash: 0
+  m_attributesNet: {fileID: 0}
+  m_attributes: {fileID: 0}
+--- !u!114 &114831601782552512
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1790146996127176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c84110819d9e34f269311da1d3cc80d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Commented: 0
+  paiHash: 0
+--- !u!114 &114865358835152142
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1655894725787062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3487e7af8cb4e4923acaee19a245a71b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   kill: 0
   fired: 0
---- !u!114 &114713523628880792
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1790146996127176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daab18dcced994c288d4ccd4e1146e80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Commented: 0
-  paiHash: 0
---- !u!114 &114865958654610118
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1812339439697198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 286aed80095ad4c0788d4a416294c081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Commented: 0
-  paiHash: 0
---- !u!114 &114887599231376978
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1790146996127176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 22
-    i1: 252
-    i2: 170
-    i3: 168
-    i4: 144
-    i5: 104
-    i6: 100
-    i7: 134
-    i8: 58
-    i9: 233
-    i10: 202
-    i11: 208
-    i12: 195
-    i13: 149
-    i14: 6
-    i15: 58
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!212 &212126910365779768
 SpriteRenderer:
   m_ObjectHideFlags: 1
