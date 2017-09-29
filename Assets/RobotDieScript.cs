@@ -18,8 +18,13 @@ public class RobotDieScript : StateMachineBehaviour {
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-		animator.SetBool ("Died", false);
-		animator.gameObject.GetComponent<Platformer2DUserControl>().ResetChar();
+			animator.SetBool ("Died", false);
+
+			if (animator.gameObject.GetComponent<PlatformerCharacter2D> ().isNet) {
+				animator.gameObject.GetComponent<PlatControlNet> ().ResetChar ();
+			} else {
+				animator.gameObject.GetComponent<Platformer2DUserControl> ().ResetChar ();
+			}
 	}
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here

@@ -32,7 +32,8 @@ GameObject:
   - component: {fileID: 114490175847374108}
   - component: {fileID: 114453255700602382}
   - component: {fileID: 114528272479123258}
-  - component: {fileID: 114128150167032868}
+  - component: {fileID: 114511070306618108}
+  - component: {fileID: 114372863505717606}
   m_Layer: 8
   m_Name: RobotBoy_Net
   m_TagString: Player
@@ -75,7 +76,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.32, y: 3.79, z: 0}
+  m_LocalPosition: {x: -2.13, y: 2.17, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -226,7 +227,7 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100002}
   m_IsPrefabParent: 1
---- !u!114 &114128150167032868
+--- !u!114 &114372863505717606
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
   Commented: 0
-  balls: 3
+  autoAttack: 0
 --- !u!114 &114453255700602382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -280,6 +281,22 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
+--- !u!114 &114511070306618108
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b86107b23c949c3950e31f0e1a1259, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balls: 3
+  life: 5
+  m_FacingRight: 1
+  m_Killed: 0
+  unlimitedBalls: 1
 --- !u!114 &114528272479123258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,13 +309,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxSpeed: 10
-  m_JumpForce: 400
+  m_JumpForce: 800
   m_CrouchSpeed: 0.36
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 1024
-  m_FacingRight: 1
+  m_WhatIsWall:
+    serializedVersion: 2
+    m_Bits: 2048
+  isNet: 1
+  waitSprint: 100
+  forcaSprint: 100
 --- !u!114 &114874929841632770
 MonoBehaviour:
   m_ObjectHideFlags: 1

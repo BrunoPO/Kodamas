@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\CharAttributes.cs" />
+     <Compile Include="Assets\CharAttributesNet.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />

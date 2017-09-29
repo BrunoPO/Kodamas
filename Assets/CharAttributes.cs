@@ -7,6 +7,7 @@ public class CharAttributes : MonoBehaviour {
 	private Animator m_anim;
 	public int balls=3;//To Private
 	public int life=5;//To Private
+	public bool m_FacingRight = true; // For determining which way the player is currently facing.
 
 	void Start(){
 		m_anim = GetComponent<Animator> ();

@@ -25,15 +25,16 @@ namespace UnityStandardAssets._2D{
 				return;
 			if (coll.tag == "Player") {
 				if (pai.GetComponent<StoneNet> ().onTheGround) {//Balls++
-					end = coll.gameObject.GetComponent<PlatControlNet> ().getBall ();
+					end = coll.gameObject.GetComponent<CharAttributesNet> ().getBall ();
 					if (end) {
 						pai.GetComponent<StoneNet> ().DestroySelf ();
 					}
 				} else if (coll.gameObject.GetComponent<NetworkIdentity>().netId.GetHashCode () != paiHash) {
 					print ("Player Kill");
+					coll.GetComponent<CharAttributesNet> ().CmdKilled ();
 					pai.GetComponent<StoneNet> ().DestroySelf ();
 				} else {//Balls++
-					end = coll.GetComponent<PlatControlNet> ().getBall ();
+					end = coll.GetComponent<CharAttributesNet> ().getBall ();
 					if (end) {
 						pai.GetComponent<StoneNet> ().DestroySelf ();
 					}
@@ -45,7 +46,7 @@ namespace UnityStandardAssets._2D{
 					}else if (coll.gameObject.GetComponent<NetworkIdentity>().netId.GetHashCode () != paiHash) {//2 Stones adversárias se batem
 						Fall ();
 					}
-				}else if(coll.gameObject.tag == "Ground"){//Stone acerta o chão
+				}else if(coll.gameObject.tag == "Ground" || coll.gameObject.tag == "Wall"){//Stone acerta o chão
 					Fall ();
 				}
 			}

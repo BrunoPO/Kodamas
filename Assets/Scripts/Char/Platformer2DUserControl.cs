@@ -6,8 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 namespace UnityStandardAssets._2D
 {
     [RequireComponent(typeof (PlatformerCharacter2D))]
-	public class Platformer2DUserControl : MonoBehaviour
-    {
+	public class Platformer2DUserControl : MonoBehaviour{
         private PlatformerCharacter2D m_Character;
         private bool m_Jump,atck;
 		private Transform Ball;
@@ -18,8 +17,10 @@ namespace UnityStandardAssets._2D
 		private int autoAttackCounter=20;
 		public bool autoAttack = false;
 		private Vector3 IniPoint;
+		public CharAttributesNet m_Attributes;
 
         private void Awake(){
+			m_Attributes = GetComponent<CharAttributesNet> ();
             m_Character = GetComponent<PlatformerCharacter2D>();
         }
 
@@ -54,12 +55,13 @@ namespace UnityStandardAssets._2D
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }
 
-			bool crouch = Input.GetKey(KeyCode.LeftControl);
+			bool crouch = false; 
+			bool sprint = CrossPlatformInputManager.GetButton ("Fire3");
 			float h = CrossPlatformInputManager.GetAxis("Horizontal");
 			float v = CrossPlatformInputManager.GetAxis("Vertical");
 
 			if (!autoAttack) {
-				atck = CrossPlatformInputManager.GetButton ("Fire3");
+				atck = Input.GetKey(KeyCode.LeftControl); 
 				if (Commented)
 					print (atck);
 			} else if (!atck && autoAttackCounter>=100) {
@@ -72,19 +74,20 @@ namespace UnityStandardAssets._2D
 				m_Jump = false;crouch = false;h = 0;v = 0;
 			}
 
+
+
             
 			//if(Commented) print(v + " " + h);
 
             // Pass all parameters to the character control script.
 			if (!atck) {
-				m_Character.Move (h, crouch, m_Jump);
+				m_Character.Move (h, crouch, m_Jump,sprint);
 				if (ob != null) {
 					if(Commented) print (ob.transform.parent);
 					CmdSpwnBall (ob.transform.position,ob.transform.rotation,gameObject.GetHashCode());
 					Destroy (ob);
 				}
 			}else if(GetComponent<CharAttributes>().balls>0){
-				float moveh;
 				Ball = this.transform.Find("Ball");
 				Vector3 p = transform.position;
 
@@ -93,9 +96,9 @@ namespace UnityStandardAssets._2D
 					ob = Instantiate (SoulStone) as GameObject;
 					ob.name = "Ball";
 					ob.transform.parent = this.transform;
-					p.x += (m_Character.m_FacingRight) ? 1f : -1f;
+					p.x += (m_Attributes.m_FacingRight) ? 1f : -1f;
 					ob.transform.position = p;
-					ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
+					ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Attributes.m_FacingRight)?0:180f));
 					return;
 				}
 
@@ -110,12 +113,12 @@ namespace UnityStandardAssets._2D
 					}
 				}
 				if (h != 0) {
-					if (h < 0 && m_Character.m_FacingRight)
-						m_Character.Move (-0.1f, false, m_Jump);
-					else if (h > 0 && !m_Character.m_FacingRight)
-						m_Character.Move (0.1f, false, m_Jump);
+					if (h < 0 && m_Attributes.m_FacingRight)
+						m_Character.Move (-0.1f, false, m_Jump,sprint);
+					else if (h > 0 && !m_Attributes.m_FacingRight)
+						m_Character.Move (0.1f, false, m_Jump,sprint);
 					else 
-						m_Character.Move (0f, false, m_Jump);
+						m_Character.Move (0f, false, m_Jump,sprint);
 				} 
 			}
             m_Jump = false;
@@ -146,7 +149,7 @@ namespace UnityStandardAssets._2D
 			} else if (v > 0) {
 				if (Commented) print ("Cima");
 				return new Vector3 (0f, 1f, 90f);
-			} else if (m_Character.m_FacingRight) {
+			} else if (m_Attributes.m_FacingRight) {
 				return new Vector3 (1f, 0f, 0);
 			}
 

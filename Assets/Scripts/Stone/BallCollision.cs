@@ -45,7 +45,7 @@ public class BallCollision : MonoBehaviour {
 					}else if (coll.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
 						Fall ();
 					}
-				}else if(coll.gameObject.tag == "Ground"){//Stone acerta o chão
+				}else if(coll.gameObject.tag == "Ground" || coll.gameObject.tag == "Wall"){//Stone acerta o chão
 					Fall ();
 				}
 			}

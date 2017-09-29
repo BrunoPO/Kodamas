@@ -14,12 +14,13 @@ namespace UnityStandardAssets._2D
 		public GameObject SoulStone;
 		private Vector3 lastParamBall;//(v,h,rotation)
 		public bool Commented = false;
-
-		[SyncVar]
-		public int balls=3;//To Private
-
+		private int autoAttackCounter=20;
+		public bool autoAttack = false;
+		private Vector3 IniPoint;
+		private CharAttributesNet m_Attributes;
 
 		private void Awake(){
+			m_Attributes = GetComponent<CharAttributesNet> ();
 			m_Character = GetComponent<PlatformerCharacter2D>();
 		}
 
@@ -27,15 +28,27 @@ namespace UnityStandardAssets._2D
 			if (isLocalPlayer) {
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 			}
+			IniPoint = transform.position;
 		}
 
+		public void ResetChar(){
+			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+			transform.position = IniPoint;
+			GetComponent<CharAttributesNet>().CmdResetAttributes();
+		}
 
-		private void Update()
-		{
+		private void Update() {
+
+			if(GetComponent<CharAttributesNet> ().m_Killed)
+				GetComponent<Animator> ().SetBool ("Died", true);
+			else
+				GetComponent<Animator> ().SetBool ("Died", false);
+
+
 			if (!isLocalPlayer)
 				return;
 			
-				if (Input.GetButtonDown("Fire2")) {
+				if (Input.GetKeyDown("\\")) {
 					if (Time.timeScale == 1.0F)
 						Time.timeScale = 0.3F;
 					else
@@ -47,31 +60,43 @@ namespace UnityStandardAssets._2D
 					m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
 
 				}
-				bool crouch = Input.GetKey(KeyCode.LeftControl);
+				bool crouch = false;
+				bool sprint = CrossPlatformInputManager.GetButton ("Fire3");
 				float h = CrossPlatformInputManager.GetAxis("Horizontal");
 				float v = CrossPlatformInputManager.GetAxis("Vertical");
 				//if(Commented) print(v + " " + h);
-				atck=CrossPlatformInputManager.GetButton("Fire3");
+				if (!autoAttack) {
+					atck = Input.GetKey(KeyCode.LeftControl); 
+					if (Commented)
+						print (atck);
+				} else if (autoAttack && !atck && autoAttackCounter>=100) {
+						autoAttackCounter = 0;
+						atck = true;
+						m_Jump = false;crouch = false;h = 0;v = 0;
+				} else if(autoAttack){
+						atck = false;
+						autoAttackCounter++;
+						m_Jump = false;crouch = false;h = 0;v = 0;
+				}
 				if(Commented) print (atck);
 				// Pass all parameters to the character control script.
 			
 			if (!atck) {
-				m_Character.Move (h, crouch, m_Jump);
+				m_Character.Move (h, crouch, m_Jump,sprint);
 				if (ob != null) {
 					if(Commented) print (ob.transform.parent);
 					print ("Aqui" + gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ());
 					CmdSpwnBall (ob.transform.position,ob.transform.rotation,gameObject.GetComponent<NetworkIdentity>().netId.GetHashCode());
 					Destroy (ob);
 				}
-			}else if(balls>0){
-				float moveh;
+			}else if(m_Attributes.balls>0){
 				Ball = this.transform.Find("Ball");
 				Vector3 p = transform.position;
 
 				if (Ball == null && ob == null) {
-					p.x += (m_Character.m_FacingRight) ? 1f : -1f;
+					p.x += (m_Attributes.m_FacingRight) ? 1f : -1f;
 					//ob.transform.position = posi;
-					ob = Instantiate (SoulStone,p,Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f))) as GameObject;
+					ob = Instantiate (SoulStone,p,Quaternion.Euler(0, 0, ((m_Attributes.m_FacingRight)?0:180f))) as GameObject;
 					ob.name = "Ball";
 					ob.transform.parent = this.transform;
 					if(Commented) print ("Não Existe");
@@ -89,12 +114,12 @@ namespace UnityStandardAssets._2D
 					}
 				}
 				if (h != 0 && isLocalPlayer) {
-					if (h < 0 && m_Character.m_FacingRight)
-						m_Character.Move (-0.1f, false, m_Jump);
-					else if (h > 0 && !m_Character.m_FacingRight)
-						m_Character.Move (0.1f, false, m_Jump);
+					if (h < 0 && m_Attributes.m_FacingRight)
+						m_Character.Move (-0.1f, false, m_Jump,sprint);
+					else if (h > 0 && !m_Attributes.m_FacingRight)
+						m_Character.Move (0.1f, false, m_Jump,sprint);
 					else 
-						m_Character.Move (0f, false, m_Jump);
+						m_Character.Move (0f, false, m_Jump,sprint);
 				} 
 			}
 			m_Jump = false;
@@ -127,29 +152,12 @@ namespace UnityStandardAssets._2D
 			} else if (v > 0) {
 				if (Commented) print ("Cima");
 				return new Vector3 (0f, 1f, 90f);
-			} else if (m_Character.m_FacingRight) {
+			} else if (m_Attributes.m_FacingRight) {
 				return new Vector3 (1f, 0f, 0);
 			}
 
 			return new Vector3 (-1f, 0f, 180f);
 
-		}
-
-		public bool getBall(){
-			if(balls<5){
-				CmdBallsPlus ();
-				return true;
-			}
-			return false;
-		}
-
-		[Command]
-		void CmdBallsMinus(){
-			balls--;
-		}
-		[Command]
-		void CmdBallsPlus(){
-			balls++;
 		}
 
 		[Command]
@@ -158,7 +166,7 @@ namespace UnityStandardAssets._2D
 			//inst.transform.parent = this.transform.parent;
 			inst.GetComponent<StoneNet> ().enabled = true;
 			inst.GetComponent<StoneNet>().Fire (3,Hash);
-			CmdBallsMinus ();
+			GetComponent<CharAttributesNet>().CmdBallsMinus();
 			NetworkServer.Spawn (inst);
 
 			GameObject inst2 = Instantiate (inst.GetComponent<StoneNet>().effect,posi,rotation) as GameObject;
