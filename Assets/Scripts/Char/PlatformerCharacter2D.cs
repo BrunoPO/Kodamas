@@ -11,6 +11,7 @@ namespace UnityStandardAssets._2D
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
 		[SerializeField] private LayerMask m_WhatIsGround;
 		[SerializeField] private LayerMask m_WhatIsWall;
+		[SerializeField] private LayerMask m_WhatIsPlayer;
 		[Range(0, 100)] [SerializeField] private int forcaSprint = 50;
 
 		 
@@ -91,7 +92,7 @@ namespace UnityStandardAssets._2D
 			transform.rotation = Quaternion.Euler(rot);
 		}
 
-        private void FixedUpdate()
+        private void Update()//Fixed?
         {
 			
 			if(transform.rotation.eulerAngles.y == 0 && !isFacingRight()){
@@ -100,7 +101,7 @@ namespace UnityStandardAssets._2D
 				Flip ();
 			}
 
-			if (m_Rigidbody2D.velocity.y < -20) {
+			if (m_Rigidbody2D.velocity.y < -19) {
 				Vector3 velo = m_Rigidbody2D.velocity;
 				velo.y = -15;
 				m_Rigidbody2D.velocity = velo;
@@ -124,6 +125,17 @@ namespace UnityStandardAssets._2D
 			m_Anim.SetBool ("Ground", m_Grounded);
 			if(!m_Grounded){
 				m_Anim.SetBool ("Wall", m_OnWall);
+				if (m_Rigidbody2D.velocity.y < 0) {//Verificar se está pisando em alguém
+					colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
+					foreach (Collider2D collider in colliders) {
+						print (collider.name);
+						if (collider.name == "Head") {
+							collider.transform.parent.GetComponent<Platformer2DUserControl> ().Killed ();
+							m_Rigidbody2D.AddForce (new Vector3(0,m_JumpForce,0));
+							break;
+						}
+					}
+				}
 			}else{
 				m_Anim.SetBool ("Wall", false);
 			}

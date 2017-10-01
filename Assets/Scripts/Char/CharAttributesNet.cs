@@ -110,6 +110,7 @@ namespace UnityStandardAssets._2D{
 				clearTxt ();
 				m_WinTxt.text = "You Lose";
 				GetComponent<Platformer2DUserControl>().enabled = false;
+				GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
 			}
 		}
 
@@ -118,7 +119,7 @@ namespace UnityStandardAssets._2D{
 				clearTxt ();
 				m_WinTxt.text = "You Won";
 				GetComponent<Platformer2DUserControl>().enabled = false;
-			
+				GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
 			}
 		}
 		public void clearTxt(){
