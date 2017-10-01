@@ -13,7 +13,10 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private LayerMask m_WhatIsWall;
 		[Range(0, 100)] [SerializeField] private int forcaSprint = 50;
 
-		//[HideInInspector] 
+		 
+
+		public Vector3 IniPoint;
+		//[HideInInspector]
 		private bool isNet;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -26,8 +29,8 @@ namespace UnityStandardAssets._2D
 		private int counterSprint;
 		private Collider2D[] colliders;
 		private Collider2D[] collidersOnChest;
-		private CharAttributesNet attributesNet; //var with refence to Attributes on the Net
-		private CharAttributes attributes;	//var with refence to Attributes on the Local
+		private CharAttributesNet m_AttributesNet; //var with refence to Attributes on the Net
+		private CharAttributes m_Attributes;	//var with refence to Attributes on the Local
 
 		private void Awake(){
 			// Setting up references.
@@ -39,27 +42,45 @@ namespace UnityStandardAssets._2D
 
 			isNet = (GetComponent<CharAttributesNet> () != null);
 			if(isNet)
-				attributesNet = GetComponent<CharAttributesNet> ();
+				m_AttributesNet = GetComponent<CharAttributesNet> ();
 			else
-				attributes = GetComponent<CharAttributes> ();
+				m_Attributes = GetComponent<CharAttributes> ();
 		}
+
 		private bool isFacingRight(){
 			if (isNet) {
-				return attributesNet.m_FacingRight;
+				return m_AttributesNet.m_FacingRight;
 			} else {
-				return attributes.m_FacingRight;
+				return m_Attributes.m_FacingRight;
 			}
 		}
+
 		private void InvertFacing(){
 			if (isNet) {
-				attributesNet.InvertFlip();
+				m_AttributesNet.InvertFlip();
 			} else {
-				attributes.InvertFlip();
+				m_Attributes.InvertFlip();
 				//GetComponent<CharAttributes> ().m_FacingRight = !GetComponent<CharAttributes> ().m_FacingRight;
 			}
 		}
-		public void Flip()
-		{
+
+		public void ResetChar(){
+			//gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			/*GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+			transform.position = GetComponent<CharAttributesNet> ().IniPoint;*/
+
+
+			/*GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+			transform.position = GetComponent<CharAttributesNet> ().IniPoint;*/
+			//GetComponent<CharAttributesNet> ().RpcResetInitPoint();
+			if (isNet) {
+				m_AttributesNet.ResetAttributes ();
+			} else {
+				m_Attributes.CmdResetAttributes ();
+			}
+		}
+
+		public void Flip(){
 
 			Vector3 rot = transform.rotation.eulerAngles;
 			if (rot.y == 0) {
@@ -179,10 +200,10 @@ namespace UnityStandardAssets._2D
 				m_Anim.SetBool ("Ground", false);
 				m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
 			} else if (jump) {
-				if (m_OnWall) {
+				if (m_OnWall && move != 0) {
 					m_Grounded = false;
 					m_Anim.SetBool ("Ground", false);
-					m_Rigidbody2D.AddForce (new Vector2 (-m_Rigidbody2D.velocity.x*10, m_JumpForce/40),ForceMode2D.Impulse);
+					m_Rigidbody2D.AddForce (new Vector2 (-m_Rigidbody2D.velocity.x * 5, m_JumpForce / 40), ForceMode2D.Impulse);
 				}
 			}/* else {
 				Collider2D[] colliders = Physics2D.OverlapCircleAll (transform.position, k_GroundedRadius, m_WhatIsWall);

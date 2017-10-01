@@ -12,19 +12,23 @@ namespace UnityStandardAssets._2D{
 		private Text m_LifeTxt;
 		private Text m_WinTxt;
 		private bool AfterReset = false;
+
 		[SerializeField] private int ballsIni;
 		[SerializeField] private int lifeIni;
+		[SerializeField] private bool wasKilled=false;
 
-		[SyncVar]
-		public int balls;//To Private
-		[SyncVar]
-		public int life;//To Private
+		[HideInInspector] [SyncVar]
+		private int balls;//To Private
+		[HideInInspector] [SyncVar]
+		private int life;//To Private
 		[SyncVar]
 		public bool m_FacingRight = true;
+
 		[SyncVar]
 		public bool m_Killed = false;
 
 		void Start(){
+			GetComponent<PlatformerCharacter2D>().IniPoint = transform.position;
 			if (isLocalPlayer) {
 				m_StonesTxt = Camera.main.GetComponent<Camera2DFollow>().m_StonesTxt;
 				m_LifeTxt = Camera.main.GetComponent<Camera2DFollow>().m_LifeTxt;
@@ -33,6 +37,7 @@ namespace UnityStandardAssets._2D{
 				SetLifeText (life);
 				m_WinTxt.text = "";
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
+				//GetComponent<Platformer2DUserControl> ().IniPoint = transform.position;
 			} else {
 				GetComponent<Platformer2DUserControl>().enabled = false;
 				//GetComponent<PlatformerCharacter2D>().enabled = false;
@@ -44,6 +49,7 @@ namespace UnityStandardAssets._2D{
 			balls = ballsIni;
 			life = lifeIni;
 			GameObject.Find ("GM").GetComponent<GM> ().PlayerIn (gameObject);
+			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 			if (isLocalPlayer) {
 				AfterReset = true;
 				clearTxt ();
@@ -51,6 +57,13 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void Update(){
+			if (m_Killed) {
+				GetComponent<Animator> ().SetBool ("Died", true);
+				return;
+			} else {
+				GetComponent<Animator> ().SetBool ("Died", false);
+			}
+			
 			if (GameObject.Find ("GM").GetComponent<GM> ().m_Reset) {
 				Reset ();
 				return;
@@ -71,10 +84,21 @@ namespace UnityStandardAssets._2D{
 					}
 				}
 			}
-			if(m_Killed)
-				GetComponent<Animator> ().SetBool ("Died", true);
-			else
-				GetComponent<Animator> ().SetBool ("Died", false);
+		}
+
+		[ClientRpc]
+		public void RpcResetInitPoint(){
+			if (!isLocalPlayer)
+				return;
+			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+			transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
+			//gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+			CmdShow();
+		}
+
+		[Command] 
+		void CmdShow(){
+			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 		}
 
 		public void SetStonesText(int i){
@@ -110,6 +134,10 @@ namespace UnityStandardAssets._2D{
 			return gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ();
 		}
 
+		public int getBall(){
+			return balls;
+		}
+
 		public bool gainBall(){
 			if(balls<6){
 				CmdBallsPlus();
@@ -137,8 +165,9 @@ namespace UnityStandardAssets._2D{
 		[Command]
 		public void CmdLifeMinus(){
 			life--;
-			if(life<=0)
+			if (life <= 0) {
 				GameObject.Find ("GM").GetComponent<GM> ().PlayerOut (gameObject);
+			}
 		}
 
 		[Command]
@@ -147,13 +176,34 @@ namespace UnityStandardAssets._2D{
 			m_Killed = true;
 			CmdLifeMinus ();
 		}
+		public void ResetAttributes(){
+			//if (isLocalPlayer && !isServer) {
+				//RpcResetInitPoint();
+				CmdResetAttributes ();
+			//}
+		}
 
 		[Command]
-		public void CmdResetAttributes(){
-			//m_FacingRight = false;
+		private void CmdResetAttributes(){
+			/*if (!isServer)
+				return;*/
+			//GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+			//transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
 			m_Killed = false;
+			gameObject.GetComponent<SpriteRenderer> ().enabled = false; 
+			print("Out of death");
+			//m_FacingRight = false;
+
 			balls=3;
+			RpcResetInitPoint();
+			if (isServer) {
+				GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+				transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
+				//CmdShow ();
+			}
+
 		}
+
 		[Command]
 		public void CmdGetDamage(){
 			CmdLifeMinus();

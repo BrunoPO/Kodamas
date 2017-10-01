@@ -14,7 +14,6 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private bool Commented = false;
 		private int autoAttackCounter=20;
 		[SerializeField] private bool autoAttack = false;
-		private Vector3 IniPoint;
 		private CharAttributesNet m_AttributesNet;
 		private CharAttributes m_Attributes;
 		private bool isNet = false;
@@ -29,42 +28,7 @@ namespace UnityStandardAssets._2D
 			m_Attributes = GetComponent<CharAttributes> ();
 		}
 
-		public bool gainBall(){
-			if (isNet)
-				return m_AttributesNet.gainBall();
-			else
-				return m_Attributes.gainBall();
-		}
-		private bool isFacingRight(){
-			if (isNet)
-				return m_AttributesNet.m_FacingRight;
-			else
-				return m_Attributes.m_FacingRight;
-		}
-		public int getBalls(){
-			if (isNet)
-				return m_AttributesNet.balls;
-			else
-				return m_Attributes.balls;
-		}
-		public int getHash(){
-			if (isNet)
-				return m_AttributesNet.getHash();
-			else
-				return m_Attributes.getHash();
-		}
-		public void Killed(){
-			if (isNet)
-				m_AttributesNet.CmdKilled();
-			else
-				m_Attributes.CmdKilled();
-		}
-
-
-
-
 		private void Start(){
-			IniPoint = transform.position;
 			if (isNet)
 				SoulStone = m_AttributesNet.SoulStone;
 			else
@@ -72,19 +36,9 @@ namespace UnityStandardAssets._2D
 			print (SoulStone);
 		}
 
-		public void ResetChar(){
-			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
-			transform.position = IniPoint;
-			if (isNet)
-				m_AttributesNet.CmdResetAttributes ();
-			else
-				m_Attributes.CmdResetAttributes();
-		}
-
 		private void Update() {
 			if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
 				m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
-
 			}
 			bool crouch = false;
 			bool sprint = CrossPlatformInputManager.GetButton ("Fire3");
@@ -159,6 +113,41 @@ namespace UnityStandardAssets._2D
 
 
 
+		}
+
+		public bool gainBall(){
+			if (isNet)
+				return m_AttributesNet.gainBall();
+			else
+				return m_Attributes.gainBall();
+		}
+
+		private bool isFacingRight(){
+			if (isNet)
+				return m_AttributesNet.m_FacingRight;
+			else
+				return m_Attributes.m_FacingRight;
+		}
+
+		public int getBalls(){
+			if (isNet)
+				return m_AttributesNet.getBall();
+			else
+				return m_Attributes.getBall();
+		}
+
+		public int getHash(){
+			if (isNet)
+				return m_AttributesNet.getHash();
+			else
+				return m_Attributes.getHash();
+		}
+
+		public void Killed(){
+			if (isNet)
+				m_AttributesNet.CmdKilled();
+			else
+				m_Attributes.CmdKilled();
 		}
 
 		Vector3 Direcao(float h, float v){

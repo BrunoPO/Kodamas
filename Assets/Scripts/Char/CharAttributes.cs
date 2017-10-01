@@ -12,6 +12,7 @@ namespace UnityStandardAssets._2D{
 		public int life=5;//To Private
 		public bool m_FacingRight = true;
 		public bool m_Killed = false;
+		[HideInInspector] public bool wasKilled=false;
 
 		void Start(){
 			if (isLocalPlayer) {
@@ -37,6 +38,10 @@ namespace UnityStandardAssets._2D{
 				return true;
 			}
 			return false;
+		}
+
+		public int getBall(){
+			return balls;
 		}
 
 		public void CmdBallsMinus(){

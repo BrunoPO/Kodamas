@@ -76,7 +76,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.03, y: 3.15, z: 0}
+  m_LocalPosition: {x: -2.5, y: 3.27, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -206,7 +206,7 @@ SpriteRenderer:
   m_SortingLayerID: -1783731295
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300034, guid: 8fb98a6035269e64a998f9b56828fc4f, type: 3}
+  m_Sprite: {fileID: 21300012, guid: 8fb98a6035269e64a998f9b56828fc4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -271,14 +271,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 2
-  m_SendInterval: 0.11111111
-  m_SyncRotationAxis: 7
+  m_SendInterval: 0.125
+  m_SyncRotationAxis: 0
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
   m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
-  m_InterpolateRotation: 1
+  m_InterpolateRotation: 0
   m_InterpolateMovement: 1
 --- !u!114 &114511070306618108
 MonoBehaviour:
@@ -293,10 +293,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlimitedBalls: 0
   SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
+  IniPoint: {x: 0, y: 0, z: 0}
   ballsIni: 5
   lifeIni: 3
-  balls: 0
-  life: 0
+  wasKilled: 0
   m_FacingRight: 1
   m_Killed: 0
 --- !u!114 &114528272479123258
@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxSpeed: 10
-  m_JumpForce: 800
-  m_CrouchSpeed: 0.36
+  m_JumpForce: 600
+  m_CrouchSpeed: 0
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 2048
-  forcaSprint: 100
+  forcaSprint: 40
 --- !u!114 &114874929841632770
 MonoBehaviour:
   m_ObjectHideFlags: 1
