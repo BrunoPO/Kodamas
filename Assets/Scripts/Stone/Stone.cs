@@ -11,7 +11,7 @@ namespace UnityStandardAssets._2D{
 		public int paiHash=0;
 		private StoneAttributesNet m_attributesNet;
 		private StoneAttributes m_attributes;
-		private bool isNet=false;
+		private bool isNet ;
 
 		private void Start(){
 			rigid = GetComponent<Rigidbody2D> ();
@@ -74,13 +74,19 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void Fire(float peso,int Hash){
+
+			print ("----------Attributes----------");
+			print (GetComponent<StoneAttributesNet> ());
+			print (GetComponent<StoneAttributes> ());
+			print ("-----------------------");
+
 			print ("Fired" + m_attributesNet);
 
-			if (m_attributesNet == null && GetComponent<StoneAttributesNet> () != null) {
+			if (GetComponent<StoneAttributesNet> () != null) {
 				if(Commented) print("Online");
 				m_attributesNet = GetComponent<StoneAttributesNet> ();
 				isNet = true;
-			}else if(m_attributes == null && GetComponent<StoneAttributes> () != null){
+			}else if(GetComponent<StoneAttributes> () != null){
 				if(Commented) print("Offline");
 				m_attributes = GetComponent<StoneAttributes> ();
 				isNet = false;

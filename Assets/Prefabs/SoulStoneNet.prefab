@@ -23,9 +23,9 @@ GameObject:
   - component: {fileID: 95510905696136956}
   - component: {fileID: 50046077567783342}
   - component: {fileID: 58195714646115748}
+  - component: {fileID: 114865358835152142}
   - component: {fileID: 114402956841035958}
   - component: {fileID: 114141534565928816}
-  - component: {fileID: 114865358835152142}
   - component: {fileID: 114790175071910364}
   m_Layer: 12
   m_Name: SoulStoneNet
@@ -241,12 +241,11 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1812339439697198}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5b39cea929f94e8fbfb22a7c8c9bb93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Commented: 0
   paiHash: 0
 --- !u!114 &114402956841035958
 MonoBehaviour:
@@ -284,15 +283,13 @@ MonoBehaviour:
   onTheGround: 0
   effect: {fileID: 1771191898292616, guid: a6d1235b2d7514c3e8df205a594068bb, type: 2}
   paiHash: 0
-  m_attributesNet: {fileID: 0}
-  m_attributes: {fileID: 0}
 --- !u!114 &114831601782552512
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1790146996127176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c84110819d9e34f269311da1d3cc80d8, type: 3}
   m_Name: 
@@ -344,7 +341,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7e3b5c40e24374d41800f97116d2e9ed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f59d14be1476c42e9b805a3871f34f31, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

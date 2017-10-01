@@ -1,19 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace UnityStandardAssets._2D{
-	public class GM : MonoBehaviour {
+	public class GMNet : NetworkBehaviour {
 		List<GameObject> m_Players;
 		List<bool> m_PlayersAlive;
 
+		[SyncVar]
 		public int hashWinner=-1;
+
+		[SyncVar]
 		public bool m_Reset=false;
 
 		public int getHashWinner(){
 			return hashWinner;
 		}
 
+		[ServerCallback]
 		public void Update(){
 			if (m_Reset) {
 				int alive = 0;
@@ -47,6 +52,8 @@ namespace UnityStandardAssets._2D{
 
 
 		public void PlayerIn(GameObject ob){
+			if (!isServer)
+				return;
 			if (ob.tag != "Player")
 				return;
 			if (m_Players == null) {
@@ -64,13 +71,15 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void PlayerOut(GameObject ob){
+			if (!isServer)
+				return;
 			print ("Died" + ob);
 			m_PlayersAlive[m_Players.IndexOf(ob)]=false;
 			int alive = 0,hash = -1;
 			for(int i =0;i<m_PlayersAlive.Count;i++){
 				print (m_PlayersAlive [i]);
 				if (m_PlayersAlive [i] == true) { 
-					hash = m_Players [i].GetComponent<CharAttributes> ().getHash ();
+					hash = m_Players [i].GetComponent<CharAttributesNet> ().getHash ();
 					alive++;
 				}
 			}

@@ -29,7 +29,7 @@ namespace UnityStandardAssets._2D{
 			}
 			Vector2 velo = rigid.velocity;
 			//if (velo.y!=0) print (velo.y);
-			if(velo.y<-19.0f){
+			if(velo.y<-16.0f){
 				velo.y = -15.0f;
 				rigid.velocity = velo;
 			}

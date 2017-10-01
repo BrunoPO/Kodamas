@@ -76,7 +76,7 @@ namespace UnityStandardAssets._2D
 			if (isNet) {
 				m_AttributesNet.ResetAttributes ();
 			} else {
-				m_Attributes.CmdResetAttributes ();
+				m_Attributes.ResetAttributes ();
 			}
 		}
 

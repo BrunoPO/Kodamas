@@ -15,6 +15,8 @@ namespace UnityStandardAssets._2D{
 		}
 		//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
 		void OnTriggerEnter2D(Collider2D col) {
+			if (pai == null)
+				return;
 			if(col.tag == "Player")
 				if(Commented) print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+col.name+" Tag:"+col.tag+"Hash:"+col.GetComponent<Platformer2DUserControl> ().getHash());
 			else if(col.tag == "Stone")

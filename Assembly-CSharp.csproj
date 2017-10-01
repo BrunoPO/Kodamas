@@ -63,6 +63,7 @@
      <Compile Include="Assets\CrossPlatformInput\Scripts\TouchPad.cs" />
      <Compile Include="Assets\CrossPlatformInput\Scripts\VirtualInput.cs" />
      <Compile Include="Assets\GM.cs" />
+     <Compile Include="Assets\GMNet.cs" />
      <Compile Include="Assets\Passagem.cs" />
      <Compile Include="Assets\Scripts\Camera\AbstractTargetFollower.cs" />
      <Compile Include="Assets\Scripts\Camera\AutoCam.cs" />

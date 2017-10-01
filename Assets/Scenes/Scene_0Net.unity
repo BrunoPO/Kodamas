@@ -623,8 +623,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 367777369}
-  - component: {fileID: 367777368}
   - component: {fileID: 367777370}
+  - component: {fileID: 367777368}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -640,7 +640,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 367777367}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50edc3d2df7b142c9bff737843577058, type: 3}
+  m_Script: {fileID: 11500000, guid: 08c613f2934cb48b3a3470cf9595f96f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hashWinner: -1
@@ -3005,8 +3005,12 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114490175847374108, guid: 0be79c51eba6346c787e4149b527cfb0,
         type: 2}
-      propertyPath: m_InterpolateMovement
-      value: 10
+      propertyPath: m_SendInterval
+      value: 0.09090909
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 0be79c51eba6346c787e4149b527cfb0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0be79c51eba6346c787e4149b527cfb0, type: 2}

@@ -73,7 +73,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.48, y: 7.34, z: 0}
+  m_LocalPosition: {x: 9.55, y: 4.75, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -245,9 +245,8 @@ MonoBehaviour:
   m_WhatIsWall:
     serializedVersion: 2
     m_Bits: 2048
-  isNet: 0
-  waitSprint: 100
-  forcaSprint: 100
+  forcaSprint: 50
+  IniPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &114781320743624610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -261,8 +260,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlimitedBalls: 0
   SoulStone: {fileID: 1092874576488382, guid: b03e81ee15db6425983cea48f28b9afb, type: 2}
-  balls: 3
-  life: 5
+  ballsIni: 5
+  lifeIni: 3
+  wasKilled: 0
   m_FacingRight: 1
   m_Killed: 0
 --- !u!114 &114965966905194230

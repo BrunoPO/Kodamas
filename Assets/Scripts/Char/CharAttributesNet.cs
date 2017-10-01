@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 namespace UnityStandardAssets._2D{
 	public class CharAttributesNet : NetworkBehaviour {
@@ -17,15 +17,11 @@ namespace UnityStandardAssets._2D{
 		[SerializeField] private int lifeIni;
 		[SerializeField] private bool wasKilled=false;
 
-		[HideInInspector] [SyncVar]
-		private int balls;//To Private
-		[HideInInspector] [SyncVar]
-		private int life;//To Private
-		[SyncVar]
-		public bool m_FacingRight = true;
+		[SyncVar] private int balls;//To Private
+		[SyncVar] private int life;//To Private
+		[SyncVar] public bool m_FacingRight = true;
 
-		[SyncVar]
-		public bool m_Killed = false;
+		[SyncVar] public bool m_Killed = false;
 
 		void Start(){
 			GetComponent<PlatformerCharacter2D>().IniPoint = transform.position;
@@ -48,7 +44,7 @@ namespace UnityStandardAssets._2D{
 		private void Reset(){
 			balls = ballsIni;
 			life = lifeIni;
-			GameObject.Find ("GM").GetComponent<GM> ().PlayerIn (gameObject);
+			GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
 			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 			if (isLocalPlayer) {
 				AfterReset = true;
@@ -60,22 +56,24 @@ namespace UnityStandardAssets._2D{
 			if (m_Killed) {
 				GetComponent<Animator> ().SetBool ("Died", true);
 				return;
-			} else {
+			} else 
 				GetComponent<Animator> ().SetBool ("Died", false);
-			}
 			
-			if (GameObject.Find ("GM").GetComponent<GM> ().m_Reset) {
+			
+			if (GameObject.Find ("GM").GetComponent<GMNet> ().m_Reset) {
 				Reset ();
 				return;
 			}
 			if (AfterReset) {
 				AfterReset = false;
-				GetComponent<Platformer2DUserControl> ().enabled = true;
+				//if(isLocalPlayer)
+					GetComponent<Platformer2DUserControl> ().enabled = true;
 			}
 			if (isLocalPlayer) {
 				SetLifeText (life);
 				SetStonesText (balls);
-				int hashWinner = GameObject.Find ("GM").GetComponent<GM> ().getHashWinner ();
+
+				int hashWinner = GameObject.Find ("GM").GetComponent<GMNet> ().getHashWinner ();
 				if (hashWinner != -1) {
 					if (hashWinner == getHash ()) {
 						youWon ();
@@ -86,8 +84,7 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
-		[ClientRpc]
-		public void RpcResetInitPoint(){
+		[ClientRpc] public void RpcResetInitPoint(){
 			if (!isLocalPlayer)
 				return;
 			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
@@ -96,8 +93,7 @@ namespace UnityStandardAssets._2D{
 			CmdShow();
 		}
 
-		[Command] 
-		void CmdShow(){
+		[Command] void CmdShow(){
 			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 		}
 
@@ -116,11 +112,13 @@ namespace UnityStandardAssets._2D{
 				GetComponent<Platformer2DUserControl>().enabled = false;
 			}
 		}
+
 		public void youWon(){
 			if (isLocalPlayer) {
 				clearTxt ();
 				m_WinTxt.text = "You Won";
 				GetComponent<Platformer2DUserControl>().enabled = false;
+			
 			}
 		}
 		public void clearTxt(){
@@ -130,6 +128,7 @@ namespace UnityStandardAssets._2D{
 				m_LifeTxt.text = "";
 			}
 		}
+
 		public int getHash(){
 			return gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ();
 		}
@@ -146,32 +145,23 @@ namespace UnityStandardAssets._2D{
 			return false;
 		}
 
-		[Command]
-		public void CmdBallsMinus(){
+		[Command] public void CmdBallsMinus(){
 			if (!unlimitedBalls) {
 				balls--;
-				if(isLocalPlayer)
-					SetStonesText (balls);
 			}
 		}
 
-		[Command]
-		public void CmdBallsPlus(){
+		[Command] public void CmdBallsPlus(){
 			balls++;
-			if(isLocalPlayer)
-				SetStonesText (balls);
 		}
 
-		[Command]
-		public void CmdLifeMinus(){
-			life--;
-			if (life <= 0) {
-				GameObject.Find ("GM").GetComponent<GM> ().PlayerOut (gameObject);
+		[Command] public void CmdLifeMinus(){
+			if (--life <= 0) {
+				GameObject.Find ("GM").GetComponent<GMNet> ().PlayerOut (gameObject);
 			}
 		}
 
-		[Command]
-		public void CmdKilled(){
+		[Command] public void CmdKilled(){
 			print("Called Killed");
 			m_Killed = true;
 			CmdLifeMinus ();
@@ -183,8 +173,7 @@ namespace UnityStandardAssets._2D{
 			//}
 		}
 
-		[Command]
-		private void CmdResetAttributes(){
+		[Command] private void CmdResetAttributes(){
 			/*if (!isServer)
 				return;*/
 			//GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
@@ -204,8 +193,7 @@ namespace UnityStandardAssets._2D{
 
 		}
 
-		[Command]
-		public void CmdGetDamage(){
+		[Command] public void CmdGetDamage(){
 			CmdLifeMinus();
 		}
 
@@ -216,17 +204,15 @@ namespace UnityStandardAssets._2D{
 			CmdInvertFlip ();
 		}
 
-		[Command]
-		private void CmdInvertFlip(){
+		[Command] private void CmdInvertFlip(){
 			m_FacingRight = !m_FacingRight;
 		}
 
-		[Command]
-		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
+		[Command] public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
 			inst.GetComponent<Stone> ().enabled = true;
-			inst.GetComponent<Stone>().Fire (3,Hash);
 			GetComponent<CharAttributesNet>().CmdBallsMinus();
+			inst.GetComponent<Stone>().Fire (3,Hash);
 			NetworkServer.Spawn (inst);
 
 			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;
