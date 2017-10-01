@@ -4,10 +4,7 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D{
 	public class StoneAttributes : MonoBehaviour {
-
 		private Rigidbody2D rigid;
-
-
 		public bool kill=false;
 		public bool fired = false;
 
@@ -15,10 +12,10 @@ namespace UnityStandardAssets._2D{
 			rigid = GetComponent<Rigidbody2D>();
 		}
 
-
 		public void SetFired(bool b){
 			CmdSetFired (b);
 		}
+
 		public void CmdSetFired(bool b){
 			fired = b;
 		}

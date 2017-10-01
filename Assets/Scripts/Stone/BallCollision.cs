@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D{
 	public class BallCollision : MonoBehaviour {
-		public bool Commented = false;
+		[SerializeField] private bool Commented = false;
 		private Rigidbody2D rigid;
 		private int groundTime=0;
 		private GameObject pai;
@@ -14,41 +14,38 @@ namespace UnityStandardAssets._2D{
 			pai = this.transform.parent.gameObject;
 		}
 		//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
-		void OnTriggerEnter2D(Collider2D coll) {
-			if(coll.tag == "Player")
-				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag+"Hash:"+coll.GetComponent<Platformer2DUserControl> ().getHash());
-			else
-				print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+coll.name+" Tag:"+coll.tag);
+		void OnTriggerEnter2D(Collider2D col) {
+			if(col.tag == "Player")
+				if(Commented) print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+col.name+" Tag:"+col.tag+"Hash:"+col.GetComponent<Platformer2DUserControl> ().getHash());
+			else if(col.tag == "Stone")
+				if(Commented) print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+col.name+" Tag:"+col.tag);
 
 			if (end)
 				return;
-			if (coll.tag == "Player") {
+			if (col.tag == "Player") {
 				if (pai.GetComponent<Stone> ().onTheGround) {//Balls++ Ball on the ground
-					end = coll.gameObject.GetComponent<Platformer2DUserControl> ().gainBall();
+					end = col.gameObject.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {
 						pai.GetComponent<Stone> ().DestroySelf ();
 					}
-				} else if (coll.GetComponent<Platformer2DUserControl> ().getHash() != paiHash) {
-					print ("Player Kill");
-					coll.GetComponent<Platformer2DUserControl> ().Killed();
+				} else if (col.GetComponent<Platformer2DUserControl> ().getHash() != paiHash) {
+					if(Commented) print ("Player Killed");
+					col.GetComponent<Platformer2DUserControl> ().Killed();
 					pai.GetComponent<Stone> ().DestroySelf ();
 				} else {//Balls++ Ball on the air
-					end = coll.GetComponent<Platformer2DUserControl> ().gainBall();
+					end = col.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {
 						pai.GetComponent<Stone> ().DestroySelf ();
 					}
 				}
 			}else if(pai.tag != "Respawn" ){
-				if (coll.gameObject.tag == "Ball") {
-					/*if (coll.GetComponent<StoneNet> () == null) {//Código para debug de colisão se bola inimiga não tiver script
-						Fall ();
-					}else */
-					if (coll == null || coll.GetComponent<Stone>() == null)
+				if (col.gameObject.tag == "Stone") {
+					if (col == null || col.GetComponent<Stone>() == null)
 						return;
-					if (coll.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
+					if (col.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
 						Fall ();
 					}
-				}else if(coll.gameObject.tag == "Ground" || coll.gameObject.tag == "Wall"){//Stone acerta o chão
+				}else if(col.gameObject.tag == "Ground" || col.gameObject.tag == "Wall"){//Stone acerta o chão
 					Fall ();
 				}
 			}
@@ -64,9 +61,9 @@ namespace UnityStandardAssets._2D{
 			pai.GetComponent<Rigidbody2D>().gravityScale = 5;
 		}
 
-		void OnTriggerStay2D(Collider2D coll){
+		void OnTriggerStay2D(Collider2D col){
 			//print(coll.tag+" "+groundTime+" "+pai.GetComponent<Stone> ().onTheGround);
-			if (coll.tag == "Ground" && groundTime > 10 && pai.GetComponent<Stone> ().onTheGround) {
+			if (col.tag == "Ground" && groundTime > 10 && pai.GetComponent<Stone> ().onTheGround) {
 				pai.GetComponent<Stone> ().flutuarNoChao();
 			} else if(groundTime<11){
 				groundTime++;

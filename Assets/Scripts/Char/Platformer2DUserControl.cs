@@ -11,9 +11,9 @@ namespace UnityStandardAssets._2D
 		private Transform Ball;
 		private GameObject ob;
 		private Vector3 lastParamBall;//(v,h,rotation)
-		public bool Commented = false;
+		[SerializeField] private bool Commented = false;
 		private int autoAttackCounter=20;
-		public bool autoAttack = false;
+		[SerializeField] private bool autoAttack = false;
 		private Vector3 IniPoint;
 		private CharAttributesNet m_AttributesNet;
 		private CharAttributes m_Attributes;
@@ -82,14 +82,6 @@ namespace UnityStandardAssets._2D
 		}
 
 		private void Update() {
-			if (Input.GetKeyDown("\\")) {
-				if (Time.timeScale == 1.0F)
-					Time.timeScale = 0.3F;
-				else
-					Time.timeScale = 1.0F;
-				Time.fixedDeltaTime = 0.02F * Time.timeScale;
-			}
-
 			if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
 				m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
 
@@ -119,7 +111,7 @@ namespace UnityStandardAssets._2D
 				m_Character.Move (h, crouch, m_Jump,sprint);
 				if (ob != null) {
 					if(Commented) print (ob.transform.parent);
-					print ("Aqui" + getHash());
+					//print ("Aqui" + getHash());
 					Vector3 position = (ob.transform.position + transform.position) / 2;//Alter position na hora de lançar
 					Quaternion rotation = ob.transform.rotation;
 					Destroy (ob);

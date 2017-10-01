@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D{
 	public class Radar : MonoBehaviour {
-
-		public bool Commented = false;
 		private GameObject pai;
 		public int paiHash;
 
@@ -15,15 +13,11 @@ namespace UnityStandardAssets._2D{
 
 		//Controle do radar para rotacionar em direção ao alvo(Ball,Player)
 		void OnTriggerStay2D(Collider2D col) {
-			//só passar se for player ou bola
-			/*if (!(col.tag == "Player" || col.tag == "Ball" ))
-				return;*/
-
-			if (!pai.GetComponent<Stone> ().wasFired()  || pai.GetComponent<Stone> ().onTheGround)
+			if (!this.enabled)
 				return;
-
-			if (col.tag == "Ball") {
-				
+			else if (!pai.GetComponent<Stone> ().wasFired()  || pai.GetComponent<Stone> ().onTheGround)
+				return;
+			else if (col.tag == "Stone") {
 				if (col.gameObject.GetComponent<Stone> () == null || col.gameObject.GetComponent<Stone> ().paiHash == paiHash)
 					return;
 			} else if (col.tag == "Player") {

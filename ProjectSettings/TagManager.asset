@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
-  - Ball
   - Wall
+  - Interactive Itens
+  - Stone
   layers:
   - Default
   - TransparentFX
@@ -17,12 +18,12 @@ TagManager:
   - 
   - 
   - Player
-  - Ball
+  - Stone
   - Ground
   - Wall
   - Inative
   - InteractInat
-  - Wall
+  - InteractAtivo
   - 
   - 
   - 

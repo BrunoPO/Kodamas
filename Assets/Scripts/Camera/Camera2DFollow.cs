@@ -1,21 +1,26 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UnityStandardAssets._2D
 {
     public class Camera2DFollow : MonoBehaviour
-    {
+	{
+		
         public Transform target;
-        public float damping = 1;
-        public float lookAheadFactor = 3;
-        public float lookAheadReturnSpeed = 0.5f;
-        public float lookAheadMoveThreshold = 0.1f;
+		[Range(0, 2)] [SerializeField] private float damping = 1;
+		[Range(0, 6)] [SerializeField] private float lookAheadFactor = 3;
+		[Range(0, 2)] [SerializeField] private float lookAheadReturnSpeed = 0.5f;
+		[Range(0, 2)] [SerializeField] private float lookAheadMoveThreshold = 0.1f;
+		[SerializeField] private Vector3 m_LookAheadPos;
+		[SerializeField] private Vector2 Min,Max;
+		public Text m_StonesTxt;
+		public Text m_LifeTxt;
+		public Text m_WinTxt;
 
         private float m_OffsetZ;
         private Vector3 m_LastTargetPosition;
         private Vector3 m_CurrentVelocity;
-        private Vector3 m_LookAheadPos;
-		public Vector2 Min,Max;
 
 		Vector2 raioDeVisao;
         // Use this for initialization

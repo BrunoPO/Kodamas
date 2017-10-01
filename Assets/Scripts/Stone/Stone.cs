@@ -9,9 +9,9 @@ namespace UnityStandardAssets._2D{
 		private float horin,vert,indexSeno=0.5f,peso=0;
 		public GameObject effect;
 		public int paiHash=0;
-		public StoneAttributesNet m_attributesNet;
-		public StoneAttributes m_attributes;
-		private bool isNet=true;
+		private StoneAttributesNet m_attributesNet;
+		private StoneAttributes m_attributes;
+		private bool isNet=false;
 
 		private void Start(){
 			rigid = GetComponent<Rigidbody2D> ();
@@ -77,9 +77,11 @@ namespace UnityStandardAssets._2D{
 			print ("Fired" + m_attributesNet);
 
 			if (m_attributesNet == null && GetComponent<StoneAttributesNet> () != null) {
+				if(Commented) print("Online");
 				m_attributesNet = GetComponent<StoneAttributesNet> ();
 				isNet = true;
 			}else if(m_attributes == null && GetComponent<StoneAttributes> () != null){
+				if(Commented) print("Offline");
 				m_attributes = GetComponent<StoneAttributes> ();
 				isNet = false;
 			}
@@ -90,17 +92,19 @@ namespace UnityStandardAssets._2D{
 			setFired(true);
 			//Configurando Ball para interagir com o ambiente
 			this.gameObject.layer = 9;
-			this.tag = "Ball";
+			this.tag = "Stone";
 
 			GameObject child = this.transform.GetChild (0).gameObject;
 			child.GetComponent<Radar>().paiHash = Hash;
+			child.GetComponent<Radar> ().enabled = true;
 			child.layer = 9;
-			child.tag = "Ball";
+			child.tag = "Stone";
 
 			child = this.transform.GetChild (1).gameObject;
 			child.GetComponent<BallCollision>().paiHash = Hash;
+			child.GetComponent<BallCollision> ().enabled = true;
 			child.layer = 9;
-			child.tag = "Ball";
+			child.tag = "Stone";
 
 
 			GetComponent<Animator>().SetBool("Fired",true);//Solved Bug
