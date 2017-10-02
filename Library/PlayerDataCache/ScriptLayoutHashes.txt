@@ -161,3 +161,4 @@ a8796ecdc9d5c260bbe32f30c4b10708 Assembly-CSharp.dll:UnityStandardAssets.CrossPl
 ead890ce0aa9d9d50ef61cd4f8956474 Assembly-CSharp.dll:UnityStandardAssets._2D.Camera2DFollow
 01f7df3d21ad87206cb85eedb3bca425 Assembly-CSharp.dll:UnityStandardAssets._2D.StoneAttributesNet
 e374bb8897ba2bae7d86662ebcf65b69 Assembly-CSharp.dll:.ControleVars
+cc1669bbc3d0f2210fc26b65cd041320 Assembly-CSharp.dll:.MyNetworkManagerScript

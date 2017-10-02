@@ -37,10 +37,18 @@ namespace UnityStandardAssets._2D{
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 
 			}
+			GameObject CP = GameObject.Find("ChoosePlayer");
+			print (CP);
+			if(CP != null){
+				CP.SetActive (false);//   .enabled = false;
+				print (CP.active);
+			}
 			Reset ();
 		}
 
 		private void Reset(){
+			
+
 			balls = ballsIni;
 			life = lifeIni;
 			GameObject.Find ("GM").GetComponent<GM> ().PlayerIn (gameObject);
