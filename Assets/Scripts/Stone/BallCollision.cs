@@ -25,6 +25,9 @@ namespace UnityStandardAssets._2D{
 			if (end)
 				return;
 			if (col.tag == "Player") {
+				if (col.gameObject.GetComponent<Platformer2DUserControl> () == null)
+					return;
+				print (col.name);
 				if (pai.GetComponent<Stone> ().onTheGround) {//Balls++ Ball on the ground
 					end = col.gameObject.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {
@@ -64,6 +67,8 @@ namespace UnityStandardAssets._2D{
 		}
 
 		void OnTriggerStay2D(Collider2D col){
+			if (!this.enabled)
+				return;
 			//print(coll.tag+" "+groundTime+" "+pai.GetComponent<Stone> ().onTheGround);
 			if (col.tag == "Ground" && groundTime > 10 && pai.GetComponent<Stone> ().onTheGround) {
 				pai.GetComponent<Stone> ().flutuarNoChao();

@@ -6,12 +6,12 @@ PlayerSettings:
   serializedVersion: 12
   productGUID: 59ae49c41a8274fcfabb4b42887ebf55
   AndroidProfiler: 0
-  defaultScreenOrientation: 2
+  defaultScreenOrientation: 3
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: Game
+  companyName: Aurora.Digital
+  productName: Kodamas
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -68,7 +68,7 @@ PlayerSettings:
   defaultIsNativeResolution: 1
   runInBackground: 0
   captureSingleScreen: 0
-  muteOtherAudioSources: 0
+  muteOtherAudioSources: 1
   Prepare IOS For Recording: 0
   Force IOS Speakers When Recording: 0
   submitAnalytics: 1
@@ -140,7 +140,8 @@ PlayerSettings:
   useHDRDisplay: 0
   targetPixelDensity: 0
   resolutionScalingMode: 0
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Android: com.AuroraDigital
   buildNumber: {}
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 22

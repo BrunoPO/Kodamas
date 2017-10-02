@@ -18,6 +18,11 @@ namespace UnityStandardAssets._2D{
 			return hashWinner;
 		}
 
+		private void Start(){
+			//Camera.main.GetComponent<Camera2DFollow> ().m_WinTxt.text = Network.player.ipAddress;
+		//	print(Network.player.ipAddress);
+		}
+
 		[ServerCallback]
 		public void Update(){
 			if (m_Reset) {

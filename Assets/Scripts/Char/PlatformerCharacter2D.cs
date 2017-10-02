@@ -212,10 +212,10 @@ namespace UnityStandardAssets._2D
 				m_Anim.SetBool ("Ground", false);
 				m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
 			} else if (jump) {
-				if (m_OnWall && move != 0) {
+				if (m_OnWall && (move > 0.3f || move < -0.3f)) {
 					m_Grounded = false;
-					m_Anim.SetBool ("Ground", false);
-					m_Rigidbody2D.AddForce (new Vector2 (-m_Rigidbody2D.velocity.x * 5, m_JumpForce / 40), ForceMode2D.Impulse);
+					m_Anim.SetBool ("Ground", false);//-m_Rigidbody2D.velocity.x * 5
+					m_Rigidbody2D.AddForce (new Vector2 ((Mathf.CeilToInt(move)*-1)*m_JumpForce/5, m_JumpForce/40 ), ForceMode2D.Impulse);
 				}
 			}/* else {
 				Collider2D[] colliders = Physics2D.OverlapCircleAll (transform.position, k_GroundedRadius, m_WhatIsWall);

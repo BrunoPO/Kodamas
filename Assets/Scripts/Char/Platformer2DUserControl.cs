@@ -16,6 +16,8 @@ namespace UnityStandardAssets._2D
 		[SerializeField] private bool autoAttack = false;
 		private CharAttributesNet m_AttributesNet;
 		private CharAttributes m_Attributes;
+		//[SerializeField] private GameObject m_controle;
+		private ControleVars m_ControleVars;
 		private bool isNet = false;
 
 		private GameObject SoulStone;
@@ -34,19 +36,30 @@ namespace UnityStandardAssets._2D
 			else
 				SoulStone = m_Attributes.SoulStone;
 			print (SoulStone);
+
+			m_ControleVars = GameObject.Find("Controle").GetComponent<ControleVars> ();
 		}
 
 		private void Update() {
-			if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
+			/*if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
 				m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
 			}
-			bool crouch = false;
 			bool sprint = CrossPlatformInputManager.GetButton ("Fire3");
 			float h = CrossPlatformInputManager.GetAxis("Horizontal");
-			float v = CrossPlatformInputManager.GetAxis("Vertical");
+			float v = CrossPlatformInputManager.GetAxis("Vertical");*/
+
+			bool sprint = m_ControleVars.getDash(); //CrossPlatformInputManager.GetButton ("Fire3");
+			float h = m_ControleVars.getHorizontal(); //CrossPlatformInputManager.GetAxis("Horizontal");
+			float v = m_ControleVars.getVertical();//CrossPlatformInputManager.GetAxis("Vertical");
+			//print("v:"+v+" ,h:"+h);
+			if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
+				m_Jump = (v>0.5f);//CrossPlatformInputManager.GetButtonDown("Jump");
+			}
+			bool crouch = false;
+
 			//if(Commented) print(v + " " + h);
 			if (!autoAttack) {
-				atck = Input.GetKey(KeyCode.LeftControl); 
+				atck = m_ControleVars.getAtk ();// Input.GetKey(KeyCode.LeftControl); 
 				if (Commented)
 					print (atck);
 			} else if (autoAttack && !atck && autoAttackCounter>=100) {
@@ -102,11 +115,11 @@ namespace UnityStandardAssets._2D
 				}
 				if (h != 0 ) {
 					if (h < 0 && isFacingRight())
-						m_Character.Move (-0.1f, false, m_Jump,sprint);
+						m_Character.Move (-0.1f, false, false,false);
 					else if (h > 0 && !isFacingRight())
-						m_Character.Move (0.1f, false, m_Jump,sprint);
+						m_Character.Move (0.1f, false, false,false);
 					else 
-						m_Character.Move (0f, false, m_Jump,sprint);
+						m_Character.Move (0f, false, false,false);
 				} 
 			}
 			m_Jump = false;
@@ -151,22 +164,22 @@ namespace UnityStandardAssets._2D
 		}
 
 		Vector3 Direcao(float h, float v){
-			if (h < 0 && v < 0) {
+			if (h < 0 && v >= -0.85 && v <= -0.3) {
 				if (Commented) print ("Esq Baixo");
 				return new Vector3 (-1f, -1f, 225f);
-			} else if (h > 0 && v < 0) {
+			} else if (h > 0 && v >= -0.85 && v <= -0.3) {
 				if (Commented) print ("Dir Baixo");
-				lastParamBall = new Vector3 (1f, -1f, 315f);
-			} else if (h < 0 && v > 0) {
+				return new Vector3 (1f, -1f, 315f);
+			} else if (h < 0 && v <= 0.85 && v>=0.3) {
 				if (Commented) print ("Esq Cima");
 				return new Vector3 (-1f, 1f, 135f);
-			} else if (h > 0 && v > 0) {
+			} else if (h > 0 && v <= 0.85 && v>=0.3) {
 				if (Commented) print ("Dir Cima");
 				return new Vector3 (1f, 1f, 45f);
-			} else if (h > 0) {
+			} else if (h > 0.3  && v<0.3 && v>-0.3) {
 				if (Commented) print ("Dir ");
 				return new Vector3 (1f, 0f, 0);
-			} else if (h < 0) {
+			} else if (h < -0.3 && v<0.3 && v>-0.3) {
 				if (Commented) print ("Esq");
 				return new Vector3 (-1f, 0f, 180f);
 			} else if (v < 0) {
