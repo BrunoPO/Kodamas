@@ -3,18 +3,22 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Char/PlatformerCharacter2D.cs">
     <Files>
       <File FileName="Assets/GM.cs" Line="1" Column="1" />
-      <File FileName="Assets/GMNet.cs" Line="10" Column="3" />
-      <File FileName="Assets/Scripts/Char/CharAttributesNet.cs" Line="122" Column="74" />
-      <File FileName="Assets/Scripts/Char/CharAttributes.cs" Line="116" Column="73" />
-      <File FileName="Assets/Scripts/Char/PlatformerCharacter2D.cs" Line="127" Column="39" />
-      <File FileName="Assets/Scripts/Char/Platformer2DUserControl.cs" Line="34" Column="8" />
-      <File FileName="Assets/Scripts/Stone/BallCollision.cs" Line="14" Column="31" />
+      <File FileName="Assets/Scripts/Char/CharAttributesNet.cs" Line="34" Column="5" />
+      <File FileName="Assets/Scripts/Char/CharAttributes.cs" Line="4" Column="1" />
+      <File FileName="Assets/Scripts/Char/PlatformerCharacter2D.cs" Line="218" Column="83" />
+      <File FileName="Assets/Scripts/Char/Platformer2DUserControl.cs" Line="54" Column="6" />
+      <File FileName="Assets/Scripts/Stone/BallCollision.cs" Line="29" Column="13" />
       <File FileName="Assets/Scripts/Char/RobotDieScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Passagem.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Stone/Stone.cs" Line="110" Column="55" />
-      <File FileName="Assets/Scripts/Stone/StoneAttributes.cs" Line="32" Column="17" />
+      <File FileName="Assets/Passagem.cs" Line="15" Column="1" />
+      <File FileName="Assets/Scripts/Stone/Stone.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Stone/StoneAttributes.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Stone/Radar.cs" Line="18" Column="49" />
-      <File FileName="Assets/Scripts/Camera/Camera2DFollow.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Camera/Camera2DFollow.cs" Line="11" Column="34" />
+      <File FileName="Assets/GMNet.cs" Line="6" Column="1" />
+      <File FileName="Assets/ExibirIP.cs" Line="9" Column="88" />
+      <File FileName="Assets/Controles/ControleVirtual.cs" Line="12" Column="9" />
+      <File FileName="Assets/ControleVars.cs" Line="9" Column="33" />
+      <File FileName="Assets/Atk1.cs" Line="15" Column="57" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

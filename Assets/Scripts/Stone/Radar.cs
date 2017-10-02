@@ -21,8 +21,13 @@ namespace UnityStandardAssets._2D{
 				if (col.gameObject.GetComponent<Stone> () == null || col.gameObject.GetComponent<Stone> ().paiHash == paiHash)
 					return;
 			} else if (col.tag == "Player") {
-				if (col.gameObject.GetComponent<Platformer2DUserControl> ().getHash() == paiHash)
-					return;
+				if (col.gameObject.GetComponent<Platformer2DUserControl> () == null) {
+					if (col.transform.parent.gameObject.GetComponent<Platformer2DUserControl> () == null)
+						return;
+				} else {
+					if (col.gameObject.GetComponent<Platformer2DUserControl> ().getHash () == paiHash)
+						return;
+				}
 			} else {
 				return;
 			}

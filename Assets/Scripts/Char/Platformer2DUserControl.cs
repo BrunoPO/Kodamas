@@ -37,29 +37,39 @@ namespace UnityStandardAssets._2D
 				SoulStone = m_Attributes.SoulStone;
 			print (SoulStone);
 
-			m_ControleVars = GameObject.Find("Controle").GetComponent<ControleVars> ();
+			GameObject m_Controle = GameObject.Find ("Controle");
+			if (m_Controle != null)
+				m_ControleVars = m_Controle.GetComponent<ControleVars> ();
+			else
+				GetComponent<PlatformerCharacter2D> ().m_JumpForce *= 2;
 		}
 
 		private void Update() {
-			/*if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
-				m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+			bool sprint;
+			float h,v;
+			if (m_ControleVars == null) {
+				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
+					m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
+				}
+				sprint = CrossPlatformInputManager.GetButton ("Fire3");
+				h = CrossPlatformInputManager.GetAxis ("Horizontal");
+				v = CrossPlatformInputManager.GetAxis ("Vertical");
+				atck = Input.GetKey(KeyCode.LeftControl);
+			} else {
+				sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
+				h = m_ControleVars.getHorizontal (); //CrossPlatformInputManager.GetAxis("Horizontal");
+				v = m_ControleVars.getVertical ();//CrossPlatformInputManager.GetAxis("Vertical");
+				//print("v:"+v+" ,h:"+h);
+				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
+					m_Jump = (v > 0.75f);//CrossPlatformInputManager.GetButtonDown("Jump");
+				}
+				atck = m_ControleVars.getAtk ();
 			}
-			bool sprint = CrossPlatformInputManager.GetButton ("Fire3");
-			float h = CrossPlatformInputManager.GetAxis("Horizontal");
-			float v = CrossPlatformInputManager.GetAxis("Vertical");*/
 
-			bool sprint = m_ControleVars.getDash(); //CrossPlatformInputManager.GetButton ("Fire3");
-			float h = m_ControleVars.getHorizontal(); //CrossPlatformInputManager.GetAxis("Horizontal");
-			float v = m_ControleVars.getVertical();//CrossPlatformInputManager.GetAxis("Vertical");
-			//print("v:"+v+" ,h:"+h);
-			if (!m_Jump){ // Read the jump input in Update so button presses aren't missed.
-				m_Jump = (v>0.5f);//CrossPlatformInputManager.GetButtonDown("Jump");
-			}
 			bool crouch = false;
 
 			//if(Commented) print(v + " " + h);
 			if (!autoAttack) {
-				atck = m_ControleVars.getAtk ();// Input.GetKey(KeyCode.LeftControl); 
 				if (Commented)
 					print (atck);
 			} else if (autoAttack && !atck && autoAttackCounter>=100) {
@@ -103,7 +113,10 @@ namespace UnityStandardAssets._2D
 					return;
 				}
 
-				lastParamBall = Direcao(h, v);
+				if (m_ControleVars == null)
+					lastParamBall = DirecaoOnControl (h, v);
+				else
+					lastParamBall = Direcao(h, v);
 
 				if (h != 0 || v != 0 || this.GetComponent<Rigidbody2D>().velocity != Vector2.zero) {
 					p.x += lastParamBall.x;
@@ -164,6 +177,39 @@ namespace UnityStandardAssets._2D
 		}
 
 		Vector3 Direcao(float h, float v){
+			if (h < 0 && v <0) {
+				if (Commented) print ("Esq Baixo");
+				return new Vector3 (-1f, -1f, 225f);
+			} else if (h > 0 && v <0) {
+				if (Commented) print ("Dir Baixo");
+				return new Vector3 (1f, -1f, 315f);
+			} else if (h < 0 && v >0) {
+				if (Commented) print ("Esq Cima");
+				return new Vector3 (-1f, 1f, 135f);
+			} else if (h > 0 && v >0) {
+				if (Commented) print ("Dir Cima");
+				return new Vector3 (1f, 1f, 45f);
+			} else if (h > 0) {
+				if (Commented) print ("Dir ");
+				return new Vector3 (1f, 0f, 0);
+			} else if (h < 0) {
+				if (Commented) print ("Esq");
+				return new Vector3 (-1f, 0f, 180f);
+			} else if (v < 0) {
+				if (Commented) print ("Baixo");
+				return new Vector3 (0f, -1f, 270f);
+			} else if (v > 0) {
+				if (Commented) print ("Cima");
+				return new Vector3 (0f, 1f, 90f);
+			} else if (isFacingRight()) {
+				return new Vector3 (1f, 0f, 0);
+			}
+
+			return new Vector3 (-1f, 0f, 180f);
+
+		}
+
+		Vector3 DirecaoOnControl(float h, float v){
 			if (h < 0 && v >= -0.85 && v <= -0.3) {
 				if (Commented) print ("Esq Baixo");
 				return new Vector3 (-1f, -1f, 225f);

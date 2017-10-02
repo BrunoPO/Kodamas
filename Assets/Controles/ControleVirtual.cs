@@ -41,18 +41,18 @@ public class ControleVirtual : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 	}
 
 	public float Horizontal(){
-		if (inputVetor.x != 0) {
+		//if (inputVetor.x != 0) {
 			return inputVetor.x;
-		} else {
+		/*} else {
 			return Input.GetAxis("Horizontal");
-		}
+		}*/
 	}
 
 	public float Vertical(){
-		if(inputVetor.y != 0){
+		//if(inputVetor.y != 0){
 			return inputVetor.y;
-		}else {
+		/*}else {
 			return Input.GetAxis("Vertical");
-		}
+		}*/
 	}
 }
