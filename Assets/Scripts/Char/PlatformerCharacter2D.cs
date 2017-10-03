@@ -128,7 +128,7 @@ namespace UnityStandardAssets._2D
 				if (m_Rigidbody2D.velocity.y < 0) {//Verificar se está pisando em alguém
 					colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
 					foreach (Collider2D collider in colliders) {
-						print (collider.name);
+						//print (collider.name);
 						if (collider.name == "Head") {
 							collider.transform.parent.GetComponent<Platformer2DUserControl> ().Killed ();
 							m_Rigidbody2D.AddForce (new Vector3(0,m_JumpForce,0));
@@ -215,7 +215,11 @@ namespace UnityStandardAssets._2D
 				if (m_OnWall && (move > 0.3f || move < -0.3f)) {
 					m_Grounded = false;
 					m_Anim.SetBool ("Ground", false);//-m_Rigidbody2D.velocity.x * 5
-					m_Rigidbody2D.AddForce (new Vector2 ((Mathf.CeilToInt(move)*-1)*m_JumpForce/5, m_JumpForce/40 ), ForceMode2D.Impulse);
+					print("Force out of wall = "+(Mathf.CeilToInt(move)*-1)*m_JumpForce/5);
+					if(move>0)
+						m_Rigidbody2D.AddForce (new Vector2 (-1*m_JumpForce/5, m_JumpForce/40 ), ForceMode2D.Impulse);
+					else
+						m_Rigidbody2D.AddForce (new Vector2 (1*m_JumpForce/5, m_JumpForce/40 ), ForceMode2D.Impulse);
 				}
 			}/* else {
 				Collider2D[] colliders = Physics2D.OverlapCircleAll (transform.position, k_GroundedRadius, m_WhatIsWall);

@@ -4,23 +4,30 @@ using UnityEngine;
 
 public class ControleVars : MonoBehaviour {
 	private bool atk;
-	private bool dash;
+	private bool pulo;
 	private int buttonAtkDelay=10;
-	private int buttonDashDelay=10;
+	private int buttonPuloDelay=5;
+
+	public void Start(){
+		float width = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.x;
+		float height = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.y;
+		this.GetComponent<RectTransform> ().sizeDelta = new Vector2(width,height);
+		//this.GetComponent<RectTransform> ().sizeDelta.y = height;
+	}
 
 	public void alterAtk(bool b){
 		atk = b;
 	}
-	public void alterDash(){
-		dash = true;
-		buttonDashDelay = 10;
+	public void alterPulo(){
+		pulo = true;
+		buttonPuloDelay = 10;
 	}
 
 	public bool getAtk(){
 		return atk;
 	}
-	public bool getDash(){
-		return dash;
+	public bool getPulo(){
+		return pulo;
 	}
 
 	[SerializeField] private GameObject control;
@@ -34,10 +41,10 @@ public class ControleVars : MonoBehaviour {
 
 	private void Update(){
 		//print (ButtonAtk.);
-		if (buttonDashDelay > 0) {
-			buttonDashDelay--;
-		}else if(dash){
-			dash = false;
+		if (buttonPuloDelay > 0) {
+			buttonPuloDelay--;
+		}else if(pulo){
+			pulo = false;
 		}
 	}
 

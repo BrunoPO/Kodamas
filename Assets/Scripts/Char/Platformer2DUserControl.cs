@@ -45,28 +45,28 @@ namespace UnityStandardAssets._2D
 		}
 
 		private void Update() {
-			bool sprint;
+			bool sprint=false;
+			bool crouch = false;
 			float h,v;
 			if (m_ControleVars == null) {
 				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
 					m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
 				}
-				sprint = CrossPlatformInputManager.GetButton ("Fire3");
+				//sprint = CrossPlatformInputManager.GetButton ("Fire3");
 				h = CrossPlatformInputManager.GetAxis ("Horizontal");
 				v = CrossPlatformInputManager.GetAxis ("Vertical");
 				atck = Input.GetKey(KeyCode.LeftControl);
 			} else {
-				sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
+				//sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
 				h = m_ControleVars.getHorizontal (); //CrossPlatformInputManager.GetAxis("Horizontal");
 				v = m_ControleVars.getVertical ();//CrossPlatformInputManager.GetAxis("Vertical");
 				//print("v:"+v+" ,h:"+h);
 				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
-					m_Jump = (v > 0.75f);//CrossPlatformInputManager.GetButtonDown("Jump");
+					m_Jump = m_ControleVars.getPulo ();//m_Jump = (v > 0.75f);//CrossPlatformInputManager.GetButtonDown("Jump");
+					//m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
 				}
 				atck = m_ControleVars.getAtk ();
 			}
-
-			bool crouch = false;
 
 			//if(Commented) print(v + " " + h);
 			if (!autoAttack) {
