@@ -60,7 +60,6 @@ namespace UnityStandardAssets._2D
 				//sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
 				h = m_ControleVars.getHorizontal (); //CrossPlatformInputManager.GetAxis("Horizontal");
 				v = m_ControleVars.getVertical ();//CrossPlatformInputManager.GetAxis("Vertical");
-				//print("v:"+v+" ,h:"+h);
 				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
 					m_Jump = m_ControleVars.getPulo ();//m_Jump = (v > 0.75f);//CrossPlatformInputManager.GetButtonDown("Jump");
 					//m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
@@ -68,10 +67,10 @@ namespace UnityStandardAssets._2D
 				atck = m_ControleVars.getAtk ();
 			}
 
-			//if(Commented) print(v + " " + h);
+
+			if(Commented) print(v + " " + h);
 			if (!autoAttack) {
-				if (Commented)
-					print (atck);
+				if (Commented) print (atck);
 			} else if (autoAttack && !atck && autoAttackCounter>=100) {
 				autoAttackCounter = 0;
 				atck = true;
@@ -81,7 +80,7 @@ namespace UnityStandardAssets._2D
 				autoAttackCounter++;
 				m_Jump = false;crouch = false;h = 0;v = 0;
 			}
-			if(Commented) print (atck);
+			//if(Commented) print (atck);
 			// Pass all parameters to the character control script.
 
 			if (!atck) {
@@ -113,7 +112,7 @@ namespace UnityStandardAssets._2D
 					return;
 				}
 
-				if (m_ControleVars == null)
+				if (m_ControleVars != null)
 					lastParamBall = DirecaoOnControl (h, v);
 				else
 					lastParamBall = Direcao(h, v);
