@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45528989213c4753931d019a3c1fa0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Commented: 1
+  Commented: 0
   autoAttack: 0
 --- !u!114 &114453255700602382
 MonoBehaviour:

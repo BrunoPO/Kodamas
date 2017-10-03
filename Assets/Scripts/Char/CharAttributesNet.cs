@@ -31,7 +31,7 @@ namespace UnityStandardAssets._2D{
 				m_WinTxt = Camera.main.GetComponent<Camera2DFollow>().m_WinTxt;
 				SetStonesText (balls);
 				SetLifeText (life);
-				m_WinTxt.text = "";
+				m_WinTxt.enabled = false;
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 				//GetComponent<Platformer2DUserControl> ().IniPoint = transform.position;
 			} else {
@@ -49,6 +49,8 @@ namespace UnityStandardAssets._2D{
 			if (isLocalPlayer) {
 				AfterReset = true;
 				clearTxt ();
+				m_StonesTxt.enabled = true;
+				m_LifeTxt.enabled = true;
 			}
 		}
 
@@ -108,6 +110,7 @@ namespace UnityStandardAssets._2D{
 		public void youLose(){
 			if (isLocalPlayer) {
 				clearTxt ();
+				m_WinTxt.enabled = true;
 				m_WinTxt.text = "You Lose";
 				GetComponent<Platformer2DUserControl>().enabled = false;
 				GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
@@ -117,6 +120,7 @@ namespace UnityStandardAssets._2D{
 		public void youWon(){
 			if (isLocalPlayer) {
 				clearTxt ();
+				m_WinTxt.enabled = true;
 				m_WinTxt.text = "You Won";
 				GetComponent<Platformer2DUserControl>().enabled = false;
 				GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
@@ -127,6 +131,9 @@ namespace UnityStandardAssets._2D{
 				m_WinTxt.text = "";
 				m_StonesTxt.text = "";
 				m_LifeTxt.text = "";
+				m_WinTxt.enabled = false;
+				m_StonesTxt.enabled = false;
+				m_LifeTxt.enabled = false;
 			}
 		}
 
