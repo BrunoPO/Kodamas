@@ -1,12 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Prototype.NetworkLobby;
 
-public class ChooseScene : NetworkBehaviour {
-	
+public class ChooseScene : MonoBehaviour {
+
+	/*private GameObject mainPanel;
 	void Start(){
-		if (!isServer)
-			this.gameObject.SetActive (false);
+		mainPanel = GameObject.Find ("MainPanel");
 	}
+	void Update(){
+		if (mainPanel == null) {
+			mainPanel = GameObject.Find ("MainPanel");
+			return;
+		}
+		if (mainPanel.GetComponent<LobbyMainMenu>().Hosting)
+			this.gameObject.SetActive(false);
+	}*/
 }

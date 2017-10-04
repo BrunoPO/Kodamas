@@ -9,6 +9,7 @@ namespace Prototype.NetworkLobby
     {
         public LobbyManager lobbyManager;
 
+		public GameObject ChooseScene;
         //public RectTransform lobbyServerList;
         public RectTransform lobbyPanel;
 
@@ -28,11 +29,13 @@ namespace Prototype.NetworkLobby
 
         public void OnClickHost()
         {
+			ChooseScene.SetActive (true);
             lobbyManager.StartHost();
         }
 
         public void OnClickJoin()
         {
+			ChooseScene.SetActive (false);
             lobbyManager.ChangeTo(lobbyPanel);
 
             lobbyManager.networkAddress = ipInput.text;

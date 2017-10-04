@@ -3927,6 +3927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyManager: {fileID: 702928029}
+  ChooseScene: {fileID: 1792538517}
   lobbyPanel: {fileID: 431122240}
   ipInput: {fileID: 282284372}
 --- !u!1 &1647152625

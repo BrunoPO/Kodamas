@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
+
 namespace UnityStandardAssets._2D{
 	public class CharAttributesNet : NetworkBehaviour {
 		public bool unlimitedBalls = false;
