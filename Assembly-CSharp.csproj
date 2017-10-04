@@ -61,6 +61,7 @@
      <Compile Include="Assets\MyNetworkManager.cs" />
      <Compile Include="Assets\MyNetworkManagerScript.cs" />
      <Compile Include="Assets\Passagem.cs" />
+     <Compile Include="Assets\PlayerPrefab.cs" />
      <Compile Include="Assets\Scripts\Camera\AbstractTargetFollower.cs" />
      <Compile Include="Assets\Scripts\Camera\AutoCam.cs" />
      <Compile Include="Assets\Scripts\Camera\Camera2DFollow.cs" />

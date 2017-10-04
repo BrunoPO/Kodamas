@@ -11,9 +11,21 @@ namespace Prototype.NetworkLobby
     //Any LobbyHook can then grab it and pass those value to the game player prefab (see the Pong Example in the Samples Scenes)
     public class LobbyPlayer : NetworkLobbyPlayer
     {
+		
+		[Header("ChoosePlayerButtons")]
+		public Dictionary<int, int> currentPlayers;
+		public GameObject controle;
+		private Button player1Button;
+		private Button player2Button;
+		private Button player3Button;
+		public int avatarIndex = 0;
+
+		[Header("Lobby Stuf")]
         static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
         //used on server to avoid assigning the same color to two player
         static List<int> _colorInUse = new List<int>();
+
+
 
         public Button colorButton;
         public InputField nameInput;
@@ -96,6 +108,34 @@ namespace Prototype.NetworkLobby
 
         void SetupLocalPlayer()
         {
+
+
+			//Add Listeners to buttons //MeAcha
+			//if (isLocalPlayer) {
+				
+				//controle = GameObject.Find("ChoosePlayer");
+
+				if (controle == null)
+					return;
+				//Button[] buttons = controle.GetComponentsInChildren<Button>();
+
+				player1Button = controle.transform.GetChild (0).GetComponent<Button>() ;
+				player2Button = controle.transform.GetChild (1).GetComponent<Button>() ;
+				player3Button = controle.transform.GetChild (2).GetComponent<Button>() ;
+				player1Button.onClick.AddListener (delegate {
+				print("Clicou");
+					AvatarPicker (0);
+				});
+				player2Button.onClick.AddListener (delegate {
+					AvatarPicker (1);
+				});
+				player3Button.onClick.AddListener (delegate {
+					AvatarPicker (2);
+				});
+			//}
+			//End
+
+
             nameInput.interactable = true;
 
             CheckRemoveButton();
@@ -129,6 +169,36 @@ namespace Prototype.NetworkLobby
             //the add button if we reach maxLocalPlayer. We pass 0, as it was already counted on OnClientEnterLobby
             if (LobbyManager.s_Singleton != null) LobbyManager.s_Singleton.OnPlayersNumberModified(0);
         }
+
+		public void AvatarPicker(int number)
+		{
+			avatarIndex = number;
+
+			print (avatarIndex + " " + number);
+			if (isServer)
+				RpcAvatarPicked (avatarIndex);
+			else
+				CmdAvatarPicked (avatarIndex);
+
+		}
+
+		[ClientRpc]
+		public void RpcAvatarPicked(int avIndex)
+		{
+			CmdAvatarPicked (avIndex);
+		}
+
+		[Command]
+		public void CmdAvatarPicked(int avIndex)
+		{
+			LobbyManager.s_Singleton.SetPlayerTypeLobby(GetComponent<NetworkIdentity>().connectionToClient, avIndex);
+		}
+
+		public void SetPlayerTypeLobby (NetworkConnection conn, int type)
+		{
+			if (currentPlayers.ContainsKey (conn.connectionId))
+				currentPlayers [conn.connectionId] = type;
+		}
 
         //This enable/disable the remove button depending on if that is the only local player or not
         public void CheckRemoveButton()

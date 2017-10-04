@@ -12,6 +12,7 @@ namespace UnityStandardAssets._2D{
 		private Text m_LifeTxt;
 		private Text m_WinTxt;
 		private bool AfterReset = false;
+		private bool toReset = true;
 
 		[SerializeField] private int ballsIni;
 		[SerializeField] private int lifeIni;
@@ -42,6 +43,9 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void Reset(){
+			if (GameObject.Find ("GM") == null)
+				return;
+			toReset = false;
 			balls = ballsIni;
 			life = lifeIni;
 			GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
@@ -55,13 +59,17 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void Update(){
+			if (toReset)
+				Reset ();
+			
 			if (m_Killed) {
 				GetComponent<Animator> ().SetBool ("Died", true);
 				return;
 			} else 
 				GetComponent<Animator> ().SetBool ("Died", false);
 			
-			
+			if (GameObject.Find ("GM") == null)
+				return;
 			if (GameObject.Find ("GM").GetComponent<GMNet> ().m_Reset) {
 				Reset ();
 				return;

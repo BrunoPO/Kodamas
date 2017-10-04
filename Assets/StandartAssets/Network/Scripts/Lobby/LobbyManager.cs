@@ -6,6 +6,7 @@ using UnityEngine.Networking.Types;
 using UnityEngine.Networking.Match;
 using System.Collections;
 using UnityEngine.Networking.NetworkSystem;
+using System.Collections.Generic;
 
 
 namespace Prototype.NetworkLobby
@@ -13,11 +14,13 @@ namespace Prototype.NetworkLobby
     public class LobbyManager : NetworkLobbyManager 
     {
 
+		public Dictionary<int, int> currentPlayers;
+
 		[Header("ChoosePlayerButtons")]
 		public Button player1Button;
 		public Button player2Button;
 		public Button player3Button;
-		private int avatarIndex = 0;
+		public int avatarIndex = 0;
 
 		[Header("Lobby Stuf")]
         static short MsgKicked = MsgType.Highest + 1;
@@ -141,6 +144,8 @@ namespace Prototype.NetworkLobby
 				player3Button.onClick.AddListener (delegate {AvatarPicker ("Player3");});
 			*/
 			//To Make Lobby work
+
+			currentPlayers = new Dictionary<int,int> ();
 
             s_Singleton = this;
             _lobbyHooks = GetComponent<Prototype.NetworkLobby.LobbyHook>();
@@ -359,7 +364,11 @@ namespace Prototype.NetworkLobby
         //But OnLobbyClientConnect isn't called on hosting player. So we override the lobbyPlayer creation
         public override GameObject OnLobbyServerCreateLobbyPlayer(NetworkConnection conn, short playerControllerId)
         {
-            GameObject obj = Instantiate(lobbyPlayerPrefab.gameObject) as GameObject;
+            
+			if (!currentPlayers.ContainsKey (conn.connectionId))
+				currentPlayers.Add (conn.connectionId, 0);
+
+			GameObject obj = Instantiate(lobbyPlayerPrefab.gameObject) as GameObject;
 
             LobbyPlayer newPlayer = obj.GetComponent<LobbyPlayer>();
             newPlayer.ToggleJoinButton(numPlayers + 1 >= minPlayers);
@@ -378,6 +387,26 @@ namespace Prototype.NetworkLobby
 
             return obj;
         }
+
+
+		public void SetPlayerTypeLobby (NetworkConnection conn, int type)
+		{
+			if (currentPlayers.ContainsKey (conn.connectionId))
+				currentPlayers [conn.connectionId] = type;
+		}
+
+		public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
+		{
+			int index = currentPlayers[conn.connectionId];
+
+			GameObject playerPrefab = (GameObject)GameObject.Instantiate(spawnPrefabs[index],
+				startPositions[conn.connectionId].position,
+				Quaternion.identity);
+			return playerPrefab;
+		}
+
+
+
 
         public override void OnLobbyServerPlayerRemoved(NetworkConnection conn, short playerControllerId)
         {
