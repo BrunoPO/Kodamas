@@ -105,6 +105,20 @@ namespace Prototype.NetworkLobby
 
             OnClientReady(false);
         }
+		void Update(){
+			if (isLocalPlayer) {
+				controle = GameObject.Find ("ChoosePlayer");
+
+				if (controle == null)
+					return;
+
+				int c = controle.GetComponent<ChooseChar> ().getChoosed ();
+
+				if (c != avatarIndex) {
+					AvatarPicker (c);
+				}
+			}
+		}
 
         void SetupLocalPlayer()
         {
@@ -113,16 +127,13 @@ namespace Prototype.NetworkLobby
 			//Add Listeners to buttons //MeAcha
 			//if (isLocalPlayer) {
 				
-				//controle = GameObject.Find("ChoosePlayer");
-
-				if (controle == null)
-					return;
+				
 				//Button[] buttons = controle.GetComponentsInChildren<Button>();
 
-				player1Button = controle.transform.GetChild (0).GetComponent<Button>() ;
+				/*player1Button = controle.transform.GetChild (0).GetComponent<Button>() ;
 				player2Button = controle.transform.GetChild (1).GetComponent<Button>() ;
-				player3Button = controle.transform.GetChild (2).GetComponent<Button>() ;
-				player1Button.onClick.AddListener (delegate {
+				player3Button = controle.transform.GetChild (2).GetComponent<Button>() ;*/
+				/*player1Button.onClick.AddListener (delegate {
 				print("Clicou");
 					AvatarPicker (0);
 				});
@@ -131,7 +142,7 @@ namespace Prototype.NetworkLobby
 				});
 				player3Button.onClick.AddListener (delegate {
 					AvatarPicker (2);
-				});
+				});*/
 			//}
 			//End
 

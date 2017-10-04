@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Atk1.cs" />
+     <Compile Include="Assets\ChooseChar.cs" />
      <Compile Include="Assets\Controles\ControleVirtual.cs" />
      <Compile Include="Assets\Controles\moverBoneco.cs" />
      <Compile Include="Assets\ControleVars.cs" />

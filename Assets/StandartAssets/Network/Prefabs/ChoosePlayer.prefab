@@ -89,6 +89,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224996265744812138}
+  - component: {fileID: 114380646020461104}
   m_Layer: 5
   m_Name: ChoosePlayer
   m_TagString: Untagged
@@ -377,6 +378,17 @@ MonoBehaviour:
   m_Text: 'Blue
 
 '
+--- !u!114 &114380646020461104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1512302437454904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e7a00d22e394c55b9c5541c95a65fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114455926446851906
 MonoBehaviour:
   m_ObjectHideFlags: 1
