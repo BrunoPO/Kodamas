@@ -25,7 +25,9 @@ namespace UnityStandardAssets._2D{
 		[SyncVar] public bool m_Killed = false;
 
 		void Start(){
+			
 			GetComponent<PlatformerCharacter2D>().IniPoint = transform.position;
+
 			if (isLocalPlayer) {
 				m_StonesTxt = Camera.main.GetComponent<Camera2DFollow>().m_StonesTxt;
 				m_LifeTxt = Camera.main.GetComponent<Camera2DFollow>().m_LifeTxt;

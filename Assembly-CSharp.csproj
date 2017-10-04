@@ -51,18 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Atk1.cs" />
-     <Compile Include="Assets\ChooseChar.cs" />
      <Compile Include="Assets\Controles\ControleVirtual.cs" />
      <Compile Include="Assets\Controles\moverBoneco.cs" />
-     <Compile Include="Assets\ControleVars.cs" />
-     <Compile Include="Assets\ExibirIP.cs" />
-     <Compile Include="Assets\GM.cs" />
-     <Compile Include="Assets\GMNet.cs" />
-     <Compile Include="Assets\MyNetworkManager.cs" />
-     <Compile Include="Assets\MyNetworkManagerScript.cs" />
-     <Compile Include="Assets\Passagem.cs" />
-     <Compile Include="Assets\PlayerPrefab.cs" />
      <Compile Include="Assets\Scripts\Camera\AbstractTargetFollower.cs" />
      <Compile Include="Assets\Scripts\Camera\AutoCam.cs" />
      <Compile Include="Assets\Scripts\Camera\Camera2DFollow.cs" />
@@ -73,7 +63,15 @@
      <Compile Include="Assets\Scripts\Char\Platformer2DUserControl.cs" />
      <Compile Include="Assets\Scripts\Char\PlatformerCharacter2D.cs" />
      <Compile Include="Assets\Scripts\Char\RobotDieScript.cs" />
+     <Compile Include="Assets\Scripts\Controle\Atk1.cs" />
+     <Compile Include="Assets\Scripts\Controle\ControleVars.cs" />
+     <Compile Include="Assets\Scripts\MyNetworkManagerScript.cs" />
      <Compile Include="Assets\Scripts\ParticulaStone\particulaStone.cs" />
+     <Compile Include="Assets\Scripts\Scene\ChooseChar.cs" />
+     <Compile Include="Assets\Scripts\Scene\ExibirIP.cs" />
+     <Compile Include="Assets\Scripts\Scene\GM.cs" />
+     <Compile Include="Assets\Scripts\Scene\GMNet.cs" />
+     <Compile Include="Assets\Scripts\Scene\Passagem.cs" />
      <Compile Include="Assets\Scripts\Scene\Restarter.cs" />
      <Compile Include="Assets\Scripts\Stone\BallCollision.cs" />
      <Compile Include="Assets\Scripts\Stone\BallParticleDestroy.cs" />

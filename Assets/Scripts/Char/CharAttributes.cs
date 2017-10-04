@@ -12,6 +12,7 @@ namespace UnityStandardAssets._2D{
 		private Text m_LifeTxt;
 		private Text m_WinTxt;
 		private bool AfterReset = false;
+		private bool toReset = true;
 
 		[SerializeField] private int ballsIni;
 		[SerializeField] private int lifeIni;
@@ -33,7 +34,7 @@ namespace UnityStandardAssets._2D{
 				m_WinTxt = Camera.main.GetComponent<Camera2DFollow>().m_WinTxt;
 				SetStonesText (balls);
 				SetLifeText (life);
-				m_WinTxt.text = "";
+				m_WinTxt.enabled = false;
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 
 			}
@@ -47,25 +48,33 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void Reset(){
-			
-
+			if (GameObject.Find ("GM") == null)
+				return;
+			toReset = false;
 			balls = ballsIni;
 			life = lifeIni;
 			GameObject.Find ("GM").GetComponent<GM> ().PlayerIn (gameObject);
 			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
-			AfterReset = true;
 			if (isLocalPlayer) {
+				AfterReset = true;
 				clearTxt ();
+				m_StonesTxt.enabled = true;
+				m_LifeTxt.enabled = true;
 			}
-
 		}
 
 		private void Update(){
+			if (toReset)
+				Reset ();
+
 			if (m_Killed) {
 				GetComponent<Animator> ().SetBool ("Died", true);
 				return;
-			}else
+			} else
 				GetComponent<Animator> ().SetBool ("Died", false);
+			
+			if (GameObject.Find ("GM") == null)
+				return;
 			if (GameObject.Find ("GM").GetComponent<GM> ().m_Reset) {
 				Reset ();
 				return;
@@ -88,7 +97,6 @@ namespace UnityStandardAssets._2D{
 					}
 				}
 			}
-
 		}
 
 		public void RpcResetInitPoint(){
@@ -128,6 +136,9 @@ namespace UnityStandardAssets._2D{
 			m_WinTxt.text = "";
 			m_StonesTxt.text = "";
 			m_LifeTxt.text = "";
+			m_WinTxt.enabled = false;
+			m_StonesTxt.enabled = false;
+			m_LifeTxt.enabled = false;
 		}
 
 		public int getHash(){

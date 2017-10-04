@@ -1,6 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Scene/GM.cs">
+    <Files>
+      <File FileName="Assets/StandartAssets/Network/Scripts/Lobby/LobbyPlayer.cs" Line="173" Column="17" />
+      <File FileName="Assets/StandartAssets/Network/Scripts/Lobby/LobbyManager.cs" Line="401" Column="3" />
+      <File FileName="Assets/Scripts/Char/CharAttributes.cs" Line="138" Column="24" />
+      <File FileName="Assets/Scripts/Char/CharAttributesNet.cs" Line="194" Column="44" />
+      <File FileName="Assets/Scripts/Scene/GM.cs" Line="9" Column="3" />
+      <File FileName="Assets/Scripts/Scene/GMNet.cs" Line="5" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
