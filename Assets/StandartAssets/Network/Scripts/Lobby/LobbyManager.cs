@@ -7,19 +7,21 @@ using UnityEngine.Networking.Match;
 using System.Collections;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections.Generic;
-
+//using UnityEngine.SceneManagement;
 
 namespace Prototype.NetworkLobby
 {
     public class LobbyManager : NetworkLobbyManager 
     {
+		public string[] nameScenesToLoad;
 
+		//public scene[] cenas; 
 		public Dictionary<int, int> currentPlayers;
 
-		[Header("ChoosePlayerButtons")]
+		/*[Header("ChoosePlayerButtons")]
 		public Button player1Button;
 		public Button player2Button;
-		public Button player3Button;
+		public Button player3Button;*/
 		public int avatarIndex = 0;
 
 		[Header("Lobby Stuf")]
@@ -64,6 +66,12 @@ namespace Prototype.NetworkLobby
         protected LobbyHook _lobbyHooks;
 
 
+
+
+		public void ChangeScene(int s){
+			if(nameScenesToLoad != null && nameScenesToLoad[s] != null)
+				playScene = nameScenesToLoad[s];
+		}
 		/*---------
 		 * Choose Player Bellow Here 
 		void AvatarPicker(string buttonName)
@@ -145,6 +153,10 @@ namespace Prototype.NetworkLobby
 			*/
 			//To Make Lobby work
 
+			
+			//print (playScene);
+			if(nameScenesToLoad.Length >0)
+				playScene = nameScenesToLoad[0];
 			currentPlayers = new Dictionary<int,int> ();
 
             s_Singleton = this;

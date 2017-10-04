@@ -6,17 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Main.unity
+    path: Assets/Scenes/Local/Main.unity
     guid: 7c9a2bb8185204a79b7674601efd87ea
   - enabled: 0
-    path: Assets/Scenes/Net.unity
+    path: Assets/Scenes/Net/NoLobby/Net.unity
     guid: a3268414318814f619dee39eb3aa2bd8
   - enabled: 0
-    path: Assets/Scenes/Scene_0Net.unity
+    path: Assets/Scenes/Net/Lobby1/Scene_0Net.unity
     guid: 79de0738aeb834a0893efc6d6bea0432
   - enabled: 1
-    path: Assets/Scenes/Lobby.unity
+    path: Assets/Scenes/Net/Lobby2/Lobby.unity
     guid: c38cbe16c11674373ba87de662e51219
   - enabled: 1
-    path: Assets/Scenes/Fase0_Net.unity
+    path: Assets/Scenes/Net/Lobby2/Fase0_Net.unity
     guid: 483ec7e6ea1514f10a58aefd4c8377ce
+  - enabled: 1
+    path: Assets/Scenes/Net/Lobby2/Fase1_Net.unity
+    guid: 0600ea5fad5c94efdbff6a206020c153
