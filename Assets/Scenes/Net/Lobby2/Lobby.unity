@@ -4092,6 +4092,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1792538518}
+  - component: {fileID: 1792538519}
+  - component: {fileID: 1792538520}
   m_Layer: 5
   m_Name: ChooseScene
   m_TagString: Untagged
@@ -4120,6 +4122,49 @@ RectTransform:
   m_AnchoredPosition: {x: 19.5, y: 5.600006}
   m_SizeDelta: {x: 786, y: 288.8}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1792538519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1792538517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7167a383941d34febaa145ca48166ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1792538520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1792538517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 36
+    i1: 30
+    i2: 124
+    i3: 40
+    i4: 238
+    i5: 196
+    i6: 68
+    i7: 51
+    i8: 59
+    i9: 143
+    i10: 58
+    i11: 104
+    i12: 195
+    i13: 140
+    i14: 92
+    i15: 182
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &1849356216
 GameObject:
   m_ObjectHideFlags: 0
