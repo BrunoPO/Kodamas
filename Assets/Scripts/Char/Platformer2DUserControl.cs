@@ -37,11 +37,12 @@ namespace UnityStandardAssets._2D
 				SoulStone = m_Attributes.SoulStone;
 			print (SoulStone);
 
-			GameObject m_Controle = GameObject.Find ("Controle");
-			if (m_Controle != null)
+			GameObject m_Controle= GameObject.Find ("Controle");
+			if (m_Controle != null) {
 				m_ControleVars = m_Controle.GetComponent<ControleVars> ();
-			else
+			}else
 				GetComponent<PlatformerCharacter2D> ().m_JumpForce *= 2;
+			print ("Teste controle:"+(m_ControleVars == null));
 		}
 
 		private void Update() {
@@ -49,20 +50,25 @@ namespace UnityStandardAssets._2D
 			bool crouch = false;
 			float h,v;
 			if (m_ControleVars == null) {
+				//print ("Entrou");
 				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
-					m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
+					m_Jump = Input.GetButtonDown ("Jump");
 				}
+				//print ("pt1"+m_Jump);
 				//sprint = CrossPlatformInputManager.GetButton ("Fire3");
-				h = CrossPlatformInputManager.GetAxis ("Horizontal");
-				v = CrossPlatformInputManager.GetAxis ("Vertical");
+				h = Input.GetAxis ("Horizontal");
+				v = Input.GetAxis ("Vertical");
+				//print ("pt2"+h+" "+v);
+				//print(h+" "+v);
 				atck = Input.GetKey(KeyCode.LeftControl);
+				//print ("pt3"+atck);
 			} else {
 				//sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
 				h = m_ControleVars.getHorizontal (); //CrossPlatformInputManager.GetAxis("Horizontal");
 				v = m_ControleVars.getVertical ();//CrossPlatformInputManager.GetAxis("Vertical");
 				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
 					m_Jump = m_ControleVars.getPulo ();//m_Jump = (v > 0.75f);//CrossPlatformInputManager.GetButtonDown("Jump");
-					//m_Jump = CrossPlatformInputManager.GetButtonDown ("Jump");
+					//m_Jump = Input.GetButtonDown ("Jump");
 				}
 				atck = m_ControleVars.getAtk ();
 			}

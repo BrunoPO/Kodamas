@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Btn_pulo.cs" />
      <Compile Include="Assets\ChooseScene.cs" />
      <Compile Include="Assets\Controles\ControleVirtual.cs" />
      <Compile Include="Assets\Controles\moverBoneco.cs" />

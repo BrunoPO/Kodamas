@@ -33,8 +33,8 @@ namespace UnityStandardAssets._2D{
 				m_StonesTxt = Camera.main.GetComponent<Camera2DFollow>().m_StonesTxt;
 				m_LifeTxt = Camera.main.GetComponent<Camera2DFollow>().m_LifeTxt;
 				m_WinTxt = Camera.main.GetComponent<Camera2DFollow>().m_WinTxt;
-				SetStonesText (balls);
 				SetLifeText (life);
+				SetStonesText (balls);
 				m_WinTxt.enabled = false;
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 				//GetComponent<Platformer2DUserControl> ().IniPoint = transform.position;
@@ -46,18 +46,21 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void Reset(){
-			if (GameObject.Find ("GM") == null)
-				return;
 			toReset = false;
 			balls = ballsIni;
 			life = lifeIni;
-			GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
 			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 			if (isLocalPlayer) {
 				AfterReset = true;
 				clearTxt ();
 				m_StonesTxt.enabled = true;
 				m_LifeTxt.enabled = true;
+			}
+			if (isServer) {
+				if (GameObject.Find ("GM") == null)
+					toReset = true;
+				else
+					GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
 			}
 		}
 
@@ -115,6 +118,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void SetLifeText(int i){
+			print ("Teste Text:"+i);
 			m_LifeTxt.text = "Life:" + i;
 		}
 

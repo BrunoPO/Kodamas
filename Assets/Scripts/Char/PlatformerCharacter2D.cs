@@ -18,6 +18,7 @@ namespace UnityStandardAssets._2D
 
 		public Vector3 IniPoint;
 		//[HideInInspector]
+		private float k_jumpWallForce;
 		private bool isNet;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -40,12 +41,14 @@ namespace UnityStandardAssets._2D
 			m_Anim = GetComponent<Animator>();
 			m_Rigidbody2D = GetComponent<Rigidbody2D>();
 			counterSprint = forcaSprint;
+			k_jumpWallForce = m_MaxSpeed*m_JumpForce/20;
 
 			isNet = (GetComponent<CharAttributesNet> () != null);
 			if(isNet)
 				m_AttributesNet = GetComponent<CharAttributesNet> ();
 			else
 				m_Attributes = GetComponent<CharAttributes> ();
+			
 		}
 
 		private bool isFacingRight(){
@@ -120,7 +123,7 @@ namespace UnityStandardAssets._2D
 				colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsWall);
 			else
 				colliders = collidersOnChest;
-			m_OnWall = (colliders != null && (colliders.Length > 0));
+			m_OnWall = (collidersOnChest != null && (collidersOnChest.Length > 0));
 
 			m_Anim.SetBool ("Ground", m_Grounded);
 			if(!m_Grounded){
@@ -179,26 +182,40 @@ namespace UnityStandardAssets._2D
                 move = (crouch ? move*m_CrouchSpeed : move);
 
                 // Move the character
-				if (m_Grounded && m_OnWall && move != 0) {
+				print("move:"+Mathf.Abs(move));
+				//print("m_OnWall:"+m_OnWall);
+				if (m_Grounded && m_OnWall) {
+					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
+					/* if (!hasWalls){
+						m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
+					}*/
+				} else if (m_OnWall && Mathf.Abs (move) > 0.3f && jump) {
 					bool hasWalls = false;
 					for (int i = 0; i < collidersOnChest.Length; i++) {
-						if (move > 0) {
-							if (collidersOnChest [i].transform.position.x - transform.position.x > 0) {
-								hasWalls = true;
-								break;
-							}
-						} else if (transform.position.x - collidersOnChest [i].transform.position.x > 0) {
+						if (move > 0.3f && collidersOnChest [i].transform.position.x - transform.position.x > 0) {
+							hasWalls = true;
+							break;
+						} else if (move < -0.3f && transform.position.x - collidersOnChest [i].transform.position.x > 0) {
 							hasWalls = true;
 							break;
 						}
 					}
 
-					if (hasWalls) {
-						move = 0;
+					if (hasWalls && !m_Grounded) {
+						m_Grounded = false;
+						m_Anim.SetBool ("Ground", false);
+						//isLeft = (collidersOnChest [0].transform.position.x < transform.position.x)
+						//-m_Rigidbody2D.velocity.x * 5
+						//print("Force out of wall = "+(Mathf.CeilToInt(move)*-1)*m_JumpForce/5);
+						if (move > 0) {
+							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce , m_JumpForce / 40), ForceMode2D.Impulse);
+						} else {
+							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce , m_JumpForce / 40), ForceMode2D.Impulse);
+						}
 					} else {
 						m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
 					}
-				} else {
+				}else {
 					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
 				}
 
@@ -211,7 +228,7 @@ namespace UnityStandardAssets._2D
 				m_Grounded = false;
 				m_Anim.SetBool ("Ground", false);
 				m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
-			} else if (jump) {
+			} /*else if (jump) {
 				if (m_OnWall && (move > 0.3f || move < -0.3f)) {
 					m_Grounded = false;
 					m_Anim.SetBool ("Ground", false);//-m_Rigidbody2D.velocity.x * 5

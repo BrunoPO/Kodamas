@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Atk1 : MonoBehaviour, IPointerDownHandler,IPointerUpHandler {
+public class Btn_pulo : MonoBehaviour, IPointerDownHandler,IPointerUpHandler {
 
 	public GameObject controle;
 	public void OnPointerDown(PointerEventData eventData){
 		//Debug.Log ("Apertou");
-		controle.GetComponent<ControleVars> ().alterAtk (true);
+		controle.GetComponent<ControleVars> ().alterPulo (true);
 	}
 	public void OnPointerUp(PointerEventData eventData){
 		//Debug.Log ("Apertou");
-		controle.GetComponent<ControleVars> ().alterAtk (false);
+		controle.GetComponent<ControleVars> ().alterPulo (false);
 	}
 }

@@ -39,7 +39,7 @@ namespace UnityStandardAssets._2D{
 
 			}
 			GameObject CP = GameObject.Find("ChoosePlayer");
-			print (CP);
+			//print (CP);
 			if(CP != null){
 				CP.SetActive (false);//   .enabled = false;
 				print (CP.active);
