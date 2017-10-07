@@ -118,7 +118,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void SetLifeText(int i){
-			print ("Teste Text:"+i);
+			//print ("Teste Text:"+i);
 			m_LifeTxt.text = "Life:" + i;
 		}
 

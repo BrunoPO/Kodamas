@@ -41,7 +41,7 @@ namespace UnityStandardAssets._2D
 			if (m_Controle != null) {
 				m_ControleVars = m_Controle.GetComponent<ControleVars> ();
 			}else
-				GetComponent<PlatformerCharacter2D> ().m_JumpForce *= 2;
+				GetComponent<PlatformerCharacter2D> ().m_JumpForce *= 4.5f;
 			print ("Teste controle:"+(m_ControleVars == null));
 		}
 
@@ -57,12 +57,14 @@ namespace UnityStandardAssets._2D
 				//print ("pt1"+m_Jump);
 				//sprint = CrossPlatformInputManager.GetButton ("Fire3");
 				h = Input.GetAxis ("Horizontal");
+
 				v = Input.GetAxis ("Vertical");
 				//print ("pt2"+h+" "+v);
 				//print(h+" "+v);
 				atck = Input.GetKey(KeyCode.LeftControl);
 				//print ("pt3"+atck);
 			} else {
+				print (m_Jump = m_ControleVars.getPulo ());
 				//sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
 				h = m_ControleVars.getHorizontal (); //CrossPlatformInputManager.GetAxis("Horizontal");
 				v = m_ControleVars.getVertical ();//CrossPlatformInputManager.GetAxis("Vertical");

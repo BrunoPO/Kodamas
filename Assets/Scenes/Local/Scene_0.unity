@@ -745,7 +745,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1272483334217556, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224038073252622882, guid: 30b622b6540624d6f8d612e9ed2de0ed,
         type: 2}
@@ -1439,17 +1439,7 @@ Prefab:
     - target: {fileID: 114631142567348056, guid: a5462d1250a814578932f2da6e2284d1,
         type: 2}
       propertyPath: m_JumpForce
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 114631142567348056, guid: a5462d1250a814578932f2da6e2284d1,
-        type: 2}
-      propertyPath: m_MaxSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114631142567348056, guid: a5462d1250a814578932f2da6e2284d1,
-        type: 2}
-      propertyPath: m_CrouchSpeed
-      value: 0
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
@@ -2243,11 +2233,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.99
+      value: -7.62
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.08
+      value: 4.29
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2315,6 +2305,10 @@ Prefab:
         type: 2}
       propertyPath: m_JumpForce
       value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5462d1250a814578932f2da6e2284d1, type: 2}

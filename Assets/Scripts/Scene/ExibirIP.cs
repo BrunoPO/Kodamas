@@ -9,7 +9,6 @@ public class ExibirIP : NetworkBehaviour {
 		this.GetComponent<Text>().text = Network.player.ipAddress;
 	}
 	void Update(){
-		if(this.GetComponent<Text>().text == "")
-			this.GetComponent<Text>().text = Network.player.ipAddress;
+		 this.GetComponent<Text>().text = Network.player.ipAddress;
 	}
 }

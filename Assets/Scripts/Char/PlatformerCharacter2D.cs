@@ -41,7 +41,9 @@ namespace UnityStandardAssets._2D
 			m_Anim = GetComponent<Animator>();
 			m_Rigidbody2D = GetComponent<Rigidbody2D>();
 			counterSprint = forcaSprint;
-			k_jumpWallForce = m_MaxSpeed*m_JumpForce/20;
+
+			k_jumpWallForce = (m_MaxSpeed*m_JumpForce)/60; //75
+			print (k_jumpWallForce);
 
 			isNet = (GetComponent<CharAttributesNet> () != null);
 			if(isNet)
@@ -49,6 +51,10 @@ namespace UnityStandardAssets._2D
 			else
 				m_Attributes = GetComponent<CharAttributes> ();
 			
+		}
+		private void Start(){
+			if (GameObject.Find ("Controle") == null)
+				k_jumpWallForce *= 4;
 		}
 
 		private bool isFacingRight(){
@@ -182,7 +188,7 @@ namespace UnityStandardAssets._2D
                 move = (crouch ? move*m_CrouchSpeed : move);
 
                 // Move the character
-				print("move:"+Mathf.Abs(move));
+				//print("move:"+Mathf.Abs(move));
 				//print("m_OnWall:"+m_OnWall);
 				if (m_Grounded && m_OnWall) {
 					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
@@ -208,9 +214,9 @@ namespace UnityStandardAssets._2D
 						//-m_Rigidbody2D.velocity.x * 5
 						//print("Force out of wall = "+(Mathf.CeilToInt(move)*-1)*m_JumpForce/5);
 						if (move > 0) {
-							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce , m_JumpForce / 40), ForceMode2D.Impulse);
+							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
 						} else {
-							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce , m_JumpForce / 40), ForceMode2D.Impulse);
+							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
 						}
 					} else {
 						m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);

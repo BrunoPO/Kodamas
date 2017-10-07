@@ -19,8 +19,10 @@ public class ControleVars : MonoBehaviour {
 		atk = b;
 	}
 	public void alterPulo(bool b){
-		pulo = b;
-		//buttonPuloDelay = 10;
+		if (b) {
+			pulo = true;
+			buttonPuloDelay = 10;
+		}
 	}
 
 	public bool getAtk(){
@@ -33,7 +35,7 @@ public class ControleVars : MonoBehaviour {
 	[SerializeField] private GameObject control;
 
 	public float getHorizontal(){
-		print ("Horizontal:" + control.GetComponent<ControleVirtual> ().Horizontal ());
+		//print ("Horizontal:" + control.GetComponent<ControleVirtual> ().Horizontal ());
 		return control.GetComponent<ControleVirtual>().Horizontal ();
 	}
 	public float getVertical(){
@@ -42,11 +44,11 @@ public class ControleVars : MonoBehaviour {
 
 	private void Update(){
 		//print (ButtonAtk.);
-		/*if (buttonPuloDelay > 0) {
+		if (buttonPuloDelay > 0) {
 			buttonPuloDelay--;
 		}else if(pulo){
 			pulo = false;
-		}*/
+		}
 	}
 
 }

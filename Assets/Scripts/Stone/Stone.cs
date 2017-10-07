@@ -61,13 +61,13 @@ namespace UnityStandardAssets._2D{
 
 		public void rotacionar(Collider2D col){
 			//Debug para identificar quais inimigos foram encontrados;
-			Debug.DrawRay(transform.position, col.transform.position-transform.position, Color.white);
+			Debug.DrawRay(transform.position, col.transform.position, Color.white);
 			Vector3 dif;
 			Quaternion r = transform.rotation;
 			if (indexSeno < 10)
 				indexSeno = 5;
 			r.SetFromToRotation (transform.position, col.transform.position-transform.position);
-			dif = (r.eulerAngles - transform.rotation.eulerAngles)/100;
+			dif = ( transform.rotation.eulerAngles-r.eulerAngles)/500;
 			dif += transform.rotation.eulerAngles;
 			transform.rotation = Quaternion.Euler(dif);
 			if(Commented) print (col.transform.position);
