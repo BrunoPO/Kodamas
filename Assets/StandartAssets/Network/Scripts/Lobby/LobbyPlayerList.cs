@@ -16,9 +16,11 @@ namespace Prototype.NetworkLobby
         protected VerticalLayoutGroup _layout;
         protected List<LobbyPlayer> _players = new List<LobbyPlayer>();
 
-        public void OnEnable()
+		public GameObject Scn_ChooseChar;
+
+		public void OnEnable()
         {
-            _instance = this;
+			_instance = this;
             _layout = playerListContentTransform.GetComponent<VerticalLayoutGroup>();
         }
 

@@ -64,7 +64,7 @@ namespace UnityStandardAssets._2D
 				atck = Input.GetKey(KeyCode.LeftControl);
 				//print ("pt3"+atck);
 			} else {
-				print (m_Jump = m_ControleVars.getPulo ());
+				//print (m_Jump = m_ControleVars.getPulo ());
 				//sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
 				h = m_ControleVars.getHorizontal (); //CrossPlatformInputManager.GetAxis("Horizontal");
 				v = m_ControleVars.getVertical ();//CrossPlatformInputManager.GetAxis("Vertical");

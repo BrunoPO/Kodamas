@@ -9,10 +9,10 @@ namespace UnityStandardAssets._2D{
 		void OnTriggerEnter2D(Collider2D col) {
 			if (col.GetComponent<Rigidbody2D> () == null)//testa se o objeto que está sendo verificado é a raiz
 				return;
-			print (col);
+			//print (col);
 			if (col.tag == "Player") {
 				Rigidbody2D rigid = col.GetComponent<Rigidbody2D> ();
-				print ("Pass Colide Y:"+rigid.velocity.y+"X:"+rigid.velocity.x);
+				//print ("Pass Colide Y:"+rigid.velocity.y+"X:"+rigid.velocity.x);
 				if (cima && rigid.velocity.y > 0) {
 					col.transform.position = to.transform.position;
 				} else if (baixo && rigid.velocity.y < 0) {

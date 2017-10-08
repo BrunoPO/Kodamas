@@ -349,7 +349,7 @@ MonoBehaviour:
   unlimitedBalls: 0
   SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
   ballsIni: 3
-  lifeIni: 6
+  lifeIni: 1
   wasKilled: 0
   m_FacingRight: 1
   m_Killed: 0

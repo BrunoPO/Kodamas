@@ -15,6 +15,7 @@ namespace Prototype.NetworkLobby
 		[Header("ChoosePlayerButtons")]
 		public Dictionary<int, int> currentPlayers;
 		public GameObject controle;
+		public GameObject Scn_ChooseChar;
 		private Button player1Button;
 		private Button player2Button;
 		private Button player3Button;
@@ -25,6 +26,10 @@ namespace Prototype.NetworkLobby
         //used on server to avoid assigning the same color to two player
         static List<int> _colorInUse = new List<int>();
 
+
+
+		public GameObject Scn_ChooseScene;
+		public Button Btn_ChooseScene;
 
 
         public Button colorButton;
@@ -74,12 +79,32 @@ namespace Prototype.NetworkLobby
             OnMyColor(playerColor);
         }
 
+		public void onSceneSelect(){
+			print("Passed");
+			Scn_ChooseScene.SetActive(true);
+		}
+
         public override void OnStartAuthority()
         {
             base.OnStartAuthority();
 
             //if we return from a game, color of text can still be the one for "Ready"
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
+
+			Btn_ChooseScene = GameObject.Find ("SceneButton").GetComponent<Button>();
+			print (Btn_ChooseScene);
+			Scn_ChooseScene = GameObject.Find ("LobbyManager").GetComponent<LobbyManager>().Scn_ChooseScene;
+			if (isServer){
+				SetupOtherPlayer();
+				Btn_ChooseScene.interactable = true;
+				Btn_ChooseScene.onClick.RemoveAllListeners ();
+				Btn_ChooseScene.onClick.AddListener (onSceneSelect);
+			}else{
+				SetupLocalPlayer();
+				Btn_ChooseScene.interactable = false;
+				Btn_ChooseScene.onClick.RemoveAllListeners ();
+			}
+
 
            SetupLocalPlayer();
         }
@@ -107,10 +132,17 @@ namespace Prototype.NetworkLobby
         }
 		void Update(){
 			if (isLocalPlayer) {
-				controle = GameObject.Find ("ChoosePlayer");
+				if (Scn_ChooseChar == null) {
+					Scn_ChooseChar = GameObject.Find ("LobbyPanel").GetComponent<LobbyPlayerList>().Scn_ChooseChar;
+				}
 
-				if (controle == null)
+				if (Scn_ChooseChar == null)
 					return;
+				else {
+					controle = Scn_ChooseChar.transform.GetChild (0).gameObject;
+					if (controle == null)
+						return;
+				}
 
 				int c = controle.GetComponent<ChooseChar> ().getChoosed ();
 
@@ -171,7 +203,7 @@ namespace Prototype.NetworkLobby
             nameInput.onEndEdit.AddListener(OnNameChanged);
 
             colorButton.onClick.RemoveAllListeners();
-            colorButton.onClick.AddListener(OnColorClicked);
+			colorButton.onClick.AddListener(OnCharSelect);
 
             readyButton.onClick.RemoveAllListeners();
             readyButton.onClick.AddListener(OnReadyClicked);
@@ -271,7 +303,11 @@ namespace Prototype.NetworkLobby
 
         //Note that those handler use Command function, as we need to change the value on the server not locally
         //so that all client get the new value throught syncvar
-        public void OnColorClicked()
+		public void OnCharSelect(){
+		print (Scn_ChooseChar);
+			Scn_ChooseChar.SetActive(true);
+		}
+		public void OnColorClicked()
         {
             CmdColorChange();
         }

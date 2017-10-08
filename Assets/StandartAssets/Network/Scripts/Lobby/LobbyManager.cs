@@ -46,6 +46,7 @@ namespace Prototype.NetworkLobby
         protected RectTransform currentPanel;
 
         public Button backButton;
+		public GameObject Scn_ChooseScene;
 
         public Text statusInfo;
         public Text hostInfo;
@@ -65,12 +66,15 @@ namespace Prototype.NetworkLobby
 
         protected LobbyHook _lobbyHooks;
 
+		private int m_SceneNum = 0;
 
 
 
 		public void ChangeScene(int s){
-			if(nameScenesToLoad != null && nameScenesToLoad[s] != null)
-				playScene = nameScenesToLoad[s];
+			if (nameScenesToLoad != null && nameScenesToLoad.Length>s) {
+				m_SceneNum = s;
+				playScene = nameScenesToLoad [s];
+			}
 		}
 		/*---------
 		 * Choose Player Bellow Here 
@@ -448,6 +452,19 @@ namespace Prototype.NetworkLobby
             }
 
         }
+
+		public void m_ServerReturnToLobby(){
+			if (!NetworkServer.active) {
+				Debug.Log ((object)"ServerReturnToLobby called on client");
+			}else {
+				this.ServerChangeScene (this.lobbyScene);
+				//print (m_SceneNum);
+				//print (nameScenesToLoad.Length);
+				int tryNum = (m_SceneNum+1) % nameScenesToLoad.Length;
+				//print (tryNum);
+				this.ChangeScene (tryNum);
+			}
+		}
 
         public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer)
         {

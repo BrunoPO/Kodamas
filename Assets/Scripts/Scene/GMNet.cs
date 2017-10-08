@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Prototype.NetworkLobby;
 
 namespace UnityStandardAssets._2D{
 	public class GMNet : NetworkBehaviour {
 		List<GameObject> m_Players;
 		List<bool> m_PlayersAlive;
-
+		private LobbyManager my_inst;
+		[SerializeField] private int endCount = 5;
 		[SyncVar]
 		public int hashWinner=-1;
 
@@ -19,10 +21,17 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void Start(){
+			endCount *= 60;
+			my_inst = GameObject.Find("LobbyManager").GetComponent<LobbyManager> ();
 			//Camera.main.GetComponent<Camera2DFollow> ().m_WinTxt.text = Network.player.ipAddress;
 		//	print(Network.player.ipAddress);
 		}
-
+		[ClientRpc]
+		void RpcEnded()
+		{
+			my_inst.m_ServerReturnToLobby ();
+			//Debug.Log("Took damage:" + amount);
+		}
 		[ServerCallback]
 		public void Update(){
 			if (m_Reset) {
@@ -37,6 +46,17 @@ namespace UnityStandardAssets._2D{
 				}
 				return;
 			}
+			if (hashWinner != -1) {
+				if(endCount<=0 && isServer){
+					//my_inst.ServerReturnToLobby ();
+
+					endCount = 1000;//Delay para não retornar denovo
+					my_inst.m_ServerReturnToLobby ();
+					//RpcEnded ();
+				}else{
+					endCount--;
+				}
+			}
 			if (Input.GetKeyDown ("\\")) {
 				if (Time.timeScale == 1.0F)
 					Time.timeScale = 0.3F;
@@ -46,6 +66,14 @@ namespace UnityStandardAssets._2D{
 			} else if (Input.GetKey(KeyCode.R)) {
 				print ("R foi apertado");
 				Reset ();
+			}else if (isServer && Input.GetKeyDown(KeyCode.N)) {
+				print ("Get here");
+				//print (my_inst);
+				my_inst.m_ServerReturnToLobby ();
+				//NetworkLobbyManager.ServerReturnToLobby ();
+				//NetworkManager.print()
+				//NetworkManager.Destro
+				//NetworkLobbyManager.networkSceneName = 
 			}
 		}
 

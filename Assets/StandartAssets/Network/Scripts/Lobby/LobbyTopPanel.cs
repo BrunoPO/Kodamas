@@ -34,6 +34,7 @@ namespace Prototype.NetworkLobby
             isDisplayed = visible;
             foreach (Transform t in transform)
             {
+				if(t.name == "BackButton")
                 t.gameObject.SetActive(isDisplayed);
             }
 
