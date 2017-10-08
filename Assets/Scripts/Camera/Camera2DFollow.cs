@@ -51,8 +51,14 @@ namespace UnityStandardAssets._2D
         private void Update()
         {
 			
+			
 			if (target == null) {
 				target = this.transform;
+			}
+			if (target == this.transform) {
+				Camera.main.orthographicSize = 8.1f;
+			} else {
+				Camera.main.orthographicSize = 3f;
 			}
             // only update lookahead pos if accelerating or changed direction
             float xMoveDelta = (target.position - m_LastTargetPosition).x;

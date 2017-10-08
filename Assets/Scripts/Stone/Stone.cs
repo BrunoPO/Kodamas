@@ -61,6 +61,33 @@ namespace UnityStandardAssets._2D{
 
 		public void rotacionar(Collider2D col){
 			//Debug para identificar quais inimigos foram encontrados;
+			Debug.DrawRay(transform.position, transform.position-col.transform.position, Color.white);
+			print (col.transform.position);
+			Vector3 dif;
+			Vector3 r = transform.rotation.eulerAngles;
+			print (r);
+			float alter = 0;
+			if (r.z > 90 || r.z < 270) {
+				if (col.transform.position.y > transform.position.y) {
+					alter = -0.3f;
+				} else if (col.transform.position.y < transform.position.y) {
+					alter = 0.3f;
+				}
+			} else {
+				if (col.transform.position.y > transform.position.y) {
+					alter = 0.3f;
+				} else if (col.transform.position.y < transform.position.y) {
+					alter = -0.3f;
+				}
+			}
+			r.z += alter;
+			if(r.z < 0){
+				r.z = 360-r.z;
+			}
+			transform.rotation = Quaternion.Euler (r);
+		}
+		/*public void rotacionar_old(Collider2D col){
+			//Debug para identificar quais inimigos foram encontrados;
 			Debug.DrawRay(transform.position, col.transform.position, Color.white);
 			Vector3 dif;
 			Quaternion r = transform.rotation;
@@ -71,7 +98,7 @@ namespace UnityStandardAssets._2D{
 			dif += transform.rotation.eulerAngles;
 			transform.rotation = Quaternion.Euler(dif);
 			if(Commented) print (col.transform.position);
-		}
+		}*/
 
 		public void Fire(float peso,int Hash){
 

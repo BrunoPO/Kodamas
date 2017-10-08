@@ -239,8 +239,8 @@ namespace UnityStandardAssets._2D{
 
 			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;
 			inst2.name = "Effect";
-			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
 			NetworkServer.Spawn (inst2);
+			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
 			//ob.transform.rotation = Quaternion.Euler(0, 0, ((m_Character.m_FacingRight)?0:180f));
 		}
 
