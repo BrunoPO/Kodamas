@@ -51,6 +51,13 @@ namespace Prototype.NetworkLobby
         public Text statusInfo;
         public Text hostInfo;
 
+		[SerializeField] private GameObject partyAttributes;
+		private InputField tfLife, tfStone;
+		public int m_quantStones = 3;
+		public int m_quantLife = 3;
+		public int m_tipoDeJogo = 0;
+		public Button Btn_ChooseScene;
+
         //Client numPlayers from NetworkManager is always 0, so we count (throught connect/destroy in LobbyPlayer) the number
         //of players, so that even client know how many player there is.
         [HideInInspector]
@@ -68,7 +75,11 @@ namespace Prototype.NetworkLobby
 
 		private int m_SceneNum = 0;
 
-
+		public void SetValsConf(){
+			m_quantLife = int.Parse(tfLife.text); 
+			m_quantStones = int.Parse(tfStone.text);
+			print ("OK");
+		}
 
 		public void ChangeScene(int s){
 			if (nameScenesToLoad != null && nameScenesToLoad.Length>s) {
@@ -167,7 +178,11 @@ namespace Prototype.NetworkLobby
             _lobbyHooks = GetComponent<Prototype.NetworkLobby.LobbyHook>();
             currentPanel = mainMenuPanel;
 
-            backButton.gameObject.SetActive(false);
+			topPanel.gameObject.SetActive (false);
+	            //backButton.gameObject.SetActive(false);
+			InputField[] Inputs = partyAttributes.GetComponentsInChildren<InputField>();
+			tfLife = Inputs[0];
+			tfStone = Inputs[1];
             GetComponent<Canvas>().enabled = true;
 
             DontDestroyOnLoad(gameObject);
@@ -241,11 +256,14 @@ namespace Prototype.NetworkLobby
 
             if (currentPanel != mainMenuPanel)
             {
-                backButton.gameObject.SetActive(true);
+
+				topPanel.gameObject.SetActive (true);
+                //backButton.gameObject.SetActive(true);
             }
             else
             {
-                backButton.gameObject.SetActive(false);
+				topPanel.gameObject.SetActive (false);
+                //backButton.gameObject.SetActive(false);
                 SetServerInfo("Offline", "None");
                 _isMatchmaking = false;
             }

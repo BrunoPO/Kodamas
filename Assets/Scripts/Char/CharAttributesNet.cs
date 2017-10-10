@@ -14,27 +14,26 @@ namespace UnityStandardAssets._2D{
 		private bool AfterReset = false;
 		private bool toReset = true;
 
-		[SerializeField] private int ballsIni;
-		[SerializeField] private int lifeIni;
+		private GameObject m_GM;
+		private int ballsIni;
+		private int lifeIni;
 		[SerializeField] private bool wasKilled=false;
 
-		[SyncVar] private int balls;//To Private
-		[SyncVar] private int life;//To Private
+		[SyncVar] [SerializeField] private int balls;
+		[SyncVar] [SerializeField] private int life;
 		[SyncVar] public bool m_FacingRight = true;
 
 		[SyncVar] public bool m_Killed = false;
 
-		void Start(){
+		private void Start(){
 			
 			GetComponent<PlatformerCharacter2D>().IniPoint = transform.position;
+
 
 			if (isLocalPlayer) {
 				m_StonesTxt = Camera.main.GetComponent<Camera2DFollow>().m_StonesTxt;
 				m_LifeTxt = Camera.main.GetComponent<Camera2DFollow>().m_LifeTxt;
 				m_WinTxt = Camera.main.GetComponent<Camera2DFollow>().m_WinTxt;
-				SetLifeText (life);
-				SetStonesText (balls);
-				m_WinTxt.enabled = false;
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 				//GetComponent<Platformer2DUserControl> ().IniPoint = transform.position;
 			} else {
@@ -42,24 +41,34 @@ namespace UnityStandardAssets._2D{
 				//GetComponent<PlatformerCharacter2D>().enabled = false;
 			}
 			Reset ();
+
 		}
 
 		private void Reset(){
+			m_GM = GameObject.Find ("GM");
+			if (m_GM == null) {
+				toReset = true;
+				return;
+			}
+
+			GMNet m_GMNet = m_GM.GetComponent<GMNet>();
 			toReset = false;
-			balls = ballsIni;
-			life = lifeIni;
 			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+			balls = ballsIni = m_GMNet.initStones();
+
+			life = m_GMNet.initLife();
+
 			if (isLocalPlayer) {
 				AfterReset = true;
 				clearTxt ();
 				m_StonesTxt.enabled = true;
 				m_LifeTxt.enabled = true;
+				SetLifeText (life);
+				SetStonesText (balls);
+				m_WinTxt.enabled = false;
 			}
 			if (isServer) {
-				if (GameObject.Find ("GM") == null)
-					toReset = true;
-				else
-					GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
+				GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
 			}
 		}
 
@@ -160,7 +169,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public bool gainBall(){
-			if(balls<6){
+			if(balls<ballsIni*2){
 				CmdBallsPlus();
 				return true;
 			}
@@ -205,7 +214,7 @@ namespace UnityStandardAssets._2D{
 			print("Out of death");
 			//m_FacingRight = false;
 
-			balls=3;
+			balls=ballsIni;
 			RpcResetInitPoint();
 			if (isServer) {
 				GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);

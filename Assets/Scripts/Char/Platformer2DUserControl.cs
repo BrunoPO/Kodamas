@@ -17,7 +17,7 @@ namespace UnityStandardAssets._2D
 		private CharAttributesNet m_AttributesNet;
 		private CharAttributes m_Attributes;
 		//[SerializeField] private GameObject m_controle;
-		private ControleVars m_ControleVars;
+		public ControleVars m_ControleVars;
 		private bool isNet = false;
 
 		private GameObject SoulStone;
@@ -103,8 +103,6 @@ namespace UnityStandardAssets._2D
 						m_AttributesNet.CmdSpwnBall (position,rotation,getHash());
 					else
 						m_Attributes.CmdSpwnBall (position,rotation,getHash());
-
-
 				}
 			}else if(getBalls()>0){
 				Ball = this.transform.Find("Ball");

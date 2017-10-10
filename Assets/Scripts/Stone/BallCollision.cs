@@ -48,6 +48,7 @@ namespace UnityStandardAssets._2D{
 					if (col == null || col.GetComponent<Stone>() == null)
 						return;
 					if (col.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
+						col.GetComponent<Stone> ().GetComponentInChildren<BallCollision>().Fall();
 						Fall ();
 					}
 				}else if(col.gameObject.tag == "Ground" || col.gameObject.tag == "Wall"){//Stone acerta o chão
@@ -56,7 +57,7 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
-		void Fall(){
+		public void Fall(){
 			pai.GetComponent<Stone> ().onTheGround = true;
 			pai.tag = "Respawn";
 			pai.layer = 12;

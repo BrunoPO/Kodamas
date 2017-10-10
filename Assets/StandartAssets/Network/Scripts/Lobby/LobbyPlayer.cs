@@ -91,10 +91,12 @@ namespace Prototype.NetworkLobby
             //if we return from a game, color of text can still be the one for "Ready"
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
 
-			Btn_ChooseScene = GameObject.Find ("SceneButton").GetComponent<Button>();
-			print (Btn_ChooseScene);
-			Scn_ChooseScene = GameObject.Find ("LobbyManager").GetComponent<LobbyManager>().Scn_ChooseScene;
+
+			Btn_ChooseScene = GameObject.Find ("LobbyManager").GetComponent<LobbyManager>().Btn_ChooseScene;
+			//print (Btn_ChooseScene);
+
 			if (isServer){
+				Scn_ChooseScene = GameObject.Find ("LobbyManager").GetComponent<LobbyManager>().Scn_ChooseScene;
 				SetupOtherPlayer();
 				Btn_ChooseScene.interactable = true;
 				Btn_ChooseScene.onClick.RemoveAllListeners ();

@@ -43,6 +43,9 @@ namespace UnityStandardAssets._2D
 			counterSprint = forcaSprint;
 
 			k_jumpWallForce = (m_MaxSpeed*m_JumpForce)/60; //75
+			if (GetComponent<Platformer2DUserControl>().m_ControleVars != null)
+				k_jumpWallForce *= 4.5f;
+			
 			print (k_jumpWallForce);
 
 			isNet = (GetComponent<CharAttributesNet> () != null);
@@ -110,9 +113,9 @@ namespace UnityStandardAssets._2D
 				Flip ();
 			}
 
-			if (m_Rigidbody2D.velocity.y < -19) {
-				Vector3 velo = m_Rigidbody2D.velocity;
-				velo.y = -15;
+			Vector3 velo = m_Rigidbody2D.velocity;
+			if (velo.y < -15) {
+				velo.y = -10;
 				m_Rigidbody2D.velocity = velo;
 			}
 
@@ -140,7 +143,9 @@ namespace UnityStandardAssets._2D
 						//print (collider.name);
 						if (collider.name == "Head") {
 							collider.transform.parent.GetComponent<Platformer2DUserControl> ().Killed ();
-							m_Rigidbody2D.AddForce (new Vector3(0,m_JumpForce,0));
+							//m_Rigidbody2D.velocity = Vector3.zero;
+							m_Rigidbody2D.AddForce (new Vector2 (m_Rigidbody2D.velocity.x, m_JumpForce));
+
 							break;
 						}
 					}

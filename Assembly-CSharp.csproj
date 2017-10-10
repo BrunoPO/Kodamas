@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Stone\Stone.cs" />
      <Compile Include="Assets\Scripts\Stone\StoneAttributes.cs" />
      <Compile Include="Assets\Scripts\Stone\StoneAttributesNet.cs" />
+     <Compile Include="Assets\Scripts\Teste.cs" />
      <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
      <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
      <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />

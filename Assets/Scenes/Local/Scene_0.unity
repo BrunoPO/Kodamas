@@ -1591,6 +1591,11 @@ Prefab:
       propertyPath: m_JumpForce
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 114781320743624610, guid: a5462d1250a814578932f2da6e2284d1,
+        type: 2}
+      propertyPath: lifeIni
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
   m_IsPrefabParent: 0
@@ -2533,11 +2538,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.62
+      value: 7.76
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.29
+      value: 1.69
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2609,6 +2614,11 @@ Prefab:
     - target: {fileID: 100002, guid: a5462d1250a814578932f2da6e2284d1, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114781320743624610, guid: a5462d1250a814578932f2da6e2284d1,
+        type: 2}
+      propertyPath: lifeIni
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5462d1250a814578932f2da6e2284d1, type: 2}

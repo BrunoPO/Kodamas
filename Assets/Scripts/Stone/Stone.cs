@@ -17,6 +17,14 @@ namespace UnityStandardAssets._2D{
 			rigid = GetComponent<Rigidbody2D> ();
 		}
 
+		private void Update(){
+			Vector3 velo = rigid.velocity;
+			if(velo.y<-15.0f){
+				velo.y = -10.0f;
+				rigid.velocity = velo;
+			}
+		}
+
 		public bool wasFired(){
 			if (isNet) {
 				return m_attributesNet.fired;
@@ -32,6 +40,7 @@ namespace UnityStandardAssets._2D{
 				m_attributes.SetFired(b);
 			}
 		}
+
 		private void setKill(bool k){
 			if (isNet) {
 				m_attributesNet.kill = k;
@@ -86,6 +95,7 @@ namespace UnityStandardAssets._2D{
 			}
 			transform.rotation = Quaternion.Euler (r);
 		}
+
 		/*public void rotacionar_old(Collider2D col){
 			//Debug para identificar quais inimigos foram encontrados;
 			Debug.DrawRay(transform.position, col.transform.position, Color.white);

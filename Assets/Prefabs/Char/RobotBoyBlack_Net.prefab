@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1867194501561574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 3.27, z: 0}
+  m_LocalPosition: {x: -3.372906, y: 2.3476846, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4184652125861900}
@@ -185,7 +185,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.041352987, y: 0.31014776}
+  m_Offset: {x: 0.041352987, y: 0.40964448}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -196,7 +196,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.36198187, y: 0.27336788}
+  m_Size: {x: 0.36198187, y: 0.05447507}
   m_EdgeRadius: 0
 --- !u!61 &61306337580750658
 BoxCollider2D:
@@ -285,6 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Commented: 0
   autoAttack: 0
+  m_ControleVars: {fileID: 0}
 --- !u!114 &114374410761006778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -364,9 +365,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlimitedBalls: 0
   SoulStone: {fileID: 1655894725787062, guid: 16fcaaa8906864863ae9cad0c395063a, type: 2}
-  ballsIni: 3
-  lifeIni: 1
   wasKilled: 0
+  balls: 0
+  life: 0
   m_FacingRight: 1
   m_Killed: 0
 --- !u!212 &212249147690199850

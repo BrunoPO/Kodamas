@@ -12,20 +12,41 @@ namespace UnityStandardAssets._2D{
 		[SerializeField] private int endCount = 5;
 		[SyncVar]
 		public int hashWinner=-1;
-
 		[SyncVar]
 		public bool m_Reset=false;
+
+		private int m_stones = 0;
+		private int m_lifes = 0;
+
+		private void Awake(){
+			endCount *= 60;
+			my_inst = GameObject.Find("LobbyManager").GetComponent<LobbyManager> ();
+			m_stones = my_inst.m_quantStones;
+			m_lifes = my_inst.m_quantLife;
+			print ("Stones init" + my_inst.m_quantStones);
+			print ("Stones:" + m_stones);
+			//Camera.main.GetComponent<Camera2DFollow> ().m_WinTxt.text = Network.player.ipAddress;
+		//	print(Network.player.ipAddress);
+		}
 
 		public int getHashWinner(){
 			return hashWinner;
 		}
 
-		private void Start(){
-			endCount *= 60;
-			my_inst = GameObject.Find("LobbyManager").GetComponent<LobbyManager> ();
-			//Camera.main.GetComponent<Camera2DFollow> ().m_WinTxt.text = Network.player.ipAddress;
-		//	print(Network.player.ipAddress);
+		public int initStones(){
+			print ("Stones:" + m_stones);
+			return m_stones;
 		}
+		public int initLife(){
+			return m_lifes;
+		}
+
+		[Command]
+		private void CmdSetInit(int iniLife,int iniStone){
+			m_stones = iniStone;
+			m_lifes = iniLife;
+		}
+
 		[ClientRpc]
 		void RpcEnded()
 		{
@@ -51,7 +72,8 @@ namespace UnityStandardAssets._2D{
 					//my_inst.ServerReturnToLobby ();
 
 					endCount = 1000;//Delay para não retornar denovo
-					my_inst.m_ServerReturnToLobby ();
+					my_inst.m_ServerReturnToLobby ();//cai o servidor
+					//RpcEnded();//Avisa ao cliente
 					//RpcEnded ();
 				}else{
 					endCount--;
