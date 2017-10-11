@@ -26,7 +26,7 @@ namespace UnityStandardAssets._2D{
 				if (col.GetComponent<Stone> () == null)
 					return;
 				float rotation = col.transform.rotation.eulerAngles.z;
-				print ("Pass Colide rotation z"+rotation);
+				//print ("Pass Colide rotation z"+rotation);
 				if (cima && 45>rotation && rotation<=135) {
 					col.transform.position = to.transform.position;
 				} else if (baixo && 180>rotation && rotation<=225) {

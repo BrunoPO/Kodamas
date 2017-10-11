@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unlimitedBalls: 0
-  SoulStone: {fileID: 1348178714606170, guid: 3f7db08ae88e041ebabddd4c92150de4, type: 2}
+  SoulStone: {fileID: 1092874576488382, guid: ba142e3a562b64a48a0b6c6372d41b80, type: 2}
   wasKilled: 0
   balls: 0
   life: 0

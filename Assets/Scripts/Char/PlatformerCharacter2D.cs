@@ -107,11 +107,7 @@ namespace UnityStandardAssets._2D
         private void Update()//Fixed?
         {
 			
-			if(transform.rotation.eulerAngles.y == 0 && !isFacingRight()){
-				Flip ();
-			}else if(transform.rotation.eulerAngles.y == 180 && isFacingRight()){
-				Flip ();
-			}
+
 
 			Vector3 velo = m_Rigidbody2D.velocity;
 			if (velo.y < -15) {

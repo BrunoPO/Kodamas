@@ -17,18 +17,21 @@ namespace UnityStandardAssets._2D{
 		private GameObject m_GM;
 		private int ballsIni;
 		private int lifeIni;
+		private Animator m_Anim;
 		[SerializeField] private bool wasKilled=false;
 
 		[SyncVar] [SerializeField] private int balls;
 		[SyncVar] [SerializeField] private int life;
-		[SyncVar] public bool m_FacingRight = true;
+		[SyncVar(hook = "OnChangeFacing")] public bool m_FacingRight = true;
 
-		[SyncVar] public bool m_Killed = false;
+		[SyncVar(hook = "OnKilled")] public bool m_Killed = false;
+
+		PlatformerCharacter2D m_PlatChar2D;
 
 		private void Start(){
-			
-			GetComponent<PlatformerCharacter2D>().IniPoint = transform.position;
-
+			m_PlatChar2D = GetComponent<PlatformerCharacter2D> ();
+			m_PlatChar2D.IniPoint = transform.position;
+			m_Anim = GetComponent<Animator> ();
 
 			if (isLocalPlayer) {
 				m_StonesTxt = Camera.main.GetComponent<Camera2DFollow>().m_StonesTxt;
@@ -38,10 +41,45 @@ namespace UnityStandardAssets._2D{
 				//GetComponent<Platformer2DUserControl> ().IniPoint = transform.position;
 			} else {
 				GetComponent<Platformer2DUserControl>().enabled = false;
-				//GetComponent<PlatformerCharacter2D>().enabled = false;
+				//m_PlatChar2D.enabled = false;
 			}
 			Reset ();
 
+		}
+
+		private void OnChangeFacing(bool newBool){
+			if(transform.rotation.eulerAngles.y == 0 && !newBool){
+				m_PlatChar2D.Flip ();
+			}else if(transform.rotation.eulerAngles.y == 180 && newBool){
+				m_PlatChar2D.Flip ();
+			}
+		}
+
+		private void OnKilled(bool newBool){
+
+			print (m_Killed +" "+ newBool);
+
+			if (m_Killed == newBool)
+				return;
+			m_Killed = newBool;
+			m_Anim.SetBool ("Died", newBool);
+			if (!newBool) {
+				gameObject.GetComponent<SpriteRenderer> ().enabled = false; 
+				GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+				transform.position = m_PlatChar2D.IniPoint;
+				wasKilled = true;
+				if (isServer) {
+					CmdLifeMinus ();
+					balls=ballsIni;
+				}
+				//m_FacingRight = false;
+				/*RpcResetInitPoint();
+				/*if (isServer) {
+					GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
+					transform.position = m_PlatChar2D.IniPoint;
+					//CmdShow ();
+				}*/
+			}
 		}
 
 		private void Reset(){
@@ -73,14 +111,10 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void Update(){
+			if(wasKilled && m_Anim.GetBool("Ground"))
+				gameObject.GetComponent<SpriteRenderer> ().enabled = true; 
 			if (toReset)
 				Reset ();
-			
-			if (m_Killed) {
-				GetComponent<Animator> ().SetBool ("Died", true);
-				return;
-			} else 
-				GetComponent<Animator> ().SetBool ("Died", false);
 			
 			if (GameObject.Find ("GM") == null)
 				return;
@@ -111,8 +145,6 @@ namespace UnityStandardAssets._2D{
 		[ClientRpc] public void RpcResetInitPoint(){
 			if (!isLocalPlayer)
 				return;
-			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
-			transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
 			//gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 			CmdShow();
 		}
@@ -136,7 +168,7 @@ namespace UnityStandardAssets._2D{
 				m_WinTxt.enabled = true;
 				m_WinTxt.text = "You Lose";
 				GetComponent<Platformer2DUserControl>().enabled = false;
-				GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
+				m_PlatChar2D.Move (0, false, false, false);
 			}
 		}
 
@@ -146,7 +178,7 @@ namespace UnityStandardAssets._2D{
 				m_WinTxt.enabled = true;
 				m_WinTxt.text = "You Won";
 				GetComponent<Platformer2DUserControl>().enabled = false;
-				GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
+				m_PlatChar2D.Move (0, false, false, false);
 			}
 		}
 		public void clearTxt(){
@@ -195,7 +227,6 @@ namespace UnityStandardAssets._2D{
 		[Command] public void CmdKilled(){
 			print("Called Killed");
 			m_Killed = true;
-			CmdLifeMinus ();
 		}
 		public void ResetAttributes(){
 			//if (isLocalPlayer && !isServer) {
@@ -208,19 +239,8 @@ namespace UnityStandardAssets._2D{
 			/*if (!isServer)
 				return;*/
 			//GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
-			//transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
+			//transform.position = m_PlatChar2D.IniPoint;
 			m_Killed = false;
-			gameObject.GetComponent<SpriteRenderer> ().enabled = false; 
-			print("Out of death");
-			//m_FacingRight = false;
-
-			balls=ballsIni;
-			RpcResetInitPoint();
-			if (isServer) {
-				GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
-				transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
-				//CmdShow ();
-			}
 
 		}
 
@@ -229,14 +249,14 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void InvertFlip(){
-			if(!isServer)
+			if (isLocalPlayer) {
 				m_FacingRight = !m_FacingRight;
-		
-			CmdInvertFlip ();
+				CmdInvertFlip (m_FacingRight);
+			}
 		}
 
-		[Command] private void CmdInvertFlip(){
-			m_FacingRight = !m_FacingRight;
+		[Command] private void CmdInvertFlip(bool facing){
+			m_FacingRight = facing;
 		}
 
 		[Command] public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){

@@ -71,10 +71,10 @@ namespace UnityStandardAssets._2D{
 		public void rotacionar(Collider2D col){
 			//Debug para identificar quais inimigos foram encontrados;
 			Debug.DrawRay(transform.position, transform.position-col.transform.position, Color.white);
-			print (col.transform.position);
+			//print (col.transform.position);
 			Vector3 dif;
 			Vector3 r = transform.rotation.eulerAngles;
-			print (r);
+			//print (r);
 			float alter = 0;
 			if (r.z > 90 || r.z < 270) {
 				if (col.transform.position.y > transform.position.y) {

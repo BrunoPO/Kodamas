@@ -37,6 +37,7 @@ namespace UnityStandardAssets._2D{
 					if(Commented) print ("Player Killed");
 					col.GetComponent<Platformer2DUserControl> ().Killed();
 					pai.GetComponent<Stone> ().DestroySelf ();
+					//Fall ();
 				} else {//Balls++ Ball on the air
 					end = col.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {

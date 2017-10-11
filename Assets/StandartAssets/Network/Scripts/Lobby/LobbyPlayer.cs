@@ -16,9 +16,11 @@ namespace Prototype.NetworkLobby
 		public Dictionary<int, int> currentPlayers;
 		public GameObject controle;
 		public GameObject Scn_ChooseChar;
-		private Button player1Button;
+		/*private Button player1Button;
 		private Button player2Button;
-		private Button player3Button;
+		private Button player3Button;*/
+
+		[SyncVar(hook = "OnMyChar")]
 		public int avatarIndex = 0;
 
 		[Header("Lobby Stuf")]
@@ -37,6 +39,13 @@ namespace Prototype.NetworkLobby
         public Button readyButton;
         public Button waitingPlayerButton;
 
+
+		private LobbyManager m_LobbyManager;
+
+		[SyncVar(hook = "OnChangeScene")]
+		public int m_SceneNum = 0;
+
+
         //OnMyName function will be invoked on clients when server change the value of playerName
         [SyncVar(hook = "OnMyName")]
         public string playerName = "";
@@ -53,6 +62,13 @@ namespace Prototype.NetworkLobby
 
         //static Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         //static Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
+
+		public void OnChangeScene(int news){
+			print ("Changed");
+			m_SceneNum = news;
+			Color newColor = (news == 1) ? Color.white : Color.blue;
+			Btn_ChooseScene.transform.GetComponent<Image> ().color = newColor;
+		}
 
 
         public override void OnClientEnterLobby()
@@ -84,6 +100,11 @@ namespace Prototype.NetworkLobby
 			Scn_ChooseScene.SetActive(true);
 		}
 
+		public void Awake(){
+			m_LobbyManager = GameObject.Find ("LobbyManager").GetComponent<LobbyManager> ();
+			Btn_ChooseScene = m_LobbyManager.Btn_ChooseScene;
+		}
+
         public override void OnStartAuthority()
         {
             base.OnStartAuthority();
@@ -92,11 +113,10 @@ namespace Prototype.NetworkLobby
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
 
 
-			Btn_ChooseScene = GameObject.Find ("LobbyManager").GetComponent<LobbyManager>().Btn_ChooseScene;
 			//print (Btn_ChooseScene);
 
 			if (isServer){
-				Scn_ChooseScene = GameObject.Find ("LobbyManager").GetComponent<LobbyManager>().Scn_ChooseScene;
+				Scn_ChooseScene = m_LobbyManager.Scn_ChooseScene;
 				SetupOtherPlayer();
 				Btn_ChooseScene.interactable = true;
 				Btn_ChooseScene.onClick.RemoveAllListeners ();
@@ -135,7 +155,7 @@ namespace Prototype.NetworkLobby
 		void Update(){
 			if (isLocalPlayer) {
 				if (Scn_ChooseChar == null) {
-					Scn_ChooseChar = GameObject.Find ("LobbyPanel").GetComponent<LobbyPlayerList>().Scn_ChooseChar;
+					Scn_ChooseChar = GameObject.Find ("LobbyPanel").GetComponent<LobbyPlayerList> ().Scn_ChooseChar;
 				}
 
 				if (Scn_ChooseChar == null)
@@ -151,7 +171,22 @@ namespace Prototype.NetworkLobby
 				if (c != avatarIndex) {
 					AvatarPicker (c);
 				}
-			}
+
+				if (isServer) {
+					int s = m_LobbyManager.m_SceneNum;
+					if (s != m_SceneNum) {
+						print ("Scene"+s);
+						CmdChangeSceneNum (s);
+					}
+				}
+
+			} 
+
+		}
+
+		[Command]
+		void CmdChangeSceneNum(int s){
+			m_SceneNum = s;
 		}
 
         void SetupLocalPlayer()
@@ -217,13 +252,14 @@ namespace Prototype.NetworkLobby
 
 		public void AvatarPicker(int number)
 		{
-			avatarIndex = number;
+			/*avatarIndex = number;
 
 			print (avatarIndex + " " + number);
 			if (isServer)
 				RpcAvatarPicked (avatarIndex);
 			else
-				CmdAvatarPicked (avatarIndex);
+				CmdAvatarPicked (avatarIndex);*/
+			CmdPlayerChar (number);
 
 		}
 
@@ -295,10 +331,17 @@ namespace Prototype.NetworkLobby
             nameInput.text = playerName;
         }
 
+		public void OnMyChar(int newidx){
+			avatarIndex = newidx;
+			Color newColor = (newidx==2)?Color.grey:Color.blue;
+			newColor = (newidx==0)?Color.red:newColor;
+			colorButton.GetComponent<Image> ().color = newColor;
+		}
+
         public void OnMyColor(Color newColor)
         {
             playerColor = newColor;
-            colorButton.GetComponent<Image>().color = newColor;
+			//colorButton.GetComponent<Image>().color = newColor;
         }
 
         //===== UI Handler
@@ -355,7 +398,7 @@ namespace Prototype.NetworkLobby
 
         //====== Server Command
 
-        [Command]
+	[Command]
         public void CmdColorChange()
         {
             int idx = System.Array.IndexOf(Colors, playerColor);
@@ -399,6 +442,12 @@ namespace Prototype.NetworkLobby
         {
             playerName = name;
         }
+
+		[Command]
+		public void CmdPlayerChar(int idxChar){
+			avatarIndex = idxChar;
+			LobbyManager.s_Singleton.SetPlayerTypeLobby(GetComponent<NetworkIdentity>().connectionToClient, idxChar);
+		}
 
         //Cleanup thing when get destroy (which happen when client kick or disconnect)
         public void OnDestroy()

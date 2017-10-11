@@ -73,7 +73,9 @@ namespace Prototype.NetworkLobby
 
         protected LobbyHook _lobbyHooks;
 
-		private int m_SceneNum = 0;
+		public int m_SceneNum = 0;
+
+
 
 		public void SetValsConf(){
 			m_quantLife = int.Parse(tfLife.text); 
@@ -87,6 +89,9 @@ namespace Prototype.NetworkLobby
 				playScene = nameScenesToLoad [s];
 			}
 		}
+
+
+
 		/*---------
 		 * Choose Player Bellow Here 
 		void AvatarPicker(string buttonName)

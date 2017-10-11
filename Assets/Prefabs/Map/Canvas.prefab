@@ -140,8 +140,6 @@ GameObject:
   - component: {fileID: 224621626832615104}
   - component: {fileID: 222424263635969390}
   - component: {fileID: 114819613286527062}
-  - component: {fileID: 114739339974583100}
-  - component: {fileID: 114935214508595538}
   m_Layer: 5
   m_Name: Won
   m_TagString: Untagged
@@ -754,38 +752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   control: {fileID: 1519193064718042}
---- !u!114 &114739339974583100
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1451701515058522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 48
-    i1: 182
-    i2: 34
-    i3: 182
-    i4: 84
-    i5: 6
-    i6: 36
-    i7: 214
-    i8: 248
-    i9: 214
-    i10: 18
-    i11: 233
-    i12: 237
-    i13: 45
-    i14: 224
-    i15: 237
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
 --- !u!114 &114806670639686960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -985,17 +951,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
---- !u!114 &114935214508595538
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1451701515058522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10d126c891c3b40d2b120df5d0eeb486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &222186379965141790
 CanvasRenderer:
   m_ObjectHideFlags: 1
