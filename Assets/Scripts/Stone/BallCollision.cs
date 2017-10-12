@@ -4,15 +4,18 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D{
 	public class BallCollision : MonoBehaviour {
+		[HideInInspector] public int paiHash=0;
+
 		[SerializeField] private bool Commented = false;
 		private Rigidbody2D rigid;
 		private int groundTime=0;
 		private GameObject pai;
 		private bool end = false;
-		public int paiHash=0;
+
 		void Start(){
 			pai = this.transform.parent.gameObject;
 		}
+
 		//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
 		void OnTriggerEnter2D(Collider2D col) {
 			if (pai == null)
@@ -71,7 +74,6 @@ namespace UnityStandardAssets._2D{
 		void OnTriggerStay2D(Collider2D col){
 			if (!this.enabled)
 				return;
-			//print(coll.tag+" "+groundTime+" "+pai.GetComponent<Stone> ().onTheGround);
 			if (col.tag == "Ground" && groundTime > 10 && pai.GetComponent<Stone> ().onTheGround) {
 				pai.GetComponent<Stone> ().flutuarNoChao();
 			} else if(groundTime<11){

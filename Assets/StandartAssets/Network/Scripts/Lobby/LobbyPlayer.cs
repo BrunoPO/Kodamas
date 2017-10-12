@@ -12,16 +12,14 @@ namespace Prototype.NetworkLobby
     public class LobbyPlayer : NetworkLobbyPlayer
     {
 		
+		//My Settings
+		[HideInInspector] public GameObject controle;
+		[HideInInspector] public GameObject Scn_ChooseChar;
+		[HideInInspector] [SyncVar(hook = "OnMyChar")]
+		public int avatarIndex = 0;
+
 		[Header("ChoosePlayerButtons")]
 		public Dictionary<int, int> currentPlayers;
-		public GameObject controle;
-		public GameObject Scn_ChooseChar;
-		/*private Button player1Button;
-		private Button player2Button;
-		private Button player3Button;*/
-
-		[SyncVar(hook = "OnMyChar")]
-		public int avatarIndex = 0;
 
 		[Header("Lobby Stuf")]
         static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
@@ -113,7 +111,9 @@ namespace Prototype.NetworkLobby
             readyButton.transform.GetChild(0).GetComponent<Text>().color = Color.white;
 
 
-			//print (Btn_ChooseScene);
+
+			//GameObject.Find ("PlayerName").GetComponent<Text>().text = " "+Network.player.externalPort;
+
 
 			if (isServer){
 				Scn_ChooseScene = m_LobbyManager.Scn_ChooseScene;

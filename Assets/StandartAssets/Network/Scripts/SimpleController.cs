@@ -34,12 +34,12 @@ namespace UnityStandardAssets.Network
 
             if (horizontalMove)
             {
-                moveX = CrossPlatformInput.CrossPlatformInputManager.GetAxis("Horizontal");
+                moveX = Input.GetAxis("Horizontal");
             }
 
             if (verticalMove)
             {
-                moveY = CrossPlatformInput.CrossPlatformInputManager.GetAxis("Vertical");
+				moveY = Input.GetAxis("Vertical");
             }
 
             if (moveX != oldMoveX || moveY != oldMoveY)

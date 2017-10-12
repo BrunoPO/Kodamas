@@ -51,49 +51,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Btn_pulo.cs" />
-     <Compile Include="Assets\ChooseScene.cs" />
-     <Compile Include="Assets\Controles\ControleVirtual.cs" />
-     <Compile Include="Assets\Controles\moverBoneco.cs" />
-     <Compile Include="Assets\Scripts\Camera\AbstractTargetFollower.cs" />
-     <Compile Include="Assets\Scripts\Camera\AutoCam.cs" />
      <Compile Include="Assets\Scripts\Camera\Camera2DFollow.cs" />
-     <Compile Include="Assets\Scripts\Camera\CameraFollow.cs" />
-     <Compile Include="Assets\Scripts\Camera\PivotBasedCameraRig.cs" />
      <Compile Include="Assets\Scripts\Char\CharAttributes.cs" />
      <Compile Include="Assets\Scripts\Char\CharAttributesNet.cs" />
      <Compile Include="Assets\Scripts\Char\Platformer2DUserControl.cs" />
      <Compile Include="Assets\Scripts\Char\PlatformerCharacter2D.cs" />
      <Compile Include="Assets\Scripts\Char\RobotDieScript.cs" />
      <Compile Include="Assets\Scripts\Controle\Atk1.cs" />
+     <Compile Include="Assets\Scripts\Controle\Btn_pulo.cs" />
      <Compile Include="Assets\Scripts\Controle\ControleVars.cs" />
-     <Compile Include="Assets\Scripts\MyNetworkManagerScript.cs" />
+     <Compile Include="Assets\Scripts\Controle\ControleVirtual.cs" />
+     <Compile Include="Assets\Scripts\ParticulaStone\BallParticleDestroy.cs" />
+     <Compile Include="Assets\Scripts\ParticulaStone\BallParticleDestroyNet.cs" />
      <Compile Include="Assets\Scripts\ParticulaStone\particulaStone.cs" />
      <Compile Include="Assets\Scripts\Scene\ChooseChar.cs" />
      <Compile Include="Assets\Scripts\Scene\ExibirIP.cs" />
      <Compile Include="Assets\Scripts\Scene\GM.cs" />
      <Compile Include="Assets\Scripts\Scene\GMNet.cs" />
      <Compile Include="Assets\Scripts\Scene\Passagem.cs" />
-     <Compile Include="Assets\Scripts\Scene\Restarter.cs" />
      <Compile Include="Assets\Scripts\Stone\BallCollision.cs" />
-     <Compile Include="Assets\Scripts\Stone\BallParticleDestroy.cs" />
-     <Compile Include="Assets\Scripts\Stone\BallParticleDestroyNet.cs" />
      <Compile Include="Assets\Scripts\Stone\Radar.cs" />
      <Compile Include="Assets\Scripts\Stone\Stone.cs" />
      <Compile Include="Assets\Scripts\Stone\StoneAttributes.cs" />
      <Compile Include="Assets\Scripts\Stone\StoneAttributesNet.cs" />
-     <Compile Include="Assets\Scripts\Teste.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\AxisTouchButton.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\ButtonHandler.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\CrossPlatformInputManager.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\InputAxisScrollbar.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\Joystick.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\MobileControlRig.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\PlatformSpecific\MobileInput.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\PlatformSpecific\StandaloneInput.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\TiltInput.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\TouchPad.cs" />
-     <Compile Include="Assets\StandartAssets\CrossPlatformInput\Scripts\VirtualInput.cs" />
      <Compile Include="Assets\StandartAssets\Network\Scripts\Lobby\LobbyHook.cs" />
      <Compile Include="Assets\StandartAssets\Network\Scripts\Lobby\LobbyInfoPanel.cs" />
      <Compile Include="Assets\StandartAssets\Network\Scripts\Lobby\LobbyMainMenu.cs" />
@@ -106,7 +86,6 @@
      <Compile Include="Assets\StandartAssets\Network\Scripts\SimpleController.cs" />
      <Compile Include="Assets\StandartAssets\Others\EventSystemChecker.cs" />
      <None Include="Assets\StandartAssets\Network\Instruction.txt" />
-     <None Include="Assets\StandartAssets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/opt/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

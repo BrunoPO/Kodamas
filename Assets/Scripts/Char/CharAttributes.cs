@@ -8,42 +8,41 @@ namespace UnityStandardAssets._2D{
 	public class CharAttributes : MonoBehaviour {
 		public bool unlimitedBalls = false;
 		public GameObject SoulStone;
+		public bool m_FacingRight = true;
+		[SerializeField] private int ballsIni;
+		[SerializeField] private int lifeIni;
+
+		private bool m_Killed = false;
+		private bool wasKilled=false;
 		private Text m_StonesTxt;
 		private Text m_LifeTxt;
 		private Text m_WinTxt;
 		private bool AfterReset = false;
 		private bool toReset = true;
-
-		[SerializeField] private int ballsIni;
-		[SerializeField] private int lifeIni;
-		[SerializeField] private bool wasKilled=false;
-
-		private int balls;//To Private
-		private int life;//To Private
-		public bool m_FacingRight = true;
-
-		public bool m_Killed = false;
+		private int balls;
+		private int life;
+		private GameObject m_GM; 
 		private bool isLocalPlayer;
+		private PlatformerCharacter2D m_PlatChar2D;
+
 		void Start(){
 
+			m_PlatChar2D = GetComponent<PlatformerCharacter2D> ();
 			GetComponent<PlatformerCharacter2D>().IniPoint = transform.position;
 			isLocalPlayer = GetComponent<Platformer2DUserControl> ().enabled;
+			m_GM = GameObject.Find ("GM");
+
 			if (isLocalPlayer) {
-				m_StonesTxt = Camera.main.GetComponent<Camera2DFollow>().m_StonesTxt;
-				m_LifeTxt = Camera.main.GetComponent<Camera2DFollow>().m_LifeTxt;
-				m_WinTxt = Camera.main.GetComponent<Camera2DFollow>().m_WinTxt;
+				m_StonesTxt = m_GM.GetComponent<GM>().m_StonesTxt;
+				m_LifeTxt = m_GM.GetComponent<GM>().m_LifeTxt;
+				m_WinTxt = m_GM.GetComponent<GM>().m_WinTxt;
 				SetStonesText (balls);
 				SetLifeText (life);
 				m_WinTxt.enabled = false;
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 
 			}
-			GameObject CP = GameObject.Find("ChoosePlayer");
-			//print (CP);
-			if(CP != null){
-				CP.SetActive (false);//   .enabled = false;
-				print (CP.active);
-			}
+
 			Reset ();
 		}
 
@@ -99,6 +98,14 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
+		private void OnChangeFacing(bool newBool){
+			if(transform.rotation.eulerAngles.y == 0 && !newBool){
+				m_PlatChar2D.Flip ();
+			}else if(transform.rotation.eulerAngles.y == 180 && newBool){
+				m_PlatChar2D.Flip ();
+			}
+		}
+
 		public void RpcResetInitPoint(){
 			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
 			transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
@@ -122,14 +129,14 @@ namespace UnityStandardAssets._2D{
 			clearTxt ();
 			m_WinTxt.text = "You Lose";
 			GetComponent<Platformer2DUserControl>().enabled = false;
-			GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
+			GetComponent<PlatformerCharacter2D> ().Move (0, false);
 		}
 
 		public void youWon(){
 			clearTxt ();
 			m_WinTxt.text = "You Won";
 			GetComponent<Platformer2DUserControl>().enabled = false;
-			GetComponent<PlatformerCharacter2D> ().Move (0, false, false, false);
+			GetComponent<PlatformerCharacter2D> ().Move (0, false);
 
 		}
 		public void clearTxt(){
@@ -192,6 +199,7 @@ namespace UnityStandardAssets._2D{
 			CmdInvertFlip ();
 		}
 		private void CmdInvertFlip(){
+			OnChangeFacing (!m_FacingRight);
 			m_FacingRight = !m_FacingRight;
 		}
 

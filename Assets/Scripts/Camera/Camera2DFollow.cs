@@ -4,45 +4,44 @@ using UnityEngine.UI;
 
 namespace UnityStandardAssets._2D
 {
-    public class Camera2DFollow : MonoBehaviour
-	{
+    public class Camera2DFollow : MonoBehaviour{
 		
-        public Transform target;
+		public Text m_StonesTxt;
+		public Text m_LifeTxt;
+		public Text m_WinTxt;
+
+		[Header("Configurações da Camera")]
+		public Transform target ;//Poderá ser gravado pelo Char para que esse seja o foco.
 		[Range(0, 2)] [SerializeField] private float damping = 1;
 		[Range(0, 6)] [SerializeField] private float lookAheadFactor = 3;
 		[Range(0, 2)] [SerializeField] private float lookAheadReturnSpeed = 0.5f;
 		[Range(0, 2)] [SerializeField] private float lookAheadMoveThreshold = 0.1f;
 		[SerializeField] private Vector3 m_LookAheadPos;
-		[SerializeField] private Vector2 Min,Max;
-		public Text m_StonesTxt;
-		public Text m_LifeTxt;
-		public Text m_WinTxt;
+		private Vector2 raioDeVisao;//Vetor reponsável por saber o raio de visão da camera(Bounds)
 
-        private float m_OffsetZ;
-        private Vector3 m_LastTargetPosition;
-        private Vector3 m_CurrentVelocity;
+		private float m_OffsetZ;
+		private Vector3 m_LastTargetPosition;
+		private Vector3 m_CurrentVelocity;
 
-		Vector2 raioDeVisao;
-        // Use this for initialization
+		[Header("Pontos limites da camera")]
+		[SerializeField] private Vector2 Min;
+		[SerializeField] private Vector2 Max;
+
         private void Start(){
             m_LastTargetPosition = target.position;
             m_OffsetZ = (transform.position - target.position).z;
-            transform.parent = null;
-			//Camera.main.ViewportToWorldPoint(
 			raioDeVisao.x = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, 0)).x - transform.position.x;
 			raioDeVisao.y = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, 0)).y - transform.position.y;
 			print (transform.position);
 			print (raioDeVisao);
         }
 
-		//DrawPoint
+		//Desenhando pontos delimitadores no momento de seleção do objeto para facilitar a vizualização do limites
 		void OnDrawGizmosSelected() {
 			if (target != null) {
 				Gizmos.color = Color.blue;
 				Gizmos.DrawLine(transform.position, Min);
 				Gizmos.DrawLine(transform.position, Max);
-				/*Gizmos.DrawLine(transform.position, East);
-				Gizmos.DrawLine(transform.position, West);*/
 			}
 		}
 

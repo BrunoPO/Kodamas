@@ -3,16 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EventSystemChecker : MonoBehaviour
-{
-    //public GameObject eventSystem;
-
-	// Use this for initialization
-	void Awake ()
-	{
-	    if(!FindObjectOfType<EventSystem>())
-        {
-           //Instantiate(eventSystem);
+public class EventSystemChecker : MonoBehaviour{
+	void Awake (){//Criar o objeto de toque na tela caso não exista
+	    if(!FindObjectOfType<EventSystem>()){
             GameObject obj = new GameObject("EventSystem");
             obj.AddComponent<EventSystem>();
             obj.AddComponent<StandaloneInputModule>().forceModuleActive = true;

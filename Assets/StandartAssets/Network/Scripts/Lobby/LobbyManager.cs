@@ -11,19 +11,20 @@ using System.Collections.Generic;
 
 namespace Prototype.NetworkLobby
 {
-    public class LobbyManager : NetworkLobbyManager 
-    {
+    public class LobbyManager : NetworkLobbyManager {
+		[Header("Game Stuff")]
 		public string[] nameScenesToLoad;
+		[SerializeField] private GameObject partyAttributes;
+		public Button Btn_ChooseScene;
+		private InputField tfLife, tfStone;
+		[HideInInspector] public int m_quantStones = 3;
+		[HideInInspector] public int m_quantLife = 3;
+		[HideInInspector] public int m_tipoDeJogo = 0;
+		[HideInInspector] public int m_SceneNum = 0;
+		[HideInInspector] public int avatarIndex = 0;
 
-		//public scene[] cenas; 
-		public Dictionary<int, int> currentPlayers;
 
-		/*[Header("ChoosePlayerButtons")]
-		public Button player1Button;
-		public Button player2Button;
-		public Button player3Button;*/
-		public int avatarIndex = 0;
-
+		[HideInInspector] public Dictionary<int, int> currentPlayers;
 		[Header("Lobby Stuf")]
         static short MsgKicked = MsgType.Highest + 1;
 
@@ -50,14 +51,6 @@ namespace Prototype.NetworkLobby
 
         public Text statusInfo;
         public Text hostInfo;
-
-		[SerializeField] private GameObject partyAttributes;
-		private InputField tfLife, tfStone;
-		public int m_quantStones = 3;
-		public int m_quantLife = 3;
-		public int m_tipoDeJogo = 0;
-		public Button Btn_ChooseScene;
-
         //Client numPlayers from NetworkManager is always 0, so we count (throught connect/destroy in LobbyPlayer) the number
         //of players, so that even client know how many player there is.
         [HideInInspector]
@@ -73,7 +66,7 @@ namespace Prototype.NetworkLobby
 
         protected LobbyHook _lobbyHooks;
 
-		public int m_SceneNum = 0;
+
 
 
 
@@ -90,91 +83,7 @@ namespace Prototype.NetworkLobby
 			}
 		}
 
-
-
-		/*---------
-		 * Choose Player Bellow Here 
-		void AvatarPicker(string buttonName)
-		{
-			switch (buttonName)
-			{
-			case "Player1":
-				avatarIndex = 0;
-				break;
-			case "Player2":
-				avatarIndex = 1;
-				break;
-			case "Player3":
-				avatarIndex = 2;
-				break;
-			}
-
-			playerPrefab = spawnPrefabs[avatarIndex];
-		}
-
-		public override void OnClientConnect(NetworkConnection conn)
-		{
-			/// ***
-			/// This is added:
-			/// First, turn off the canvas...
-			//characterSelectionCanvas.enabled = false;
-			/// Can't directly send an int variable to 'addPlayer()' so you have to use a message service...
-
-
-
-		}
-
-		/// Copied from Unity's original NetworkManager 'OnServerAddPlayerInternal' script except where noted
-		/// Since OnServerAddPlayer calls OnServerAddPlayerInternal and needs to pass the message - just add it all into one.
-		public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader)
-		{
-			/// *** additions
-			/// I skipped all the debug messages...
-			/// This is added to recieve the message from addPlayer()...
-			int id = 0;
-
-			if (extraMessageReader != null)
-			{
-				IntegerMessage i = extraMessageReader.ReadMessage<IntegerMessage>();
-				id = i.value;
-			}
-
-			/// using the sent message - pick the correct prefab
-			GameObject playerPrefab = spawnPrefabs[id];
-			/// *** end of additions
-
-			GameObject player;
-			Transform startPos = GetStartPosition();
-			if (startPos != null)
-			{
-				player = (GameObject)Instantiate(playerPrefab, startPos.position, startPos.rotation);
-			}
-			else
-			{
-				player = (GameObject)Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-			}
-
-			NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
-		}
-
-		/*---------
-		 * Lobby Stuf Below Here 
-		*/
-
-
-        void Start()
-        {
-			/*To make choose player work
-			player1Button.onClick.AddListener (delegate {AvatarPicker ("Player1");});
-			player2Button.onClick.AddListener (delegate {AvatarPicker ("Player2");});
-
-			if(player3Button!= null)
-				player3Button.onClick.AddListener (delegate {AvatarPicker ("Player3");});
-			*/
-			//To Make Lobby work
-
-			
-			//print (playScene);
+        void Start(){
 			if(nameScenesToLoad.Length >0)
 				playScene = nameScenesToLoad[0];
 			currentPlayers = new Dictionary<int,int> ();
@@ -184,7 +93,6 @@ namespace Prototype.NetworkLobby
             currentPanel = mainMenuPanel;
 
 			topPanel.gameObject.SetActive (false);
-	            //backButton.gameObject.SetActive(false);
 			InputField[] Inputs = partyAttributes.GetComponentsInChildren<InputField>();
 			tfLife = Inputs[0];
 			tfStone = Inputs[1];
@@ -195,8 +103,32 @@ namespace Prototype.NetworkLobby
             SetServerInfo("Offline", "None");
         }
 
+
+		//-------------My Funcs-------------//
+
+		public void m_ServerReturnToLobby(){//Para todos retornarem ao lobby
+			if (!NetworkServer.active) {
+				Debug.Log ((object)"ServerReturnToLobby called on client");
+			}else {
+				this.ServerChangeScene (this.lobbyScene);
+				int tryNum = (m_SceneNum+1) % nameScenesToLoad.Length;
+				this.ChangeScene (tryNum);
+			}
+		}
+
+		public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId){
+			int index = currentPlayers[conn.connectionId];
+			GameObject playerPrefab = (GameObject)GameObject.Instantiate(spawnPrefabs[index],
+				startPositions[conn.connectionId].position,
+				Quaternion.identity);
+			return playerPrefab;
+		}
+
+		//-------------My Funcs-------------//
+
+
         public override void OnLobbyClientSceneChanged(NetworkConnection conn)
-        {
+        {//On Lobby
             if (SceneManager.GetSceneAt(0).name == lobbyScene)
             {
                 if (topPanel.isInGame)
@@ -239,7 +171,6 @@ namespace Prototype.NetworkLobby
 
                 Destroy(GameObject.Find("MainMenuUI(Clone)"));
 
-                //backDelegate = StopGameClbk;
                 topPanel.isInGame = true;
                 topPanel.ToggleVisibility(false);
             }
@@ -263,12 +194,10 @@ namespace Prototype.NetworkLobby
             {
 
 				topPanel.gameObject.SetActive (true);
-                //backButton.gameObject.SetActive(true);
             }
             else
             {
 				topPanel.gameObject.SetActive (false);
-                //backButton.gameObject.SetActive(false);
                 SetServerInfo("Offline", "None");
                 _isMatchmaking = false;
             }
@@ -280,17 +209,14 @@ namespace Prototype.NetworkLobby
             infoPanel.Display("Connecting...", "Cancel", () => { _this.backDelegate(); });
         }
 
-        public void SetServerInfo(string status, string host)
-        {
+       	public void SetServerInfo(string status, string host){
             statusInfo.text = status;
             hostInfo.text = host;
         }
 
-
         public delegate void BackButtonDelegate();
         public BackButtonDelegate backDelegate;
-        public void GoBackButton()
-        {
+        public void GoBackButton(){
             backDelegate();
         }
 
@@ -350,10 +276,6 @@ namespace Prototype.NetworkLobby
         {
             conn.Send(MsgKicked, new KickMsg());
         }
-
-
-
-
         public void KickedMessageHandler(NetworkMessage netMsg)
         {
             infoPanel.Display("Kicked by Server", "Close", null);
@@ -434,21 +356,7 @@ namespace Prototype.NetworkLobby
 				currentPlayers [conn.connectionId] = type;
 		}
 
-		public override GameObject OnLobbyServerCreateGamePlayer(NetworkConnection conn, short playerControllerId)
-		{
-			int index = currentPlayers[conn.connectionId];
-
-			GameObject playerPrefab = (GameObject)GameObject.Instantiate(spawnPrefabs[index],
-				startPositions[conn.connectionId].position,
-				Quaternion.identity);
-			return playerPrefab;
-		}
-
-
-
-
-        public override void OnLobbyServerPlayerRemoved(NetworkConnection conn, short playerControllerId)
-        {
+        public override void OnLobbyServerPlayerRemoved(NetworkConnection conn, short playerControllerId){
             for (int i = 0; i < lobbySlots.Length; ++i)
             {
                 LobbyPlayer p = lobbySlots[i] as LobbyPlayer;
@@ -461,8 +369,7 @@ namespace Prototype.NetworkLobby
             }
         }
 
-        public override void OnLobbyServerDisconnect(NetworkConnection conn)
-        {
+        public override void OnLobbyServerDisconnect(NetworkConnection conn){
             for (int i = 0; i < lobbySlots.Length; ++i)
             {
                 LobbyPlayer p = lobbySlots[i] as LobbyPlayer;
@@ -475,19 +382,6 @@ namespace Prototype.NetworkLobby
             }
 
         }
-
-		public void m_ServerReturnToLobby(){
-			if (!NetworkServer.active) {
-				Debug.Log ((object)"ServerReturnToLobby called on client");
-			}else {
-				this.ServerChangeScene (this.lobbyScene);
-				//print (m_SceneNum);
-				//print (nameScenesToLoad.Length);
-				int tryNum = (m_SceneNum+1) % nameScenesToLoad.Length;
-				//print (tryNum);
-				this.ChangeScene (tryNum);
-			}
-		}
 
         public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobbyPlayer, GameObject gamePlayer)
         {
@@ -554,47 +448,27 @@ namespace Prototype.NetworkLobby
 
         // ----------------- Client callbacks ------------------
 
-        public override void OnClientConnect(NetworkConnection conn)
-        {
+        public override void OnClientConnect(NetworkConnection conn){
             base.OnClientConnect(conn);
 
             infoPanel.gameObject.SetActive(false);
 
             conn.RegisterHandler(MsgKicked, KickedMessageHandler);
 
-            if (!NetworkServer.active)
-            {//only to do on pure client (not self hosting client)
+            if (!NetworkServer.active){//only to do on pure client (not self hosting client)
                 ChangeTo(lobbyPanel);
                 backDelegate = StopClientClbk;
                 SetServerInfo("Client", networkAddress);
             }
-
-			/*IntegerMessage msg = new IntegerMessage(avatarIndex);
-			/// ***
-
-			if (!clientLoadedScene)
-			{
-				// Ready/AddPlayer is usually triggered by a scene load completing. if no scene was loaded, then Ready/AddPlayer it here instead.
-				ClientScene.Ready(conn);
-				if (autoCreatePlayer)
-				{
-					///***
-					/// This is changed - the original calls a differnet version of addPlayer
-					/// this calls a version that allows a message to be sent
-					ClientScene.AddPlayer(conn, 0, msg);
-				}
-			}*/
         }
 
 
-        public override void OnClientDisconnect(NetworkConnection conn)
-        {
+        public override void OnClientDisconnect(NetworkConnection conn){
             base.OnClientDisconnect(conn);
             ChangeTo(mainMenuPanel);
         }
 
-        public override void OnClientError(NetworkConnection conn, int errorCode)
-        {
+        public override void OnClientError(NetworkConnection conn, int errorCode){
             ChangeTo(mainMenuPanel);
             infoPanel.Display("Cient error : " + (errorCode == 6 ? "timeout" : errorCode.ToString()), "Close", null);
         }

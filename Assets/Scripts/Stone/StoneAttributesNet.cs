@@ -5,17 +5,13 @@ using UnityEngine.Networking;
 
 namespace UnityStandardAssets._2D{
 	public class StoneAttributesNet : NetworkBehaviour {
-		
-		private Rigidbody2D rigid;
-		[SyncVar]
-		public bool kill=false;
-		[SyncVar]
-		public bool fired = false;
+		[HideInInspector] [SyncVar] public bool kill=false;
+		[HideInInspector] [SyncVar] public bool fired = false;
 
+		private Rigidbody2D rigid;
 		void Start(){
 			rigid = GetComponent<Rigidbody2D>();
 		}
-
 
 		public void SetFired(bool b){
 			if(!isServer)
@@ -27,18 +23,20 @@ namespace UnityStandardAssets._2D{
 		public void CmdSetFired(bool b){
 			fired = b;
 		}
-		// Update is called once per frame
+
+
 		[ServerCallback]
 		void Update () {
 			if (isServer && kill) {
 				NetworkServer.Destroy (gameObject);
 			}
+
 			if(fired){
 				GetComponent<Stone> ().trageto ();
 			}
+
 			Vector2 velo = rigid.velocity;
-			//if (velo.y!=0) print (velo.y);
-			if(velo.y<-19.0f){
+			if(velo.y<-19.0f){//Controla o limite de velocidade de queda da stone.
 				velo.y = -15.0f;
 				rigid.velocity = velo;
 			}

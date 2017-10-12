@@ -1,123 +1,120 @@
 using System;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
 
 namespace UnityStandardAssets._2D
 {
 	[RequireComponent(typeof (PlatformerCharacter2D))]
 	public class Platformer2DUserControl : MonoBehaviour{
+
+		public ControleVars m_ControleVars;
+		[SerializeField] private bool autoAttack = false;
+		[SerializeField] private bool Commented = false;
+
 		private PlatformerCharacter2D m_Character;
 		private bool m_Jump,atck;
-		private Transform Ball;
-		private GameObject ob;
+		private Transform t_stone;
+		private GameObject go_stone;
 		private Vector3 lastParamBall;//(v,h,rotation)
-		[SerializeField] private bool Commented = false;
 		private int autoAttackCounter=20;
-		[SerializeField] private bool autoAttack = false;
 		private CharAttributesNet m_AttributesNet;
 		private CharAttributes m_Attributes;
-		//[SerializeField] private GameObject m_controle;
-		public ControleVars m_ControleVars;
 		private bool isNet = false;
-
+		private bool init = false;
+		private GameObject gm;
 		private GameObject SoulStone;
 
 		private void Awake(){
 			m_Character = GetComponent<PlatformerCharacter2D>();
-			isNet = (GetComponent<CharAttributesNet> () != null);
 			//isNet = m_Character.isNet;
 			m_AttributesNet = GetComponent<CharAttributesNet> ();
 			m_Attributes = GetComponent<CharAttributes> ();
+			Init ();
 		}
-
-		private void Start(){
+		private void Init(){
+			if (GameObject.Find ("GM") == null)
+				return;
+			init = true;
+			isNet = (GetComponent<CharAttributesNet> () != null);
 			if (isNet)
 				SoulStone = m_AttributesNet.SoulStone;
 			else
 				SoulStone = m_Attributes.SoulStone;
-			print (SoulStone);
-
 			GameObject m_Controle= GameObject.Find ("Controle");
 			if (m_Controle != null) {
 				m_ControleVars = m_Controle.GetComponent<ControleVars> ();
 			}else
 				GetComponent<PlatformerCharacter2D> ().m_JumpForce *= 4.5f;
-			print ("Teste controle:"+(m_ControleVars == null));
+			print ("Teste controle:"+(m_ControleVars != null));
 		}
 
 		private void Update() {
-			bool sprint=false;
-			bool crouch = false;
+			if (!init) {
+				Init ();
+				return;
+			}
 			float h,v;
+			//Pega valores
 			if (m_ControleVars == null) {
-				//print ("Entrou");
-				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
+				if (!m_Jump) { 
 					m_Jump = Input.GetButtonDown ("Jump");
 				}
-				//print ("pt1"+m_Jump);
-				//sprint = CrossPlatformInputManager.GetButton ("Fire3");
 				h = Input.GetAxis ("Horizontal");
-
 				v = Input.GetAxis ("Vertical");
-				//print ("pt2"+h+" "+v);
-				//print(h+" "+v);
 				atck = Input.GetKey(KeyCode.LeftControl);
-				//print ("pt3"+atck);
 			} else {
-				//print (m_Jump = m_ControleVars.getPulo ());
-				//sprint = m_ControleVars.getDash (); //CrossPlatformInputManager.GetButton ("Fire3");
-				h = m_ControleVars.getHorizontal (); //CrossPlatformInputManager.GetAxis("Horizontal");
-				v = m_ControleVars.getVertical ();//CrossPlatformInputManager.GetAxis("Vertical");
-				if (!m_Jump) { // Read the jump input in Update so button presses aren't missed.
-					m_Jump = m_ControleVars.getPulo ();//m_Jump = (v > 0.75f);//CrossPlatformInputManager.GetButtonDown("Jump");
-					//m_Jump = Input.GetButtonDown ("Jump");
+				h = m_ControleVars.getHorizontal (); 
+				v = m_ControleVars.getVertical ();
+				if (!m_Jump) {
+					m_Jump = m_ControleVars.getPulo ();
 				}
 				atck = m_ControleVars.getAtk ();
 			}
 
-
 			if(Commented) print(v + " " + h);
+
+			//Ataca se estiver no automatico
 			if (!autoAttack) {
 				if (Commented) print (atck);
 			} else if (autoAttack && !atck && autoAttackCounter>=100) {
 				autoAttackCounter = 0;
 				atck = true;
-				m_Jump = false;crouch = false;h = 0;v = 0;
+				m_Jump = false;h = 0;v = 0;
 			} else if(autoAttack){
 				atck = false;
 				autoAttackCounter++;
-				m_Jump = false;crouch = false;h = 0;v = 0;
+				m_Jump = false;h = 0;v = 0;
 			}
-			//if(Commented) print (atck);
-			// Pass all parameters to the character control script.
 
+			//Se não estiver atacando
 			if (!atck) {
-				m_Character.Move (h, crouch, m_Jump,sprint);
-				if (ob != null) {
-					if(Commented) print (ob.transform.parent);
-					//print ("Aqui" + getHash());
-					Vector3 position = (ob.transform.position + transform.position) / 2;//Alter position na hora de lançar
-					Quaternion rotation = ob.transform.rotation;
-					Destroy (ob);
+				//Se mova
+				m_Character.Move (h, m_Jump);
+				//Se possuir um orbe em seu poder, solte-a.
+				if (go_stone != null) {
+					if(Commented) print (go_stone.transform.parent);
+					Vector3 position = (go_stone.transform.position + transform.position) / 2;//Alter position na hora de lançar
+					Quaternion rotation = go_stone.transform.rotation;
+					Destroy (go_stone);
 					if(isNet)
 						m_AttributesNet.CmdSpwnBall (position,rotation,getHash());
 					else
 						m_Attributes.CmdSpwnBall (position,rotation,getHash());
 				}
+			//Se não estiver atacando e tem stone
 			}else if(getBalls()>0){
-				Ball = this.transform.Find("Ball");
+				t_stone = this.transform.Find("Stone");
 				Vector3 p = transform.position;
 
-				if (Ball == null && ob == null) {
+				if (t_stone == null && go_stone == null) {//Se stone não estiver no ar,crie-a na frente.
 					p.x += (isFacingRight()) ? 1f : -1f;
-					//ob.transform.position = posi;
-					ob = Instantiate (SoulStone,p,Quaternion.Euler(0, 0, ((isFacingRight())?0:180f))) as GameObject;
-					ob.name = "Ball";
-					ob.transform.parent = this.transform;
-					if(Commented) print ("Não Existe");
+					go_stone = Instantiate (SoulStone,p,Quaternion.Euler(0, 0, ((isFacingRight())?0:180f))) as GameObject;
+					go_stone.name = "Stone";
+					go_stone.transform.parent = this.transform;
+					if(Commented) print ("Stone criada");
 					return;
 				}
 
+				//Coloca em posição obedecendo o controle
 				if (m_ControleVars != null)
 					lastParamBall = DirecaoOnControl (h, v);
 				else
@@ -126,18 +123,18 @@ namespace UnityStandardAssets._2D
 				if (h != 0 || v != 0 || this.GetComponent<Rigidbody2D>().velocity != Vector2.zero) {
 					p.x += lastParamBall.x;
 					p.y += lastParamBall.y;
-					if(Ball != null){
-						Ball.transform.position = p;
-						Ball.transform.rotation = Quaternion.Euler(0, 0, lastParamBall.z);
+					if(t_stone != null){
+						t_stone.transform.position = p;
+						t_stone.transform.rotation = Quaternion.Euler(0, 0, lastParamBall.z);
 					}
 				}
 				if (h != 0 ) {
 					if (h < 0 && isFacingRight())
-						m_Character.Move (-0.1f, false, false,false);
+						m_Character.Move (-0.1f, false);
 					else if (h > 0 && !isFacingRight())
-						m_Character.Move (0.1f, false, false,false);
+						m_Character.Move (0.1f, false);
 					else 
-						m_Character.Move (0f, false, false,false);
+						m_Character.Move (0f, false);
 				} 
 			}
 			m_Jump = false;
@@ -146,6 +143,8 @@ namespace UnityStandardAssets._2D
 
 		}
 
+
+		//Metodos chamados externamente
 		public bool gainBall(){
 			if (isNet)
 				return m_AttributesNet.gainBall();
@@ -181,6 +180,7 @@ namespace UnityStandardAssets._2D
 				m_Attributes.CmdKilled();
 		}
 
+		//Metodos chamados internamente
 		Vector3 Direcao(float h, float v){
 			if (h < 0 && v <0) {
 				if (Commented) print ("Esq Baixo");

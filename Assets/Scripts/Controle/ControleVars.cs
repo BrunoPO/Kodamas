@@ -12,7 +12,6 @@ public class ControleVars : MonoBehaviour {
 		float width = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.x;
 		float height = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.y;
 		this.GetComponent<RectTransform> ().sizeDelta = new Vector2(width,height);
-		//this.GetComponent<RectTransform> ().sizeDelta.y = height;
 	}
 
 	public void alterAtk(bool b){
@@ -35,7 +34,6 @@ public class ControleVars : MonoBehaviour {
 	[SerializeField] private GameObject control;
 
 	public float getHorizontal(){
-		//print ("Horizontal:" + control.GetComponent<ControleVirtual> ().Horizontal ());
 		return control.GetComponent<ControleVirtual>().Horizontal ();
 	}
 	public float getVertical(){
@@ -43,7 +41,6 @@ public class ControleVars : MonoBehaviour {
 	}
 
 	private void Update(){
-		//print (ButtonAtk.);
 		if (buttonPuloDelay > 0) {
 			buttonPuloDelay--;
 		}else if(pulo){

@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace UnityStandardAssets._2D{
 	public class StoneAttributes : MonoBehaviour {
-		public bool kill=false;
-		public bool fired = false;
+		[HideInInspector] public bool kill=false;
+		[HideInInspector] public bool fired = false;
 
 		void Start(){
 		}

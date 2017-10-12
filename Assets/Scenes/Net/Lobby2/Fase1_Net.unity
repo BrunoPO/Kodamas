@@ -588,7 +588,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endCount: 5
-  hashWinner: -1
+  Commented: 0
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 2048
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 256
+  m_StonesTxt: {fileID: 2070849077}
+  m_LifeTxt: {fileID: 2070849076}
+  m_WinTxt: {fileID: 2070849075}
   m_Reset: 0
 --- !u!4 &367777369
 Transform:
@@ -736,6 +748,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e097dfe666ea434cb7ffe242fdb24ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_StonesTxt: {fileID: 2070849077}
+  m_LifeTxt: {fileID: 2070849076}
+  m_WinTxt: {fileID: 2070849075}
   target: {fileID: 380989402}
   damping: 0
   lookAheadFactor: 0
@@ -744,9 +759,6 @@ MonoBehaviour:
   m_LookAheadPos: {x: 0, y: 0, z: 0}
   Min: {x: -10, y: 0}
   Max: {x: 12.45, y: 16.8}
-  m_StonesTxt: {fileID: 2070849077}
-  m_LifeTxt: {fileID: 2070849076}
-  m_WinTxt: {fileID: 2070849075}
 --- !u!1 &432861547
 GameObject:
   m_ObjectHideFlags: 0

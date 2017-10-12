@@ -60,21 +60,17 @@ namespace UnityStandardAssets._2D{
 
 		//Controle da bola depois dela já estar no chão
 		public void flutuarNoChao(){
-			//print("Tentando Flutuar"+transform.up+peso);
 			if (rigid.gravityScale != 0.2f)
 				rigid.gravityScale = 0.2f;
 			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
 			rigid.AddForce (transform.up * peso * 10);
-			//transform.position += transform.up * peso /2;
 		}
 
 		public void rotacionar(Collider2D col){
 			//Debug para identificar quais inimigos foram encontrados;
 			Debug.DrawRay(transform.position, transform.position-col.transform.position, Color.white);
-			//print (col.transform.position);
 			Vector3 dif;
 			Vector3 r = transform.rotation.eulerAngles;
-			//print (r);
 			float alter = 0;
 			if (r.z > 90 || r.z < 270) {
 				if (col.transform.position.y > transform.position.y) {
@@ -96,28 +92,9 @@ namespace UnityStandardAssets._2D{
 			transform.rotation = Quaternion.Euler (r);
 		}
 
-		/*public void rotacionar_old(Collider2D col){
-			//Debug para identificar quais inimigos foram encontrados;
-			Debug.DrawRay(transform.position, col.transform.position, Color.white);
-			Vector3 dif;
-			Quaternion r = transform.rotation;
-			if (indexSeno < 10)
-				indexSeno = 5;
-			r.SetFromToRotation (transform.position, col.transform.position-transform.position);
-			dif = ( transform.rotation.eulerAngles-r.eulerAngles)/500;
-			dif += transform.rotation.eulerAngles;
-			transform.rotation = Quaternion.Euler(dif);
-			if(Commented) print (col.transform.position);
-		}*/
-
 		public void Fire(float peso,int Hash){
 
-			print ("----------Attributes----------");
-			print (GetComponent<StoneAttributesNet> ());
-			print (GetComponent<StoneAttributes> ());
-			print ("-----------------------");
-
-			print ("Fired" + m_attributesNet);
+			print ("Fired");
 
 			if (GetComponent<StoneAttributesNet> () != null) {
 				if(Commented) print("Online");
@@ -129,10 +106,9 @@ namespace UnityStandardAssets._2D{
 				isNet = false;
 			}
 
-			print ("Fired2" + m_attributesNet);
-			//print(" "+paiHash+" "+Hash);
 			this.paiHash = Hash;
 			setFired(true);
+
 			//Configurando Ball para interagir com o ambiente
 			this.gameObject.layer = 9;
 			this.tag = "Stone";
@@ -152,8 +128,8 @@ namespace UnityStandardAssets._2D{
 
 			GetComponent<Animator>().SetBool("Fired",true);//Solved Bug
 			//Bug Prefab isn't enable at begin so Start wouln't run and because of that ani wouln't inicialize
-			this.peso = peso;
 
+			this.peso = peso;
 			if (isNet) {
 				m_attributesNet = GetComponent<StoneAttributesNet> ();
 			} else {

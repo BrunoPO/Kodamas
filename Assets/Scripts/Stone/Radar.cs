@@ -5,7 +5,7 @@ using UnityEngine;
 namespace UnityStandardAssets._2D{
 	public class Radar : MonoBehaviour {
 		private GameObject pai;
-		public int paiHash;
+		[HideInInspector] public int paiHash;
 
 		void Start(){
 			pai = this.transform.parent.gameObject;

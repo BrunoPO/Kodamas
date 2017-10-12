@@ -1,23 +1,18 @@
 using System;
 using UnityEngine;
 
-namespace UnityStandardAssets._2D
-{
-    public class PlatformerCharacter2D : MonoBehaviour
-    {
+namespace UnityStandardAssets._2D{
+    public class PlatformerCharacter2D : MonoBehaviour{
+		
 		[Range(0, 50)] [SerializeField] private float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 		[Range(0, 1000)] [SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
-        [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
-		[SerializeField] private LayerMask m_WhatIsGround;
-		[SerializeField] private LayerMask m_WhatIsWall;
-		[SerializeField] private LayerMask m_WhatIsPlayer;
-		[Range(0, 100)] [SerializeField] private int forcaSprint = 50;
 
-		 
 
-		public Vector3 IniPoint;
-		//[HideInInspector]
+		[HideInInspector] public Vector3 IniPoint;
+		private LayerMask m_WhatIsGround;
+		private LayerMask m_WhatIsWall;
+		private LayerMask m_WhatIsPlayer;
 		private float k_jumpWallForce;
 		private bool isNet;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
@@ -26,39 +21,149 @@ namespace UnityStandardAssets._2D
 		private bool m_OnWall;   			// Whether or not the player is on wall.
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
-        private Animator m_Anim;            // Reference to the player's animator component.
-        private Rigidbody2D m_Rigidbody2D;
-		private int counterSprint;
-		private Collider2D[] colliders;
+       	private Collider2D[] colliders;
 		private Collider2D[] collidersOnChest;
 		private CharAttributesNet m_AttributesNet; //var with refence to Attributes on the Net
 		private CharAttributes m_Attributes;	//var with refence to Attributes on the Local
+		private Animator m_Anim;            // Reference to the player's animator component.
+		private Rigidbody2D m_Rigidbody2D; // Reference to the player's rigidbody component.
+		private bool init = false ;
 
-		private void Awake(){
-			// Setting up references.
+		private void Start(){
 			m_GroundCheck = transform.Find("GroundCheck");
 			m_CeilingCheck = transform.Find("CeilingCheck");
 			m_Anim = GetComponent<Animator>();
 			m_Rigidbody2D = GetComponent<Rigidbody2D>();
-			counterSprint = forcaSprint;
 
 			k_jumpWallForce = (m_MaxSpeed*m_JumpForce)/60; //75
 			if (GetComponent<Platformer2DUserControl>().m_ControleVars != null)
 				k_jumpWallForce *= 4.5f;
 			
 			print (k_jumpWallForce);
+			Init ();
+		}
+		private void Init(){
+			print ("tentou");
+			if (GameObject.Find ("GM") == null)
+				return;
+			init = true;
 
 			isNet = (GetComponent<CharAttributesNet> () != null);
-			if(isNet)
+			if (isNet) {
 				m_AttributesNet = GetComponent<CharAttributesNet> ();
-			else
+				GMNet gm = GameObject.Find ("GM").GetComponent<GMNet> ();
+				m_WhatIsGround = gm.whatIsGround;
+				m_WhatIsWall = gm.whatIsWall;
+				m_WhatIsPlayer = gm.whatIsPlayer;
+			} else {
 				m_Attributes = GetComponent<CharAttributes> ();
+				GM gm = GameObject.Find ("GM").GetComponent<GM> ();
+				m_WhatIsGround = gm.whatIsGround;
+				m_WhatIsWall = gm.whatIsWall;
+				m_WhatIsPlayer = gm.whatIsPlayer;
+			}
+		}
+
+        private void Update(){//Fixed?
+			if (!init) {
+				Init ();
+				return;
+			}
+			m_Grounded = false;
+			m_OnWall = false;
+			colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+			m_Grounded = (colliders != null && (colliders.Length > 0));
+
+			//Verifica colisão com o muro na altura do pé ou do peito
+			collidersOnChest = Physics2D.OverlapCircleAll (transform.position, k_GroundedRadius, m_WhatIsWall);
+			if (collidersOnChest.Length < 1)
+				colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsWall);
+			else
+				colliders = collidersOnChest;
+			m_OnWall = (collidersOnChest != null && (collidersOnChest.Length > 0));
+
+			m_Anim.SetBool ("Ground", m_Grounded);
+			if(!m_Grounded){
+				m_Anim.SetBool ("Wall", m_OnWall);
+
+				//Verificar se está pisando em alguém
+				if (m_Rigidbody2D.velocity.y < 0) {
+					colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
+					foreach (Collider2D collider in colliders) {
+						if (collider.name == "Head") {
+							collider.transform.parent.GetComponent<Platformer2DUserControl> ().Killed ();
+							m_Rigidbody2D.velocity = new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/50, m_JumpForce/50);
+							//m_Rigidbody2D.AddForce (new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/20, m_JumpForce));
+							break;
+						}
+					}
+				}
+			}else{
+				m_Anim.SetBool ("Wall", false);
+			}
+
+			Vector3 velo = m_Rigidbody2D.velocity;
+			//Se passar do limite volte para -10
+			if (velo.y < -15) {
+				velo.y = -10;
+				m_Rigidbody2D.velocity = velo;
+			}
+
+            m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+        }
+
+		public void Move(float move, bool jump){
 			
-		}
-		private void Start(){
-			if (GameObject.Find ("Controle") == null)
-				k_jumpWallForce *= 4;
-		}
+			//Se não olhando para frente inverta.
+			if ((move < 0 && isFacingRight()) || (move > 0 && !isFacingRight())) {
+				InvertFacing ();
+			}
+
+			//Se tiver pulando e no chão pule
+			if (m_Grounded && jump && m_Anim.GetBool ("Ground")) {
+				m_Grounded = false;
+				m_Anim.SetBool ("Ground", false);
+				m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
+			}
+
+            if (m_Grounded || m_AirControl){
+				m_Anim.SetFloat("Speed", Mathf.Abs(move));
+
+				if (m_Grounded && m_OnWall) {//Se estiver no chão e perto de um muro ande
+					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
+
+				//Se tiver perto de um muro pulando (E não no chão)
+				} else if (m_OnWall && Mathf.Abs (move) > 0.3f && jump) { 
+					bool facingWalls = false;
+
+					//Procura se está olhando para o muro
+					for (int i = 0; i < collidersOnChest.Length; i++) {
+						if (move > 0.3f && collidersOnChest [i].transform.position.x - transform.position.x > 0) {
+							facingWalls = true;
+							break;
+						} else if (move < -0.3f && transform.position.x - collidersOnChest [i].transform.position.x > 0) {
+							facingWalls = true;
+							break;
+						}
+					}
+
+					if (facingWalls && !m_Grounded) {//Se olhando para um muro e está pulando
+						m_Grounded = false;
+						m_Anim.SetBool ("Ground", false);
+						if (move > 0) {
+							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
+						} else {
+							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
+						}
+						return;
+					}
+				}
+				//Se não voltou então passe a velocidade Horinzontal.
+				m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
+				
+            }
+
+        }
 
 		private bool isFacingRight(){
 			if (isNet) {
@@ -73,19 +178,10 @@ namespace UnityStandardAssets._2D
 				m_AttributesNet.InvertFlip();
 			} else {
 				m_Attributes.InvertFlip();
-				//GetComponent<CharAttributes> ().m_FacingRight = !GetComponent<CharAttributes> ().m_FacingRight;
 			}
 		}
 
 		public void ResetChar(){
-			//gameObject.GetComponent<SpriteRenderer> ().enabled = false;
-			/*GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
-			transform.position = GetComponent<CharAttributesNet> ().IniPoint;*/
-
-
-			/*GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
-			transform.position = GetComponent<CharAttributesNet> ().IniPoint;*/
-			//GetComponent<CharAttributesNet> ().RpcResetInitPoint();
 			if (isNet) {
 				m_AttributesNet.ResetAttributes ();
 			} else {
@@ -103,167 +199,6 @@ namespace UnityStandardAssets._2D
 			}
 			transform.rotation = Quaternion.Euler(rot);
 		}
-
-        private void Update()//Fixed?
-        {
-			
-
-
-			Vector3 velo = m_Rigidbody2D.velocity;
-			if (velo.y < -15) {
-				velo.y = -10;
-				m_Rigidbody2D.velocity = velo;
-			}
-
-			m_Grounded = false;
-			m_OnWall = false;
-			// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-			// This can be done using layers instead but Sample Assets will not overwrite your project settings.
-			colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-			m_Grounded = (colliders != null && (colliders.Length > 0));
-
-			//Verifica colisão com o muro na altura do pé ou do peito
-			collidersOnChest = Physics2D.OverlapCircleAll (transform.position, k_GroundedRadius, m_WhatIsWall);
-			if (collidersOnChest.Length < 1)
-				colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsWall);
-			else
-				colliders = collidersOnChest;
-			m_OnWall = (collidersOnChest != null && (collidersOnChest.Length > 0));
-
-			m_Anim.SetBool ("Ground", m_Grounded);
-			if(!m_Grounded){
-				m_Anim.SetBool ("Wall", m_OnWall);
-				if (m_Rigidbody2D.velocity.y < 0) {//Verificar se está pisando em alguém
-					colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
-					foreach (Collider2D collider in colliders) {
-						//print (collider.name);
-						if (collider.name == "Head") {
-							collider.transform.parent.GetComponent<Platformer2DUserControl> ().Killed ();
-							//m_Rigidbody2D.velocity = Vector3.zero;
-							m_Rigidbody2D.AddForce (new Vector2 (m_Rigidbody2D.velocity.x, m_JumpForce));
-
-							break;
-						}
-					}
-				}
-			}else{
-				m_Anim.SetBool ("Wall", false);
-			}
-            // Set the vertical animation
-            m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
-        }
-
-
-
-
-		
-		public void Move(float move, bool crouch, bool jump,bool sprint)
-        {
-            // If crouching, check to see if the character can stand up
-            if (!crouch && m_Anim.GetBool("Crouch"))
-            {
-                // If the character has a ceiling preventing them from standing up, keep them crouching
-                if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-                {
-                    crouch = true;
-                }
-            }
-
-			if (sprint && counterSprint >= forcaSprint) {
-				counterSprint = 0;
-			}
-
-			if (counterSprint < (forcaSprint * 0.7)) {//Redução da velocidade do sprint
-				move *= 5*(forcaSprint-counterSprint)/forcaSprint;
-			}
-
-			counterSprint++;
-
-            // Set whether or not the character is crouching in the animator
-            m_Anim.SetBool("Crouch", crouch);
-
-            //only control the player if grounded or airControl is turned on
-            if (m_Grounded || m_AirControl)
-            {
-                // Reduce the speed if crouching by the crouchSpeed multiplier
-                move = (crouch ? move*m_CrouchSpeed : move);
-
-                // Move the character
-				//print("move:"+Mathf.Abs(move));
-				//print("m_OnWall:"+m_OnWall);
-				if (m_Grounded && m_OnWall) {
-					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
-					/* if (!hasWalls){
-						m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
-					}*/
-				} else if (m_OnWall && Mathf.Abs (move) > 0.3f && jump) {
-					bool hasWalls = false;
-					for (int i = 0; i < collidersOnChest.Length; i++) {
-						if (move > 0.3f && collidersOnChest [i].transform.position.x - transform.position.x > 0) {
-							hasWalls = true;
-							break;
-						} else if (move < -0.3f && transform.position.x - collidersOnChest [i].transform.position.x > 0) {
-							hasWalls = true;
-							break;
-						}
-					}
-
-					if (hasWalls && !m_Grounded) {
-						m_Grounded = false;
-						m_Anim.SetBool ("Ground", false);
-						//isLeft = (collidersOnChest [0].transform.position.x < transform.position.x)
-						//-m_Rigidbody2D.velocity.x * 5
-						//print("Force out of wall = "+(Mathf.CeilToInt(move)*-1)*m_JumpForce/5);
-						if (move > 0) {
-							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
-						} else {
-							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
-						}
-					} else {
-						m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
-					}
-				}else {
-					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
-				}
-
-				// The Speed animator parameter is set to the absolute value of the horizontal input.
-				m_Anim.SetFloat("Speed", Mathf.Abs(move));
-            }
-            // If the player should jump...
-			if (m_Grounded && jump && m_Anim.GetBool ("Ground")) {
-				// Add a vertical force to the player.
-				m_Grounded = false;
-				m_Anim.SetBool ("Ground", false);
-				m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
-			} /*else if (jump) {
-				if (m_OnWall && (move > 0.3f || move < -0.3f)) {
-					m_Grounded = false;
-					m_Anim.SetBool ("Ground", false);//-m_Rigidbody2D.velocity.x * 5
-					print("Force out of wall = "+(Mathf.CeilToInt(move)*-1)*m_JumpForce/5);
-					if(move>0)
-						m_Rigidbody2D.AddForce (new Vector2 (-1*m_JumpForce/5, m_JumpForce/40 ), ForceMode2D.Impulse);
-					else
-						m_Rigidbody2D.AddForce (new Vector2 (1*m_JumpForce/5, m_JumpForce/40 ), ForceMode2D.Impulse);
-				}
-			}/* else {
-				Collider2D[] colliders = Physics2D.OverlapCircleAll (transform.position, k_GroundedRadius, m_WhatIsWall);
-				m_OnWall = (colliders != null && (colliders.Length > 0));
-
-				if (m_OnWall) {
-					m_Rigidbody2D.AddForce (new Vector2 (0, -130));
-				}
-			}*/
-			if (move < 0 && isFacingRight()) {
-				// ... flip the player.
-				InvertFacing ();
-			}
-			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (move > 0 && !isFacingRight()) {
-				// ... flip the player.
-				InvertFacing ();
-			}
-
-        }
 
 
         
