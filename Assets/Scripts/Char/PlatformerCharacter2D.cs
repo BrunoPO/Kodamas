@@ -43,7 +43,7 @@ namespace UnityStandardAssets._2D{
 			Init ();
 		}
 		private void Init(){
-			print ("tentou");
+			//print ("tentou");
 			if (GameObject.Find ("GM") == null)
 				return;
 			init = true;
@@ -91,7 +91,7 @@ namespace UnityStandardAssets._2D{
 					colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
 					foreach (Collider2D collider in colliders) {
 						if (collider.name == "Head") {
-							collider.transform.parent.GetComponent<Platformer2DUserControl> ().Killed ();
+							Killed ();
 							m_Rigidbody2D.velocity = new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/50, m_JumpForce/50);
 							//m_Rigidbody2D.AddForce (new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/20, m_JumpForce));
 							break;
@@ -111,6 +111,13 @@ namespace UnityStandardAssets._2D{
 
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
+
+		public int getHash(){
+			if (isNet)
+				return m_AttributesNet.getHash();
+			else
+				return m_Attributes.getHash();
+		}
 
 		public void Move(float move, bool jump){
 			
@@ -164,6 +171,13 @@ namespace UnityStandardAssets._2D{
             }
 
         }
+
+		public void Killed(){
+			if (isNet)
+				m_AttributesNet.CmdKilled();
+			else
+				m_Attributes.CmdKilled();
+		}
 
 		private bool isFacingRight(){
 			if (isNet) {

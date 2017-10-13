@@ -120,7 +120,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 7cf27cabe9c0367a3591dbe94b729daf Assembly-CSharp.dll:UnityStandardAssets.Network.SimpleController
 f671aa975974562917e3bf91d1444c4e Assembly-CSharp.dll:UnityStandardAssets._2D.Stone
-ae0d36f12d7baceab9a288ed613e2faa Assembly-CSharp.dll:UnityStandardAssets._2D.CharAttributesNet
+43f99b24b9d9e218db0c3ce7dd06c54a Assembly-CSharp.dll:UnityStandardAssets._2D.CharAttributesNet
 6bf4a55f8fb217cf13b4b90490cdab6d Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyManager
 49a519291eb698293318ea256fb13ae4 Assembly-CSharp.dll:UnityStandardAssets._2D.Platformer2DUserControl
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ExibirIP
@@ -158,7 +158,7 @@ d438e4c1d0e4e87353177a813a98af2e Assembly-CSharp.dll:UnityStandardAssets._2D.Cha
 e20a31b96c493061d422ad18a2e8213b Assembly-CSharp.dll:.Btn_pulo
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChooseChar
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.BallParticleDestroyNet
-0c1e129bbbe118d58031aa5ff262f9bb Assembly-CSharp.dll:UnityStandardAssets._2D.Camera2DFollow
+15f7490cac3c52c4d8dfba3f9574a987 Assembly-CSharp.dll:UnityStandardAssets._2D.Camera2DFollow
 01f7df3d21ad87206cb85eedb3bca425 Assembly-CSharp.dll:UnityStandardAssets._2D.StoneAttributesNet
 239d2cc8d353bbfcbefc27fa8f0221cc Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyServerList
 e374bb8897ba2bae7d86662ebcf65b69 Assembly-CSharp.dll:.ControleVars

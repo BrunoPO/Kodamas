@@ -25,7 +25,7 @@ namespace UnityStandardAssets._2D{
 					if (col.transform.parent.gameObject.GetComponent<Platformer2DUserControl> () == null)
 						return;
 				} else {
-					if (col.gameObject.GetComponent<Platformer2DUserControl> ().getHash () == paiHash)
+					if (col.gameObject.GetComponent<PlatformerCharacter2D> ().getHash () == paiHash)
 						return;
 				}
 			} else {

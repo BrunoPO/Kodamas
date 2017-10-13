@@ -15,28 +15,23 @@ namespace Prototype.NetworkLobby
 		//My Settings
 		[HideInInspector] public GameObject controle;
 		[HideInInspector] public GameObject Scn_ChooseChar;
-		[HideInInspector] [SyncVar(hook = "OnMyChar")]
+		//[HideInInspector] 
+		[SyncVar(hook = "OnMyChar")]
 		public int avatarIndex = 0;
-
-		[Header("ChoosePlayerButtons")]
-		public Dictionary<int, int> currentPlayers;
-
-		[Header("Lobby Stuf")]
-        static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
-        //used on server to avoid assigning the same color to two player
-        static List<int> _colorInUse = new List<int>();
-
-
-
 		public GameObject Scn_ChooseScene;
 		public Button Btn_ChooseScene;
 
+		[Header("ChoosePlayerButtons")]
+		//public Dictionary<int, int> currentPlayers;
+
+		[Header("Lobby Stuf")]
+        //static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
+        //static List<int> _colorInUse = new List<int>();
 
         public Button colorButton;
         public InputField nameInput;
         public Button readyButton;
         public Button waitingPlayerButton;
-
 
 		private LobbyManager m_LobbyManager;
 
@@ -102,6 +97,9 @@ namespace Prototype.NetworkLobby
 			m_LobbyManager = GameObject.Find ("LobbyManager").GetComponent<LobbyManager> ();
 			Btn_ChooseScene = m_LobbyManager.Btn_ChooseScene;
 		}
+		public void Start(){
+			OnMyChar (avatarIndex);
+		}
 
         public override void OnStartAuthority()
         {
@@ -125,6 +123,8 @@ namespace Prototype.NetworkLobby
 				SetupLocalPlayer();
 				Btn_ChooseScene.interactable = false;
 				Btn_ChooseScene.onClick.RemoveAllListeners ();
+				m_SceneNum = transform.parent.GetChild (0).gameObject.GetComponent<LobbyPlayer> ().m_SceneNum;
+				OnChangeScene (m_SceneNum);
 			}
 
 
@@ -141,8 +141,7 @@ namespace Prototype.NetworkLobby
             readyButton.colors = b;
         }
 
-        void SetupOtherPlayer()
-        {
+        void SetupOtherPlayer(){
             nameInput.interactable = false;
 
             ChangeReadyButtonColor(NotReadyColor);
@@ -156,11 +155,8 @@ namespace Prototype.NetworkLobby
 			if (isLocalPlayer) {
 				if (Scn_ChooseChar == null) {
 					Scn_ChooseChar = GameObject.Find ("LobbyPanel").GetComponent<LobbyPlayerList> ().Scn_ChooseChar;
-				}
-
-				if (Scn_ChooseChar == null)
 					return;
-				else {
+				}else {
 					controle = Scn_ChooseChar.transform.GetChild (0).gameObject;
 					if (controle == null)
 						return;
@@ -220,8 +216,8 @@ namespace Prototype.NetworkLobby
 
             CheckRemoveButton();
 
-            if (playerColor == Color.white)
-                CmdColorChange();
+            /*if (playerColor == Color.white)
+                CmdColorChange();*/
 
             ChangeReadyButtonColor(JoinColor);
 
@@ -263,7 +259,7 @@ namespace Prototype.NetworkLobby
 
 		}
 
-		[ClientRpc]
+		/*[ClientRpc]
 		public void RpcAvatarPicked(int avIndex)
 		{
 			CmdAvatarPicked (avIndex);
@@ -273,13 +269,13 @@ namespace Prototype.NetworkLobby
 		public void CmdAvatarPicked(int avIndex)
 		{
 			LobbyManager.s_Singleton.SetPlayerTypeLobby(GetComponent<NetworkIdentity>().connectionToClient, avIndex);
-		}
+		}*/
 
-		public void SetPlayerTypeLobby (NetworkConnection conn, int type)
+		/*public void SetPlayerTypeLobby (NetworkConnection conn, int type)
 		{
 			if (currentPlayers.ContainsKey (conn.connectionId))
 				currentPlayers [conn.connectionId] = type;
-		}
+		}*/
 
         //This enable/disable the remove button depending on if that is the only local player or not
         public void CheckRemoveButton()
@@ -332,6 +328,7 @@ namespace Prototype.NetworkLobby
         }
 
 		public void OnMyChar(int newidx){
+			print ("Changed Char");
 			avatarIndex = newidx;
 			Color newColor = (newidx==2)?Color.grey:Color.blue;
 			newColor = (newidx==0)?Color.red:newColor;
@@ -352,10 +349,10 @@ namespace Prototype.NetworkLobby
 		print (Scn_ChooseChar);
 			Scn_ChooseChar.SetActive(true);
 		}
-		public void OnColorClicked()
+		/*public void OnColorClicked()
         {
             CmdColorChange();
-        }
+        }*/
 
         public void OnReadyClicked()
         {
@@ -398,7 +395,7 @@ namespace Prototype.NetworkLobby
 
         //====== Server Command
 
-	[Command]
+		/*[Command]
         public void CmdColorChange()
         {
             int idx = System.Array.IndexOf(Colors, playerColor);
@@ -435,7 +432,7 @@ namespace Prototype.NetworkLobby
             }
 
             playerColor = Colors[idx];
-        }
+        }*/
 
         [Command]
         public void CmdNameChanged(string name)
@@ -455,7 +452,7 @@ namespace Prototype.NetworkLobby
             LobbyPlayerList._instance.RemovePlayer(this);
             if (LobbyManager.s_Singleton != null) LobbyManager.s_Singleton.OnPlayersNumberModified(-1);
 
-            int idx = System.Array.IndexOf(Colors, playerColor);
+            /*int idx = System.Array.IndexOf(Colors, playerColor);
 
             if (idx < 0)
                 return;
@@ -467,7 +464,7 @@ namespace Prototype.NetworkLobby
                     _colorInUse.RemoveAt(i);
                     break;
                 }
-            }
+            }*/
         }
     }
 }

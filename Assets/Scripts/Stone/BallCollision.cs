@@ -21,7 +21,7 @@ namespace UnityStandardAssets._2D{
 			if (pai == null)
 				return;
 			if(col.tag == "Player")
-				if(Commented) print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+col.name+" Tag:"+col.tag+"Hash:"+col.GetComponent<Platformer2DUserControl> ().getHash());
+			if(Commented) print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+col.name+" Tag:"+col.tag+"Hash:"+col.GetComponent<PlatformerCharacter2D> ().getHash());
 			else if(col.tag == "Stone")
 				if(Commented) print ("Colidiu This:"+this.name+" tag:"+this.tag+"FatherID:"+paiHash+", Com:"+col.name+" Tag:"+col.tag);
 
@@ -36,9 +36,9 @@ namespace UnityStandardAssets._2D{
 					if (end) {
 						pai.GetComponent<Stone> ().DestroySelf ();
 					}
-				} else if (col.GetComponent<Platformer2DUserControl> ().getHash() != paiHash) {
+				} else if (col.GetComponent<PlatformerCharacter2D> ().getHash() != paiHash) {
 					if(Commented) print ("Player Killed");
-					col.GetComponent<Platformer2DUserControl> ().Killed();
+					col.GetComponent<PlatformerCharacter2D> ().Killed();
 					pai.GetComponent<Stone> ().DestroySelf ();
 					//Fall ();
 				} else {//Balls++ Ball on the air

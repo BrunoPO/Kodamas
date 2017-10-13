@@ -111,7 +111,7 @@ namespace UnityStandardAssets._2D{
 
 		private void OnKilled(bool newBool){
 
-			print (m_Killed +" "+ newBool);
+			//print (m_Killed +" "+ newBool);
 
 			if (m_Killed == newBool)
 				return;
@@ -144,7 +144,7 @@ namespace UnityStandardAssets._2D{
 
 			life = m_GMNet.initLife();
 
-			print (balls + "b and l " + life);
+			//print (balls + "b and l " + life);
 
 			if (isLocalPlayer) {
 				AfterReset = true;

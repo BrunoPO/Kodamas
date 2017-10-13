@@ -24,27 +24,31 @@ namespace UnityStandardAssets._2D
 		private GameObject SoulStone;
 
 		private void Awake(){
-			m_Character = GetComponent<PlatformerCharacter2D>();
 			//isNet = m_Character.isNet;
-			m_AttributesNet = GetComponent<CharAttributesNet> ();
-			m_Attributes = GetComponent<CharAttributes> ();
 			Init ();
 		}
 		private void Init(){
+			print ("Tentou" + GameObject.Find ("GM"));
 			if (GameObject.Find ("GM") == null)
 				return;
 			init = true;
+			m_Character = GetComponent<PlatformerCharacter2D>();
+			init = true;
 			isNet = (GetComponent<CharAttributesNet> () != null);
-			if (isNet)
+			//print (isNet);
+			if (isNet) {
+				m_AttributesNet = GetComponent<CharAttributesNet> ();
 				SoulStone = m_AttributesNet.SoulStone;
-			else
+			} else {
 				SoulStone = m_Attributes.SoulStone;
+				m_Attributes = GetComponent<CharAttributes> ();
+			}
 			GameObject m_Controle= GameObject.Find ("Controle");
 			if (m_Controle != null) {
 				m_ControleVars = m_Controle.GetComponent<ControleVars> ();
 			}else
 				GetComponent<PlatformerCharacter2D> ().m_JumpForce *= 4.5f;
-			print ("Teste controle:"+(m_ControleVars != null));
+			//print ("Teste controle:"+(m_ControleVars != null));
 		}
 
 		private void Update() {
@@ -96,9 +100,9 @@ namespace UnityStandardAssets._2D
 					Quaternion rotation = go_stone.transform.rotation;
 					Destroy (go_stone);
 					if(isNet)
-						m_AttributesNet.CmdSpwnBall (position,rotation,getHash());
+						m_AttributesNet.CmdSpwnBall (position,rotation,m_Character.getHash());
 					else
-						m_Attributes.CmdSpwnBall (position,rotation,getHash());
+						m_Attributes.CmdSpwnBall (position,rotation,m_Character.getHash());
 				}
 			//Se não estiver atacando e tem stone
 			}else if(getBalls()>0){
@@ -166,19 +170,7 @@ namespace UnityStandardAssets._2D
 				return m_Attributes.getBall();
 		}
 
-		public int getHash(){
-			if (isNet)
-				return m_AttributesNet.getHash();
-			else
-				return m_Attributes.getHash();
-		}
 
-		public void Killed(){
-			if (isNet)
-				m_AttributesNet.CmdKilled();
-			else
-				m_Attributes.CmdKilled();
-		}
 
 		//Metodos chamados internamente
 		Vector3 Direcao(float h, float v){

@@ -92,6 +92,7 @@ namespace UnityStandardAssets._2D{
 
 
 		public void PlayerIn(GameObject ob){
+			print ("PlayerIn"+ob);
 			if (!isServer || ob.tag != "Player") 
 				return;
 			
@@ -110,6 +111,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void PlayerOut(GameObject ob){
+			print ("PlayerOut"+ob);
 			if (!isServer)
 				return;
 			
