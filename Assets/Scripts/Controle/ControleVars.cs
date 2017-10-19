@@ -9,9 +9,9 @@ public class ControleVars : MonoBehaviour {
 	private int buttonPuloDelay=5;
 
 	public void Start(){
-		float width = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.x;
-		float height = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.y;
-		this.GetComponent<RectTransform> ().sizeDelta = new Vector2(width,height);
+		//float width = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.x;
+		//float height = this.transform.parent.GetComponent<RectTransform> ().sizeDelta.y;
+		//this.GetComponent<RectTransform> ().sizeDelta = new Vector2(width,height);
 	}
 
 	public void alterAtk(bool b){

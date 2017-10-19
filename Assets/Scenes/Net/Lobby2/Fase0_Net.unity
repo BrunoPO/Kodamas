@@ -3673,10 +3673,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1272483334217556, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 223489059447723278, guid: 30b622b6540624d6f8d612e9ed2de0ed,
+        type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 380989401}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
   m_IsPrefabParent: 0
