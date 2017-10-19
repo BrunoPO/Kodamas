@@ -219,6 +219,7 @@ namespace UnityStandardAssets._2D{
 			print("Called Killed");
 			m_Killed = true;
 		}
+
 		public void ResetAttributes(){
 			CmdResetAttributes ();
 		}

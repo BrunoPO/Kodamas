@@ -22,6 +22,7 @@ namespace UnityStandardAssets._2D
 		private bool init = false;
 		private GameObject gm;
 		private GameObject SoulStone;
+		private Animator m_Anim;
 
 		private void Awake(){
 			//isNet = m_Character.isNet;
@@ -32,6 +33,7 @@ namespace UnityStandardAssets._2D
 			if (GameObject.Find ("GM") == null)
 				return;
 			init = true;
+			m_Anim = GetComponent<Animator> ();
 			m_Character = GetComponent<PlatformerCharacter2D>();
 			init = true;
 			isNet = (GetComponent<CharAttributesNet> () != null);
@@ -88,6 +90,10 @@ namespace UnityStandardAssets._2D
 				autoAttackCounter++;
 				m_Jump = false;h = 0;v = 0;
 			}
+
+
+			m_Anim.SetBool ("Atack", atck);
+			print (atck);
 
 			//Se não estiver atacando
 			if (!atck) {

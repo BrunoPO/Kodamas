@@ -31,9 +31,15 @@ namespace UnityStandardAssets._2D{
 
 		private void Awake(){
 			endCount *= 60;
-			my_inst = GameObject.Find("LobbyManager").GetComponent<LobbyManager> ();
-			m_stones = my_inst.m_quantStones;
-			m_lifes = my_inst.m_quantLife;
+
+			m_stones = 3;
+			m_lifes = 3;
+			if (GameObject.Find ("LobbyManager") != null) {
+				my_inst = GameObject.Find ("LobbyManager").GetComponent<LobbyManager> ();
+
+				m_stones = my_inst.m_quantStones;
+				m_lifes = my_inst.m_quantLife;
+			}
 		}
 
 		public int getHashWinner(){
