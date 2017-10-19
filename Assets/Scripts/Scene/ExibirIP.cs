@@ -5,10 +5,19 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class ExibirIP : NetworkBehaviour {
+	string meuip;
 	void Start () {
-		this.GetComponent<Text>().text = Network.player.ipAddress;
+		meuip = Network.player.ipAddress;
 	}
 	void Update(){
-		 this.GetComponent<Text>().text = Network.player.ipAddress;
+		meuip = Network.player.ipAddress;
+		if (meuip != "0.0.0.0") {
+			print (transform.GetChild (0));
+			string converted = Convert.IPToHash(meuip);
+			transform.GetChild(0).gameObject.GetComponent<Text>().text = converted;
+			print (Convert.HashToIP (converted));
+
+			this.enabled = false;
+		}
 	}
 }

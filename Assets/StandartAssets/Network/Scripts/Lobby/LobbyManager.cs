@@ -7,7 +7,7 @@ using UnityEngine.Networking.Match;
 using System.Collections;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections.Generic;
-//using UnityEngine.SceneManagement;
+
 
 namespace Prototype.NetworkLobby
 {
@@ -17,11 +17,13 @@ namespace Prototype.NetworkLobby
 		[SerializeField] private GameObject partyAttributes;
 		public Button Btn_ChooseScene;
 		private InputField tfLife, tfStone;
-		[HideInInspector] public int m_quantStones = 3;
-		[HideInInspector] public int m_quantLife = 3;
+		[HideInInspector] public int m_quantStones = 1;
+		[HideInInspector] public int m_quantLife = 1;
 		[HideInInspector] public int m_tipoDeJogo = 0;
 		[HideInInspector] public int m_SceneNum = 0;
 		[HideInInspector] public int avatarIndex = 0;
+
+		[HideInInspector] public LobbyTopPanel m_LobbyTopPanel ;
 
 
 		[HideInInspector] public Dictionary<int, int> currentPlayers;
@@ -68,14 +70,12 @@ namespace Prototype.NetworkLobby
 
 
 
-
-
 		public void SetValsConf(){
 			m_quantLife = int.Parse(tfLife.text); 
 			m_quantStones = int.Parse(tfStone.text);
 			print ("OK");
 		}
-
+			
 		public void ChangeScene(int s){
 			if (nameScenesToLoad != null && nameScenesToLoad.Length>s) {
 				m_SceneNum = s;
@@ -83,7 +83,9 @@ namespace Prototype.NetworkLobby
 			}
 		}
 
+
         void Start(){
+			m_LobbyTopPanel = GameObject.Find("TopPanel").GetComponent<LobbyTopPanel>();
 			if(nameScenesToLoad.Length >0)
 				playScene = nameScenesToLoad[0];
 			currentPlayers = new Dictionary<int,int> ();

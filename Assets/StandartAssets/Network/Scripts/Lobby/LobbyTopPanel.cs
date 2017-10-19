@@ -7,6 +7,7 @@ namespace Prototype.NetworkLobby
     public class LobbyTopPanel : MonoBehaviour
     {
         public bool isInGame = false;
+		public bool isServer = false;
 
         protected bool isDisplayed = true;
         protected Image panelImage;
@@ -16,9 +17,11 @@ namespace Prototype.NetworkLobby
             panelImage = GetComponent<Image>();
         }
 
+		public void setIsServer(bool b){
+			isServer = b;
+		}
 
-        void Update()
-        {
+        void Update(){
             if (!isInGame)
                 return;
 
@@ -32,10 +35,13 @@ namespace Prototype.NetworkLobby
         public void ToggleVisibility(bool visible)
         {
             isDisplayed = visible;
-            foreach (Transform t in transform)
-            {
-				if(t.name == "BackButton" || t.name == "Configuracao")
-                t.gameObject.SetActive(isDisplayed);
+            foreach (Transform t in transform){
+				if(t.name == "BackButton")
+                	t.gameObject.SetActive(isDisplayed);
+				else if((isServer || !visible)&&(t.name == "Configuracao" || t.name == "InfoPanel" )){
+					print (isServer + " "+!visible);
+					t.gameObject.SetActive(isDisplayed);
+				}
             }
 
             if (panelImage != null)

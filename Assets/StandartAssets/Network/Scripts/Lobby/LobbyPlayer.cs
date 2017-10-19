@@ -119,12 +119,16 @@ namespace Prototype.NetworkLobby
 				Btn_ChooseScene.interactable = true;
 				Btn_ChooseScene.onClick.RemoveAllListeners ();
 				Btn_ChooseScene.onClick.AddListener (onSceneSelect);
+				m_LobbyManager.m_LobbyTopPanel.setIsServer (true);
+				m_LobbyManager.m_LobbyTopPanel.ToggleVisibility (true);
 			}else{
 				SetupLocalPlayer();
 				Btn_ChooseScene.interactable = false;
 				Btn_ChooseScene.onClick.RemoveAllListeners ();
 				m_SceneNum = transform.parent.GetChild (0).gameObject.GetComponent<LobbyPlayer> ().m_SceneNum;
+				m_LobbyManager.m_LobbyTopPanel.setIsServer (false);
 				OnChangeScene (m_SceneNum);
+				m_LobbyManager.m_LobbyTopPanel.ToggleVisibility (true);
 			}
 
 
@@ -328,7 +332,7 @@ namespace Prototype.NetworkLobby
         }
 
 		public void OnMyChar(int newidx){
-			print ("Changed Char");
+			//print ("Changed Char");
 			avatarIndex = newidx;
 			Color newColor = (newidx==2)?Color.grey:Color.blue;
 			newColor = (newidx==0)?Color.red:newColor;
