@@ -26,3 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Net/Lobby2/Fase1_Net.unity
     guid: 0600ea5fad5c94efdbff6a206020c153
+  - enabled: 0
+    path: Assets/Scenes/Net/Lobby2/Fase1_Net(original).unity
+    guid: cf36d964cdb084cdea31d5f5b0f39acf
+  - enabled: 0
+    path: Assets/Scenes/Net/Lobby2/Fase0_Net (original).unity
+    guid: 0473f8beff425489d840aae1084d22e8

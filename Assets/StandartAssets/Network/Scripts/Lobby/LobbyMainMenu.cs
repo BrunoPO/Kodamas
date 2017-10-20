@@ -28,7 +28,7 @@ namespace Prototype.NetworkLobby
             lobbyManager.ChangeTo(lobbyPanel);
 			print (ipInput.text);
 			print (Convert.HashToIP (ipInput.text));
-			lobbyManager.networkAddress = Convert.HashToIP(ipInput.text);
+			lobbyManager.networkAddress = Convert.HashToIP (ipInput.text);
             lobbyManager.StartClient();
             lobbyManager.backDelegate = lobbyManager.StopClientClbk;
             lobbyManager.DisplayIsConnecting();

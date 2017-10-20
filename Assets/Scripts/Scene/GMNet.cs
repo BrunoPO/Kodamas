@@ -115,6 +115,7 @@ namespace UnityStandardAssets._2D{
 				m_PlayersAlive.Add (true);
 			}
 		}
+
 		[Command]
 		private void CmdPlayerLosed(GameObject ob){
 			ob.GetComponent<CharAttributesNet> ().m_Losed=true;
