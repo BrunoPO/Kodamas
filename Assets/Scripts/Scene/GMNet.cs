@@ -32,8 +32,8 @@ namespace UnityStandardAssets._2D{
 		private void Awake(){
 			endCount *= 60;
 
-			m_stones = 3;
-			m_lifes = 1;
+			m_stones = 5;
+			m_lifes = 2;
 			if (GameObject.Find ("LobbyManager") != null) {
 				my_inst = GameObject.Find ("LobbyManager").GetComponent<LobbyManager> ();
 
