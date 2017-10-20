@@ -26,7 +26,7 @@ namespace Prototype.NetworkLobby
         public void OnClickJoin(){
 			ChooseScene.SetActive (false);
             lobbyManager.ChangeTo(lobbyPanel);
-            lobbyManager.networkAddress = ipInput.text;
+			lobbyManager.networkAddress = Convert.HashToIP(ipInput.text);
             lobbyManager.StartClient();
             lobbyManager.backDelegate = lobbyManager.StopClientClbk;
             lobbyManager.DisplayIsConnecting();
