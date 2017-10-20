@@ -20,6 +20,7 @@ namespace Prototype.NetworkLobby
 		public int avatarIndex = 0;
 		public GameObject Scn_ChooseScene;
 		public Button Btn_ChooseScene;
+		private GameObject GM_PersonagemButton;
 
 		[Header("ChoosePlayerButtons")]
 		//public Dictionary<int, int> currentPlayers;
@@ -28,7 +29,7 @@ namespace Prototype.NetworkLobby
         //static Color[] Colors = new Color[] { Color.magenta, Color.red, Color.cyan, Color.blue, Color.green, Color.yellow };
         //static List<int> _colorInUse = new List<int>();
 
-        public Button colorButton;
+        //public Button colorButton;
         public InputField nameInput;
         public Button readyButton;
         public Button waitingPlayerButton;
@@ -48,9 +49,9 @@ namespace Prototype.NetworkLobby
         public Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
         public Color EvenRowColor = new Color(180.0f / 255.0f, 180.0f / 255.0f, 180.0f / 255.0f, 1.0f);
 
-        static Color JoinColor = new Color(255.0f/255.0f, 0.0f, 101.0f/255.0f,1.0f);
-        static Color NotReadyColor = new Color(34.0f / 255.0f, 44 / 255.0f, 55.0f / 255.0f, 1.0f);
-        static Color ReadyColor = new Color(0.0f, 204.0f / 255.0f, 204.0f / 255.0f, 1.0f);
+		public Color JoinColor = new Color(255.0f/255.0f, 0.0f, 101.0f/255.0f,1.0f);
+		public Color NotReadyColor = new Color(34.0f / 255.0f, 44 / 255.0f, 55.0f / 255.0f, 1.0f);
+		public Color ReadyColor = new Color(0.0f, 204.0f / 255.0f, 204.0f / 255.0f, 1.0f);
         static Color TransparentColor = new Color(0, 0, 0, 0);
 
         //static Color OddRowColor = new Color(250.0f / 255.0f, 250.0f / 255.0f, 250.0f / 255.0f, 1.0f);
@@ -59,8 +60,9 @@ namespace Prototype.NetworkLobby
 		public void OnChangeScene(int news){
 			print ("Changed");
 			m_SceneNum = news;
-			Color newColor = (news == 1) ? Color.white : Color.blue;
-			Btn_ChooseScene.transform.GetComponent<Image> ().color = newColor;
+			Btn_ChooseScene.GetComponent<AlterImg> ().Alter (news);
+			/*Color newColor = (news == 1) ? Color.white : Color.blue;
+			Btn_ChooseScene.transform.GetComponent<Image> ().color = newColor;*/
 		}
 
 
@@ -233,14 +235,14 @@ namespace Prototype.NetworkLobby
                 CmdNameChanged("Player" + (LobbyPlayerList._instance.playerListContentTransform.childCount-1));
 
             //we switch from simple name display to name input
-            colorButton.interactable = true;
+            //colorButton.interactable = true;
             nameInput.interactable = true;
 
             nameInput.onEndEdit.RemoveAllListeners();
             nameInput.onEndEdit.AddListener(OnNameChanged);
 
-            colorButton.onClick.RemoveAllListeners();
-			colorButton.onClick.AddListener(OnCharSelect);
+            //colorButton.onClick.RemoveAllListeners();
+			//colorButton.onClick.AddListener(OnCharSelect);
 
             readyButton.onClick.RemoveAllListeners();
             readyButton.onClick.AddListener(OnReadyClicked);
@@ -302,7 +304,7 @@ namespace Prototype.NetworkLobby
                 textComponent.text = "READY";
                 textComponent.color = ReadyColor;
                 readyButton.interactable = false;
-                colorButton.interactable = false;
+                //colorButton.interactable = false;
                 nameInput.interactable = false;
             }
             else
@@ -313,7 +315,7 @@ namespace Prototype.NetworkLobby
                 textComponent.text = isLocalPlayer ? "JOIN" : "...";
                 textComponent.color = Color.white;
                 readyButton.interactable = isLocalPlayer;
-                colorButton.interactable = isLocalPlayer;
+                //colorButton.interactable = isLocalPlayer;
                 nameInput.interactable = isLocalPlayer;
             }
         }
@@ -334,9 +336,17 @@ namespace Prototype.NetworkLobby
 		public void OnMyChar(int newidx){
 			//print ("Changed Char");
 			avatarIndex = newidx;
-			Color newColor = (newidx==2)?Color.grey:Color.blue;
-			newColor = (newidx==0)?Color.red:newColor;
-			colorButton.GetComponent<Image> ().color = newColor;
+			
+			//Color newColor = (newidx==2)?Color.grey:Color.blue;
+			//newColor = (newidx==0)?Color.red:newColor;
+			//colorButton.GetComponent<Image> ().color = newColor;
+			if (GM_PersonagemButton== null){
+					GM_PersonagemButton = GameObject.Find("PersonagemButton");
+				}
+			if (GM_PersonagemButton != null) {
+				GM_PersonagemButton.GetComponent<AlterImg> ().Alter (newidx);
+			}
+			
 		}
 
         public void OnMyColor(Color newColor)
