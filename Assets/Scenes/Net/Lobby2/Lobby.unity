@@ -1300,10 +1300,8 @@ MonoBehaviour:
   m_OfflineScene: Lobby
   m_OnlineScene: 
   m_SpawnPrefabs:
-  - {fileID: 1465601682738982, guid: 3916a21e2f5f744819fca6cd1c4cd9ba, type: 2}
-  - {fileID: 1727486961079994, guid: 1ebf7545c50464726ba345004f2176c7, type: 2}
-  - {fileID: 100002, guid: 0be79c51eba6346c787e4149b527cfb0, type: 2}
-  - {fileID: 1867194501561574, guid: b206a880b929a49e0ac912a4d2201a6a, type: 2}
+  - {fileID: 1745564189404528, guid: 70a4ecbc9dd6b4c1c8671c8b2ebbdbf1, type: 2}
+  - {fileID: 1458591419360630, guid: 6a725a0536f7b4ff08de9f2e60098c3e, type: 2}
   - {fileID: 1092874576488382, guid: 93e54b931d2c74cfeabdfda4b80ae193, type: 2}
   - {fileID: 1092874576488382, guid: 007ccda6557a84732bbfb3d6fa5f90c4, type: 2}
   - {fileID: 1771191898292616, guid: e56e00750d5e04f7891b77296a03cf73, type: 2}
@@ -1369,7 +1367,8 @@ MonoBehaviour:
   m_MinPlayers: 1
   m_LobbyPlayerPrefab: {fileID: 11487034, guid: ad727d7e1462ecc4f83c898ecc501997,
     type: 2}
-  m_GamePlayerPrefab: {fileID: 100002, guid: 0be79c51eba6346c787e4149b527cfb0, type: 2}
+  m_GamePlayerPrefab: {fileID: 1745564189404528, guid: 70a4ecbc9dd6b4c1c8671c8b2ebbdbf1,
+    type: 2}
   m_LobbyScene: Lobby
   m_PlayScene: Fase0_Net
   lobbySlots: []
@@ -1702,7 +1701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &383807120
 RectTransform:
   m_ObjectHideFlags: 0
