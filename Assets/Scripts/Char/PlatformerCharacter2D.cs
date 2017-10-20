@@ -91,7 +91,7 @@ namespace UnityStandardAssets._2D{
 					colliders = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
 					foreach (Collider2D collider in colliders) {
 						if (collider.name == "Head") {
-							Killed ();
+							collider.transform.parent.gameObject.GetComponent<PlatformerCharacter2D>().Killed ();
 							m_Rigidbody2D.velocity = new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/50, m_JumpForce/50);
 							//m_Rigidbody2D.AddForce (new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/20, m_JumpForce));
 							break;

@@ -1,0 +1,352 @@
+fileFormatVersion: 2
+guid: 28d5113b6e95544a4945b7f3c4638dbd
+timeCreated: 1508377331
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Shirin_Death_0
+    21300002: Shirin_Death_1
+    21300004: Shirin_Death_2
+    21300006: Shirin_Death_3
+    21300008: Shirin_Death_4
+    21300010: Shirin_Death_5
+    21300012: Shirin_Death_6
+    21300014: Shirin_Death_6
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Tizen
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Samsung TV
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Shirin_Death_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 34
+        width: 520
+        height: 953
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 260, y: 224.83986}
+        - {x: 189.19775, y: 451.46222}
+        - {x: 135.5669, y: 476.5}
+        - {x: -102.79248, y: 476.5}
+        - {x: -180.25928, y: 442.5166}
+        - {x: -260, y: 362.00604}
+        - {x: -260, y: -153.85803}
+        - {x: -159.40283, y: -475.90033}
+        - {x: 78.95654, y: -475.90033}
+        - {x: 90.87451, y: -469.93658}
+        - {x: 90.87451, y: -422.22662}
+        - {x: 236.86961, y: -64.40184}
+        - {x: 260, y: 10.144994}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shirin_Death_1
+      rect:
+        serializedVersion: 2
+        x: 591
+        y: 34
+        width: 522
+        height: 953
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 242.39943, y: 469.3535}
+        - {x: 218.56349, y: 476.5}
+        - {x: -115.13962, y: 476.5}
+        - {x: -261, y: 218.87611}
+        - {x: -261, y: -34.583103}
+        - {x: -100.24216, y: -466.9547}
+        - {x: -88.32419, y: -475.90033}
+        - {x: 51.711937, y: -475.90033}
+        - {x: 72.56838, y: -449.06348}
+        - {x: 261, y: -64.40184}
+        - {x: 261, y: 376.9154}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shirin_Death_2
+      rect:
+        serializedVersion: 2
+        x: 1244
+        y: 31
+        width: 515
+        height: 954
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 123.71093, y: 477}
+        - {x: 10.490234, y: 477}
+        - {x: -4.407226, y: 452.93506}
+        - {x: -10.36621, y: 423.11633}
+        - {x: -78.89453, y: 432.06195}
+        - {x: -257.5, y: 309.80515}
+        - {x: -257.5, y: -125.54835}
+        - {x: -186.15625, y: -477}
+        - {x: 28.367188, y: -477}
+        - {x: 46.24414, y: -468.46378}
+        - {x: 257.5, y: -173.25832}
+        - {x: 257.5, y: 321.73264}
+        - {x: 227.99315, y: 432.06195}
+      - - {x: -7.3867183, y: -256.75076}
+        - {x: -4.407226, y: -241.8414}
+        - {x: -4.407226, y: -226.93204}
+        - {x: -1.4277339, y: -223.95016}
+        - {x: -4.407226, y: -206.05893}
+        - {x: -7.3867183, y: -215.00455}
+        - {x: -4.407226, y: -217.98642}
+        - {x: -4.407226, y: -238.85953}
+        - {x: -1.4277339, y: -241.8414}
+        - {x: 1.5517582, y: -265.69638}
+        - {x: 1.5517582, y: -262.7145}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shirin_Death_3
+      rect:
+        serializedVersion: 2
+        x: 1858
+        y: 31
+        width: 596
+        height: 882
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 182.03561, y: 441}
+        - {x: 158.19968, y: 441}
+        - {x: 152.24069, y: 441}
+        - {x: 77.753395, y: 435.04382}
+        - {x: 59.876442, y: 399.26135}
+        - {x: 56.89695, y: 354.53323}
+        - {x: 59.876442, y: 351.55136}
+        - {x: 59.876442, y: 339.62387}
+        - {x: 59.876442, y: 345.58762}
+        - {x: 39.02, y: 384.352}
+        - {x: -29.50832, y: 402.24323}
+        - {x: -226.1548, y: 300.85953}
+        - {x: -297.6626, y: 190.53021}
+        - {x: -297.6626, y: -441}
+        - {x: -151.6675, y: -441}
+        - {x: -26.528828, y: -322.352}
+        - {x: 298, y: -86.784}
+        - {x: 298, y: 381.3701}
+      - - {x: 238.64597, y: 220.34895}
+        - {x: 244.60495, y: 214.38521}
+        - {x: 247.58444, y: 217.36708}
+        - {x: 241.62546, y: 220.34895}
+        - {x: 235.66647, y: 214.38521}
+        - {x: 238.64597, y: 214.38521}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shirin_Death_4
+      rect:
+        serializedVersion: 2
+        x: 2573
+        y: 54
+        width: 917
+        height: 767
+      alignment: 9
+      pivot: {x: 0.05, y: 0.49309936}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 458.5, y: -86.14805}
+        - {x: 458.5, y: 113.63746}
+        - {x: 321.99374, y: 349.20544}
+        - {x: 184.93709, y: 383.5}
+        - {x: 158.12167, y: 383.5}
+        - {x: 158.12167, y: 382.00604}
+        - {x: 152.16269, y: 358.15106}
+        - {x: 92.57284, y: 346.22357}
+        - {x: -151.74551, y: 143.45619}
+        - {x: -199.41739, y: 71.891235}
+        - {x: -458.5, y: -279.96982}
+        - {x: -458.5, y: -363.46225}
+        - {x: -434.79727, y: -383.5}
+        - {x: -291.78165, y: -383.5}
+        - {x: -178.56094, y: -324.6979}
+        - {x: -172.60196, y: -306.80667}
+        - {x: 3.1880784, y: -321.71603}
+        - {x: 381.5836, y: -235.2417}
+      - - {x: 316.03476, y: 206.07553}
+        - {x: 319.01425, y: 203.09366}
+        - {x: 324.97324, y: 203.09366}
+        - {x: 327.95273, y: 209.0574}
+        - {x: 313.05527, y: 197.12991}
+        - {x: 316.03476, y: 194.14804}
+        - {x: 319.01425, y: 197.12991}
+      - - {x: 304.1168, y: 346.22357}
+        - {x: 313.05527, y: 349.20544}
+        - {x: 313.05527, y: 358.15106}
+        - {x: 304.1168, y: 361.13293}
+        - {x: 298.1578, y: 355.1692}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shirin_Death_5
+      rect:
+        serializedVersion: 2
+        x: 3601
+        y: 55
+        width: 1096
+        height: 543
+      alignment: 9
+      pivot: {x: 0.05, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 530.6333, y: 271.5}
+        - {x: -53.347164, y: 271.5}
+        - {x: -547.9429, y: 14.744702}
+        - {x: -547.9429, y: -271.5}
+        - {x: 506.79733, y: -271.5}
+        - {x: 548, y: -167.14957}
+        - {x: 548, y: 250.31268}
+      - - {x: 325.04834, y: 175.76585}
+        - {x: 325.04834, y: 172.78398}
+        - {x: 331.00732, y: 172.78398}
+        - {x: 333.98682, y: 175.76585}
+        - {x: 331.00732, y: 169.80211}
+        - {x: 331.00732, y: 172.78398}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Shirin_Death_6
+      rect:
+        serializedVersion: 2
+        x: 4835
+        y: 10
+        width: 1215
+        height: 394
+      alignment: 9
+      pivot: {x: 0.04, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 388.10794, y: 197}
+        - {x: -270.3598, y: 197}
+        - {x: -607.0424, y: 68.14654}
+        - {x: -607.0424, y: -164.43958}
+        - {x: -538.5141, y: -197}
+        - {x: 510.26712, y: -197}
+        - {x: 607.5, y: -125.675224}
+        - {x: 607.5, y: 77.092155}
+        - {x: 578.7954, y: 124.80213}
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

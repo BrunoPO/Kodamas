@@ -31,9 +31,15 @@ namespace UnityStandardAssets._2D{
 
 		private void Awake(){
 			endCount *= 60;
-			my_inst = GameObject.Find("LobbyManager").GetComponent<LobbyManager> ();
-			m_stones = my_inst.m_quantStones;
-			m_lifes = my_inst.m_quantLife;
+
+			m_stones = 5;
+			m_lifes = 2;
+			if (GameObject.Find ("LobbyManager") != null) {
+				my_inst = GameObject.Find ("LobbyManager").GetComponent<LobbyManager> ();
+
+				m_stones = my_inst.m_quantStones;
+				m_lifes = my_inst.m_quantLife;
+			}
 		}
 
 		public int getHashWinner(){
@@ -109,6 +115,11 @@ namespace UnityStandardAssets._2D{
 				m_PlayersAlive.Add (true);
 			}
 		}
+		[Command]
+		private void CmdPlayerLosed(GameObject ob){
+			ob.GetComponent<CharAttributesNet> ().m_Losed=true;
+			ob.GetComponent<CharAttributesNet> ().OnLosed(true);
+		}
 
 		public void PlayerOut(GameObject ob){
 			print ("PlayerOut"+ob);
@@ -116,6 +127,7 @@ namespace UnityStandardAssets._2D{
 				return;
 			
 			m_PlayersAlive[m_Players.IndexOf(ob)]=false;
+			CmdPlayerLosed (ob);
 
 			int alive = 0,lastAlive=0;
 			for(int i =0;i<m_PlayersAlive.Count;i++){
