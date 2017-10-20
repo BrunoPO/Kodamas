@@ -14,15 +14,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Local/Scene_0.unity
     guid: bbe16fd8e233940a7b16ba60d65a7097
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Net/Lobby1/Scene_0Net.unity
     guid: 79de0738aeb834a0893efc6d6bea0432
-  - enabled: 0
-    path: Assets/Scenes/Net/Lobby2/Fase0_Net.unity
-    guid: 483ec7e6ea1514f10a58aefd4c8377ce
-  - enabled: 0
-    path: Assets/Scenes/Net/Lobby2/Fase1_Net.unity
-    guid: 0600ea5fad5c94efdbff6a206020c153
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Net/Lobby2/Lobby.unity
     guid: c38cbe16c11674373ba87de662e51219
+  - enabled: 1
+    path: Assets/Scenes/Net/Lobby2/Fase0_Net.unity
+    guid: 483ec7e6ea1514f10a58aefd4c8377ce
+  - enabled: 1
+    path: Assets/Scenes/Net/Lobby2/Fase1_Net.unity
+    guid: 0600ea5fad5c94efdbff6a206020c153

@@ -54,6 +54,7 @@
      <Compile Include="Assets\AlterImg.cs" />
      <Compile Include="Assets\AtackIni.cs" />
      <Compile Include="Assets\AtackReleased.cs" />
+     <Compile Include="Assets\AudioVerify.cs" />
      <Compile Include="Assets\Convert.cs" />
      <Compile Include="Assets\Scripts\Camera\Camera2DFollow.cs" />
      <Compile Include="Assets\Scripts\Char\CharAttributes.cs" />

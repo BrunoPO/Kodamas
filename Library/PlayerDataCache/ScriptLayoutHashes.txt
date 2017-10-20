@@ -17,6 +17,7 @@ c24a21b131bfa67be1162db2cba4b52b UnityEngine.Timeline.dll:UnityEngine.Timeline.T
 7150ee80ca7ad57ec3467d7accc0019c Assembly-CSharp.dll:UnityStandardAssets._2D.Passagem
 05ebfc1ec78b507bc7179faa6ec02f2f Assembly-CSharp.dll:UnityStandardAssets._2D.BallCollision
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.EventSystemChecker
+695a68fd8efe0e5d9316cbb7bb73ac83 Assembly-CSharp.dll:.AudioVerify
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 49cd62a578efc0a599b810a2b66cd49c UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -119,6 +120,7 @@ bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.Audi
 c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingCollider
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.VR.WSA.SpatialMappingRenderer
 7cf27cabe9c0367a3591dbe94b729daf Assembly-CSharp.dll:UnityStandardAssets.Network.SimpleController
+5afea70aaffa099d7410c1aabda8f41e Assembly-CSharp.dll:.AlterImg
 f671aa975974562917e3bf91d1444c4e Assembly-CSharp.dll:UnityStandardAssets._2D.Stone
 b9fe401609404f3cdc148b6d1a60ec59 Assembly-CSharp.dll:UnityStandardAssets._2D.CharAttributesNet
 a1267ded2fd5a4322b5cd95b6a421b60 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyManager
@@ -126,7 +128,7 @@ a1267ded2fd5a4322b5cd95b6a421b60 Assembly-CSharp.dll:Prototype.NetworkLobby.Lobb
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ExibirIP
 abf10c6619d17fec1b7a4bac300aef9e Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyTopPanel
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.AtackReleased
-5c259bae40d5e285af55af3a771a8837 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyPlayer
+8ab7c430d2c83e1a23a31e9c13388469 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyPlayer
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery

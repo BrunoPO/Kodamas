@@ -7,11 +7,14 @@ public class Convert{
 
 	static public string IPToHash(string address){
 		uint val = IP2Long (address);
-		string encodedasBASE62 = IntToString (val);
-		return encodedasBASE62;
+		return IntToString (val);
 	}
 
 	static public string HashToIP(string encodedasBASE62){
+		/*string limpa = "";
+		for (int i = 0; i < 6; i++) {
+			limpa += encodedasBASE62 [i];
+		}*/
 		long teste = StringToInt (encodedasBASE62);
 		return Long2IP (teste);
 	}
