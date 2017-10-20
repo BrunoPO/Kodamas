@@ -11,6 +11,7 @@ namespace UnityStandardAssets._2D{
 
 		[HideInInspector] [SyncVar(hook = "OnChangeFacing")] public bool m_FacingRight = true;
 		[SyncVar(hook = "OnKilled")] private bool m_Killed = false;
+		[SyncVar(hook = "OnLosed")] public bool m_Losed = false;
 		[SerializeField] [SyncVar] private int balls;
 		[SerializeField] [SyncVar] private int life;
 		private bool wasKilled=false;
@@ -89,9 +90,13 @@ namespace UnityStandardAssets._2D{
 			m_LifeTxt.text = "Life:" + i;
 		}
 
+
 		public void youLose(){
+			this.gameObject.SetActive (false);
+
 			if (!isLocalPlayer)
 				return;
+			Camera.main.GetComponent<Camera2DFollow> ().target = Camera.main.transform;
 			clearTxt ();
 			m_WinTxt.enabled = true;
 			m_WinTxt.text = "You Lose";
@@ -106,6 +111,13 @@ namespace UnityStandardAssets._2D{
 				m_PlatChar2D.Flip ();
 			}else if(transform.rotation.eulerAngles.y == 180 && newBool){
 				m_PlatChar2D.Flip ();
+			}
+		}
+
+		public void OnLosed(bool newBool){
+			print("OnLosed");
+			if (newBool) {
+				youLose ();
 			}
 		}
 

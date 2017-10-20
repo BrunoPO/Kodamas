@@ -93,7 +93,7 @@ namespace UnityStandardAssets._2D
 
 
 			m_Anim.SetBool ("Atack", atck);
-			print (atck);
+			//print (atck);
 
 			//Se não estiver atacando
 			if (!atck) {

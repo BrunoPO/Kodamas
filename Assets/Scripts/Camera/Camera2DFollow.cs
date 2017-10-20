@@ -22,6 +22,8 @@ namespace UnityStandardAssets._2D
 		private float m_OffsetZ;
 		private Vector3 m_LastTargetPosition;
 		private Vector3 m_CurrentVelocity;
+		private Transform GMTrans;
+		private float viewSize = 0;
 
 		[Header("Pontos limites da camera")]
 		[SerializeField] private Vector2 Min;
@@ -32,6 +34,11 @@ namespace UnityStandardAssets._2D
             m_OffsetZ = (transform.position - target.position).z;
 			raioDeVisao.x = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, 0)).x - transform.position.x;
 			raioDeVisao.y = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, 0)).y - transform.position.y;
+			viewSize = Camera.main.orthographicSize;
+
+			if(GameObject.Find ("GM"))
+				GMTrans = GameObject.Find ("GM").transform;
+			
 			print (transform.position);
 			print (raioDeVisao);
         }
@@ -55,9 +62,22 @@ namespace UnityStandardAssets._2D
 				target = this.transform;
 			}
 			if (target == this.transform) {
-				Camera.main.orthographicSize = 8.1f;
-			} else {
-				Camera.main.orthographicSize = 3f;
+				if (GMTrans != null) {
+					target = GMTrans;
+				} else {
+					if(GameObject.Find ("GM"))
+						GMTrans = GameObject.Find ("GM").transform;
+				}
+			}
+
+			if (target == GMTrans) {
+				if (viewSize <= 8) {
+					viewSize += 0.1f;
+					Camera.main.orthographicSize = viewSize;
+				}
+			} else if(viewSize>3f){
+				viewSize -= 0.1f;
+				Camera.main.orthographicSize = viewSize;
 			}
             // only update lookahead pos if accelerating or changed direction
             float xMoveDelta = (target.position - m_LastTargetPosition).x;
