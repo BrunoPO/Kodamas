@@ -343,8 +343,8 @@ namespace Prototype.NetworkLobby
 			if (GM_PersonagemButton== null){
 					GM_PersonagemButton = GameObject.Find("PersonagemButton");
 				}
-			if (GM_PersonagemButton != null) {
-				GM_PersonagemButton.GetComponent<AlterImg> ().Alter (newidx);
+            if (GM_PersonagemButton != null && isLocalPlayer) {
+				    GM_PersonagemButton.GetComponent<AlterImg> ().Alter (newidx);
 			}
 			
 		}

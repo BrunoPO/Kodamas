@@ -6,11 +6,14 @@ namespace UnityStandardAssets._2D
 	[RequireComponent(typeof (PlatformerCharacter2D))]
 	public class Platformer2DUserControl : MonoBehaviour{
 
-		public ControleVars m_ControleVars;
+
+        public bool onTestCell = true;
+        public ControleVars m_ControleVars;
 		[SerializeField] private bool autoAttack = false;
 		[SerializeField] private bool Commented = false;
 
-		private PlatformerCharacter2D m_Character;
+
+        private PlatformerCharacter2D m_Character;
 		private bool m_Jump,atck;
 		private Transform t_stone;
 		private GameObject go_stone;
@@ -24,18 +27,20 @@ namespace UnityStandardAssets._2D
 		private GameObject SoulStone;
 		private Animator m_Anim;
 
-		private void Awake(){
+        private void Awake(){
 			//isNet = m_Character.isNet;
 			Init ();
 		}
 		private void Init(){
 			print ("Tentou" + GameObject.Find ("GM"));
-			if (GameObject.Find ("GM") == null)
-				return;
+			if (init || GameObject.Find ("GM") == null )
+            {
+                return;
+            }
 			init = true;
+
 			m_Anim = GetComponent<Animator> ();
 			m_Character = GetComponent<PlatformerCharacter2D>();
-			init = true;
 			isNet = (GetComponent<CharAttributesNet> () != null);
 			//print (isNet);
 			if (isNet) {
@@ -45,15 +50,40 @@ namespace UnityStandardAssets._2D
 				SoulStone = m_Attributes.SoulStone;
 				m_Attributes = GetComponent<CharAttributes> ();
 			}
-			GameObject m_Controle= GameObject.Find ("Controle");
-			if (m_Controle != null) {
-				m_ControleVars = m_Controle.GetComponent<ControleVars> ();
-			}else
-				GetComponent<PlatformerCharacter2D> ().m_JumpForce *= 4.5f;
-			//print ("Teste controle:"+(m_ControleVars != null));
-		}
 
-		private void Update() {
+			GameObject m_Controle= GameObject.Find ("Controle");
+            if (m_Controle != null)
+            {
+                m_ControleVars = m_Controle.GetComponent<ControleVars>();
+            }
+            else
+            {
+                GetComponent<PlatformerCharacter2D>().m_JumpForce *= 3.6f;
+            }
+
+            float k_jumpWallForce;
+
+            if (!onTestCell){
+                GetComponent<PlatformerCharacter2D>().m_JumpForce *= 0.85f;
+                k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
+            }
+            else{
+                k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
+                k_jumpWallForce *= 4;
+            }
+
+            if(m_Controle == null)
+                k_jumpWallForce /= 3.6f;
+            print(k_jumpWallForce);
+
+
+
+            GetComponent<PlatformerCharacter2D>().k_jumpWallForce = k_jumpWallForce;
+
+
+        }
+
+        private void Update() {
 			if (!init) {
 				Init ();
 				return;

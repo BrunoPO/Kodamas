@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a639ccb7a61b24ac6851a53b791b312e
-timeCreated: 1508377046
+timeCreated: 1508636795
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,7 @@ TextureImporter:
     21300010: Shirin_Idle_5
     21300012: Shirin_Idle_6
     21300014: Shirin_Idle_7
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -65,6 +66,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -73,6 +75,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -81,6 +84,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: iPhone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -89,6 +93,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -97,6 +102,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Tizen
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -105,6 +111,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: WebGL
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -113,6 +120,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Samsung TV
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -127,9 +135,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 8
+        y: 0
         width: 519
-        height: 958
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,9 +149,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 567
-        y: 8
+        y: 0
         width: 519
-        height: 951
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,9 +163,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1147
-        y: 8
+        y: 0
         width: 519
-        height: 944
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,9 +177,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1739
-        y: 8
+        y: 0
         width: 519
-        height: 937
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,9 +191,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2335
-        y: 8
+        y: 0
         width: 519
-        height: 930
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -197,9 +205,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2944
-        y: 8
+        y: 0
         width: 519
-        height: 937
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,9 +219,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 3540
-        y: 8
+        y: 0
         width: 519
-        height: 944
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -225,9 +233,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 4150
-        y: 8
+        y: 0
         width: 519
-        height: 951
+        height: 974
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

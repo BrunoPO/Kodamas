@@ -1,19 +1,12 @@
-﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Convert.cs">
+﻿<Properties StartupItem="Game.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\StandartAssets\Network\Scripts\Lobby\LobbyManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Camera/Camera2DFollow.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Char/CharAttributesNet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Scene/GMNet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Char/Platformer2DUserControl.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Char/PlatformerCharacter2D.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/ParticulaStone/BallParticleDestroyNet.cs" Line="1" Column="1" />
-      <File FileName="Assets/StandartAssets/Network/Scripts/Lobby/LobbyManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/StandartAssets/Network/Scripts/Lobby/LobbyMainMenu.cs" Line="30" Column="1" />
-      <File FileName="Assets/AudioVerify.cs" Line="26" Column="21" />
-      <File FileName="Assets/StandartAssets/Network/Scripts/Lobby/LobbyTopPanel.cs" Line="42" Column="1" />
-      <File FileName="Assets/Convert.cs" Line="10" Column="28" />
-      <File FileName="Assets/Scripts/Scene/ExibirIP.cs" Line="1" Column="1" />
+      <File FileName="Assets\StandartAssets\Network\Scripts\Lobby\LobbyTopPanel.cs" Line="42" Column="1" />
+      <File FileName="Assets\StandartAssets\Network\Scripts\Lobby\LobbyMainMenu.cs" Line="32" Column="21" />
+      <File FileName="Assets\Scripts\Scene\ExibirIP.cs" Line="15" Column="6" />
+      <File FileName="Assets\StandartAssets\Network\Scripts\Lobby\LobbyManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Scene\Passagem.cs" Line="9" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

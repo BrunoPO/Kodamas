@@ -10,8 +10,12 @@ namespace UnityStandardAssets._2D
 		public Text m_LifeTxt;
 		public Text m_WinTxt;
 
-		[Header("Configurações da Camera")]
-		public Transform target ;//Poderá ser gravado pelo Char para que esse seja o foco.
+        
+
+        [Header("Configurações da Camera")]
+        [SerializeField] private float CamPlayerZoom = 0f;
+        [SerializeField] private float CamSceneZoom = 0f;
+        public Transform target ;//Poderá ser gravado pelo Char para que esse seja o foco.
 		[Range(0, 2)] [SerializeField] private float damping = 1;
 		[Range(0, 6)] [SerializeField] private float lookAheadFactor = 3;
 		[Range(0, 2)] [SerializeField] private float lookAheadReturnSpeed = 0.5f;
@@ -71,11 +75,11 @@ namespace UnityStandardAssets._2D
 			}
 
 			if (target == GMTrans) {
-				if (viewSize <= 8) {
+				if (viewSize <= CamSceneZoom) {
 					viewSize += 0.1f;
 					Camera.main.orthographicSize = viewSize;
 				}
-			} else if(viewSize>3f){
+			} else if(viewSize> CamPlayerZoom){
 				viewSize -= 0.1f;
 				Camera.main.orthographicSize = viewSize;
 			}

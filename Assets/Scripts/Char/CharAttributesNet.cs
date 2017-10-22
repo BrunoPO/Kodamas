@@ -41,8 +41,7 @@ namespace UnityStandardAssets._2D{
 				GetComponent<Platformer2DUserControl>().enabled = false;
 			}
 			Reset ();
-
-		}
+        }
 
 		private void Update(){
 
@@ -107,14 +106,46 @@ namespace UnityStandardAssets._2D{
 
 
 		private void OnChangeFacing(bool newBool){
-			if(transform.rotation.eulerAngles.y == 0 && !newBool){
-				m_PlatChar2D.Flip ();
-			}else if(transform.rotation.eulerAngles.y == 180 && newBool){
-				m_PlatChar2D.Flip ();
+
+            //print("OnChangeFacing newBool:" + newBool + "facing:" + m_FacingRight);
+
+            m_FacingRight = newBool;
+            //print(transform.rotation.eulerAngles);
+            //print(transform.rotation);
+            if (transform.rotation.y < 0.5f && !newBool){
+				Flip ();
+			}else if(transform.rotation.y > 0.5f && newBool){
+				Flip ();
 			}
 		}
 
-		public void OnLosed(bool newBool){
+        public void Flip()
+        {
+
+            Quaternion rot = transform.rotation;
+            /*print("Fliped----------------");
+
+            print(rot);
+            print(transform.rotation);
+
+            print(rot.y);*/
+
+            if (rot.y <= 0.5f)
+            {
+                rot = new Quaternion(0, 1, 0, 0);
+            }
+            else
+            {
+                rot = new Quaternion(0, 0 , 0, 1);
+            }
+
+            transform.rotation = rot;
+            /*print("After Flip --------------------");
+            print(rot);
+            print(transform.rotation);*/
+        }
+
+        public void OnLosed(bool newBool){
 			print("OnLosed");
 			if (newBool) {
 				youLose ();
@@ -247,9 +278,9 @@ namespace UnityStandardAssets._2D{
 		public void InvertFlip(){
 			if (!isLocalPlayer)
 				return;
-			m_FacingRight = !m_FacingRight;
-			CmdInvertFlip (m_FacingRight);
-		}
+
+                CmdInvertFlip (!m_FacingRight);
+        }
 
 		[Command] private void CmdInvertFlip(bool facing){
 			m_FacingRight = facing;
@@ -260,7 +291,7 @@ namespace UnityStandardAssets._2D{
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
 			inst.GetComponent<Stone> ().enabled = true;
 			GetComponent<CharAttributesNet>().CmdBallsMinus();
-			inst.GetComponent<Stone>().Fire (3,Hash);
+			inst.GetComponent<Stone>().Fire (5,Hash);
 			NetworkServer.Spawn (inst);
 
 			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;

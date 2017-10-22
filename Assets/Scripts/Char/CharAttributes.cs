@@ -100,13 +100,36 @@ namespace UnityStandardAssets._2D{
 
 		private void OnChangeFacing(bool newBool){
 			if(transform.rotation.eulerAngles.y == 0 && !newBool){
-				m_PlatChar2D.Flip ();
+				Flip ();
 			}else if(transform.rotation.eulerAngles.y == 180 && newBool){
-				m_PlatChar2D.Flip ();
+				Flip ();
 			}
 		}
 
-		public void RpcResetInitPoint(){
+        public void Flip()
+        {
+            print("Fliped");
+            Vector3 rot = transform.rotation.eulerAngles;
+            print(rot);
+            transform.rotation = Quaternion.Euler(rot);
+            print(transform.rotation);
+
+            if (rot.y == 0)
+            {
+                rot = new Vector3(rot.x, 180, rot.z);
+            }
+            else
+            {
+                rot = new Vector3(rot.x, 0, rot.z);
+            }
+
+            print("After Flip --------------------");
+            print(rot);
+            transform.rotation = Quaternion.Euler(rot);
+            print(transform.rotation);
+        }
+
+        public void RpcResetInitPoint(){
 			GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
 			transform.position = GetComponent<PlatformerCharacter2D>().IniPoint;
 			//gameObject.GetComponent<SpriteRenderer> ().enabled = true;

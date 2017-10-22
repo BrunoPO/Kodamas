@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: af73dd7d30e504fde9e0d31bc31380ba
-timeCreated: 1508377106
+timeCreated: 1508636971
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -16,6 +16,7 @@ TextureImporter:
     21300018: Shirin_Run_9
     21300020: Shirin_Run_10
     21300022: Shirin_Run_11
+  externalObjects: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -69,6 +70,7 @@ TextureImporter:
   platformSettings:
   - buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -77,6 +79,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Standalone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -85,6 +88,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: iPhone
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -93,6 +97,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Android
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -101,6 +106,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Tizen
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -109,6 +115,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: WebGL
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -117,6 +124,7 @@ TextureImporter:
     overridden: 0
   - buildTarget: Samsung TV
     maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -131,11 +139,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 43
-        y: 36
+        y: 37
         width: 352
-        height: 944
+        height: 1004
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -145,11 +153,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 518
-        y: 39
+        y: 32
         width: 365
-        height: 945
+        height: 1009
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -159,11 +167,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 933
-        y: 39
+        y: 27
         width: 414
-        height: 1002
+        height: 1014
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,11 +181,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1365
-        y: 123
+        y: 27
         width: 467
-        height: 899
+        height: 1014
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -189,9 +197,9 @@ TextureImporter:
         x: 1953
         y: 31
         width: 360
-        height: 958
+        height: 1010
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -203,9 +211,9 @@ TextureImporter:
         x: 2415
         y: 30
         width: 361
-        height: 934
+        height: 1011
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,11 +223,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2861
-        y: 39
+        y: 32
         width: 351
-        height: 937
+        height: 1009
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -231,9 +239,9 @@ TextureImporter:
         x: 3311
         y: 39
         width: 359
-        height: 948
+        height: 1002
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -247,7 +255,7 @@ TextureImporter:
         width: 400
         height: 1001
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -257,11 +265,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 4274
-        y: 120
+        y: 40
         width: 455
-        height: 899
+        height: 1001
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -273,9 +281,9 @@ TextureImporter:
         x: 4819
         y: 30
         width: 381
-        height: 957
+        height: 1011
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -287,9 +295,9 @@ TextureImporter:
         x: 5250
         y: 30
         width: 381
-        height: 943
+        height: 1011
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
