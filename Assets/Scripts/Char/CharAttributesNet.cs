@@ -279,7 +279,8 @@ namespace UnityStandardAssets._2D{
 			if (!isLocalPlayer)
 				return;
 
-                CmdInvertFlip (!m_FacingRight);
+            m_FacingRight = !m_FacingRight;
+            CmdInvertFlip (m_FacingRight);
         }
 
 		[Command] private void CmdInvertFlip(bool facing){
