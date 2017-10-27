@@ -8,6 +8,7 @@ namespace UnityStandardAssets._2D{
 	public class CharAttributesNet : NetworkBehaviour {
 		public bool unlimitedBalls = false;
 		public GameObject SoulStone;
+		public int myOrder=0;
 
 		[HideInInspector] [SyncVar(hook = "OnChangeFacing")] public bool m_FacingRight = true;
 		[SyncVar(hook = "OnKilled")] private bool m_Killed = false;
@@ -18,6 +19,8 @@ namespace UnityStandardAssets._2D{
 		private Text m_StonesTxt;
 		private Text m_LifeTxt;
 		private Text m_WinTxt;
+		private GameObject m_GameHUD;
+		private GameObject m_EndingImg;
 		private bool AfterReset = false;
 		private bool toReset = true;
 		private GameObject m_GM;
@@ -34,9 +37,14 @@ namespace UnityStandardAssets._2D{
 
 			if (isLocalPlayer) {
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
+				m_GameHUD = Camera.main.GetComponent<Camera2DFollow> ().m_GameHUD;
+				m_EndingImg = Camera.main.GetComponent<Camera2DFollow> ().m_EndingImg;
 				m_StonesTxt = Camera.main.GetComponent<Camera2DFollow> ().m_StonesTxt;
 				m_LifeTxt = Camera.main.GetComponent<Camera2DFollow> ().m_LifeTxt;
 				m_WinTxt = Camera.main.GetComponent<Camera2DFollow> ().m_WinTxt;
+
+				m_GameHUD.GetComponent<AlterImg> ().Alter (myOrder);
+				m_EndingImg.GetComponent<AlterImg> ().Alter (myOrder);
 			} else {
 				GetComponent<Platformer2DUserControl>().enabled = false;
 			}
@@ -82,11 +90,11 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void SetStonesText(int i){
-			m_StonesTxt.text = "Stones:" + i;
+			m_StonesTxt.text = ""+i;//"Stones:" + 
 		}
 
 		public void SetLifeText(int i){
-			m_LifeTxt.text = "Life:" + i;
+			m_LifeTxt.text =  ""+i;//"Life:" +
 		}
 
 
@@ -97,8 +105,8 @@ namespace UnityStandardAssets._2D{
 				return;
 			Camera.main.GetComponent<Camera2DFollow> ().target = Camera.main.transform;
 			clearTxt ();
-			m_WinTxt.enabled = true;
-			m_WinTxt.text = "You Lose";
+			m_WinTxt.gameObject.SetActive (true);
+			m_WinTxt.text = "     Você Perdeu!";
 			GetComponent<Platformer2DUserControl>().enabled = false;
 			m_PlatChar2D.Move (0, false);
 		}
@@ -196,7 +204,7 @@ namespace UnityStandardAssets._2D{
 				m_LifeTxt.enabled = true;
 				SetLifeText (life);
 				SetStonesText (balls);
-				m_WinTxt.enabled = false;
+				m_WinTxt.gameObject.SetActive (false);
 			}
 			if (isServer) {
 				GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
@@ -209,8 +217,9 @@ namespace UnityStandardAssets._2D{
 			if (!isLocalPlayer)
 				return;
 			clearTxt ();
-			m_WinTxt.enabled = true;
-			m_WinTxt.text = "You Won";
+			gameObject.SetActive (false);
+			m_WinTxt.gameObject.SetActive (true);
+			m_WinTxt.text = "     Você Ganhou!";
 			GetComponent<Platformer2DUserControl>().enabled = false;
 			m_PlatChar2D.Move (0, false);
 		}
@@ -221,7 +230,7 @@ namespace UnityStandardAssets._2D{
 			m_WinTxt.text = "";
 			m_StonesTxt.text = "";
 			m_LifeTxt.text = "";
-			m_WinTxt.enabled = false;
+			m_WinTxt.gameObject.SetActive (false);
 			m_StonesTxt.enabled = false;
 			m_LifeTxt.enabled = false;
 		}

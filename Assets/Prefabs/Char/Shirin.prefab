@@ -90,7 +90,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1458591419360630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.23, y: 2.35, z: 0}
+  m_LocalPosition: {x: 19.88332, y: 5.906373, z: 0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_Children:
   - {fileID: 4937154538544452}
@@ -185,7 +185,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.18078738, y: -0.69609785}
+  m_Offset: {x: 0.007886946, y: -0.69609785}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -196,7 +196,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.1214795, y: 5.7749805}
+  m_Size: {x: 1.8246588, y: 5.7749805}
   m_EdgeRadius: 0
 --- !u!61 &61157346750934964
 BoxCollider2D:
@@ -210,7 +210,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.027781427, y: 0}
+  m_Offset: {x: -0.027781487, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -221,7 +221,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.8110504, y: 0.4}
+  m_Size: {x: 2.8110504, y: 0.51}
   m_EdgeRadius: 0
 --- !u!95 &95218020677978664
 Animator:
@@ -316,6 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlimitedBalls: 0
   SoulStone: {fileID: 1092874576488382, guid: 007ccda6557a84732bbfb3d6fa5f90c4, type: 2}
+  myOrder: 1
   m_FacingRight: 1
   m_Losed: 0
   balls: 0

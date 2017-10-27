@@ -5,7 +5,9 @@ using UnityEngine.UI;
 namespace UnityStandardAssets._2D
 {
     public class Camera2DFollow : MonoBehaviour{
-		
+
+		public GameObject m_GameHUD;
+		public GameObject m_EndingImg;
 		public Text m_StonesTxt;
 		public Text m_LifeTxt;
 		public Text m_WinTxt;
