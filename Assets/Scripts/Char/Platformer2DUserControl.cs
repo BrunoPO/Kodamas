@@ -106,12 +106,10 @@ namespace UnityStandardAssets._2D
 				atck = m_ControleVars.getAtk ();
 			}
 
-			if(Commented) print(v + " " + h);
+			//if(Commented) print(v + " " + h);
 
 			//Ataca se estiver no automatico
-			if (!autoAttack) {
-				if (Commented) print (atck);
-			} else if (autoAttack && !atck && autoAttackCounter>=100) {
+			if (autoAttack && !atck && autoAttackCounter>=100) {
 				autoAttackCounter = 0;
 				atck = true;
 				m_Jump = false;h = 0;v = 0;
@@ -145,20 +143,21 @@ namespace UnityStandardAssets._2D
 				t_stone = this.transform.Find("Stone");
 				Vector3 p = transform.position;
 
-				if (t_stone == null && go_stone == null) {//Se stone não estiver no ar,crie-a na frente.
-					p.x += (isFacingRight()) ? 1f : -1f;
-					go_stone = Instantiate (SoulStone,p,Quaternion.Euler(0, 0, ((isFacingRight())?0:180f))) as GameObject;
+                //Coloca em posição obedecendo o controle
+                if (m_ControleVars != null)
+                    lastParamBall = DirecaoOnControl(h, v);
+                else
+                    lastParamBall = Direcao(h, v);
+
+                if (t_stone == null && go_stone == null) {//Se stone não estiver no ar,crie-a na frente.
+                    p.x += lastParamBall.x;
+                    p.y += lastParamBall.y;
+                    go_stone = Instantiate (SoulStone,p,Quaternion.Euler(0, 0, lastParamBall.z)) as GameObject;
 					go_stone.name = "Stone";
 					go_stone.transform.parent = this.transform;
 					if(Commented) print ("Stone criada");
 					return;
 				}
-
-				//Coloca em posição obedecendo o controle
-				if (m_ControleVars != null)
-					lastParamBall = DirecaoOnControl (h, v);
-				else
-					lastParamBall = Direcao(h, v);
 
 				if (h != 0 || v != 0 || this.GetComponent<Rigidbody2D>().velocity != Vector2.zero) {
 					p.x += lastParamBall.x;
@@ -210,7 +209,32 @@ namespace UnityStandardAssets._2D
 
 		//Metodos chamados internamente
 		Vector3 Direcao(float h, float v){
-			if (h < 0 && v <0) {
+            if (Commented) print("h:" + h + "v: " + v);
+            if (h == 0 && v == 0)
+            {
+                if (Commented) print("Old Posi");
+                if (lastParamBall != Vector3.zero){
+                    if(lastParamBall.x < 0 && isFacingRight())
+                    {
+                        h = 1;v = lastParamBall.y;
+                    }
+                    else if (lastParamBall.x > 0 && !isFacingRight())
+                    {
+                        h = -1; v = lastParamBall.y;
+                    }
+                    else
+                    {
+                        return lastParamBall;
+                    }
+                }
+                else if (isFacingRight())
+                    return new Vector3(1f, 0f, 0);
+                else
+                    return new Vector3(-1f, 0f, 180f);
+
+            }
+
+            if (h < 0 && v <0) {
 				if (Commented) print ("Esq Baixo");
 				return new Vector3 (-1f, -1f, 225f);
 			} else if (h > 0 && v <0) {
@@ -243,7 +267,33 @@ namespace UnityStandardAssets._2D
 		}
 
 		Vector3 DirecaoOnControl(float h, float v){
-			if (h < 0 && v >= -0.85 && v <= -0.3) {
+            if (Commented) print("h:" + h + "v: " + v);
+            if (h == 0 && v == 0)
+            {
+                if (Commented) print("Old Posi");
+                if (lastParamBall != Vector3.zero)
+                {
+                    if (lastParamBall.x < 0 && isFacingRight())
+                    {
+                        h = 1; v = lastParamBall.y;
+                    }
+                    else if (lastParamBall.x > 0 && !isFacingRight())
+                    {
+                        h = -1; v = lastParamBall.y;
+                    }
+                    else
+                    {
+                        return lastParamBall;
+                    }
+                }
+                else if (isFacingRight())
+                    return new Vector3(1f, 0f, 0);
+                else
+                    return new Vector3(-1f, 0f, 180f);
+
+            }
+
+            if (h < 0 && v >= -0.85 && v <= -0.3) {
 				if (Commented) print ("Esq Baixo");
 				return new Vector3 (-1f, -1f, 225f);
 			} else if (h > 0 && v >= -0.85 && v <= -0.3) {

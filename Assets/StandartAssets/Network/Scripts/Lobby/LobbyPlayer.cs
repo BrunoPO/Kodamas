@@ -179,7 +179,11 @@ namespace Prototype.NetworkLobby
 					if (s != m_SceneNum) {
 						print ("Scene"+s);
 						CmdChangeSceneNum (s);
-					}
+                        if (c != avatarIndex)
+                        {
+                            AvatarPicker(c);
+                        }
+                    }
 				}
 
 			} 
@@ -227,7 +231,7 @@ namespace Prototype.NetworkLobby
 
             ChangeReadyButtonColor(JoinColor);
 
-            readyButton.transform.GetChild(0).GetComponent<Text>().text = "JOIN";
+            readyButton.transform.GetChild(0).GetComponent<Text>().text = "INICIAR";
             readyButton.interactable = true;
 
             //have to use child count of player prefab already setup as "this.slot" is not set yet
@@ -301,7 +305,7 @@ namespace Prototype.NetworkLobby
                 ChangeReadyButtonColor(TransparentColor);
 
                 Text textComponent = readyButton.transform.GetChild(0).GetComponent<Text>();
-                textComponent.text = "READY";
+                textComponent.text = "PREPARADO";
                 textComponent.color = ReadyColor;
                 readyButton.interactable = false;
                 //colorButton.interactable = false;
@@ -312,7 +316,7 @@ namespace Prototype.NetworkLobby
                 ChangeReadyButtonColor(isLocalPlayer ? JoinColor : NotReadyColor);
 
                 Text textComponent = readyButton.transform.GetChild(0).GetComponent<Text>();
-                textComponent.text = isLocalPlayer ? "JOIN" : "...";
+                textComponent.text = isLocalPlayer ? "INICIAR" : "...";
                 textComponent.color = Color.white;
                 readyButton.interactable = isLocalPlayer;
                 //colorButton.interactable = isLocalPlayer;

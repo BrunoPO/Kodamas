@@ -160,23 +160,26 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
-		private void OnKilled(bool newBool){
+        
 
-			//print (m_Killed +" "+ newBool);
+        private void OnKilled(bool newBool){
 
-			if (m_Killed == newBool)
+            //print (m_Killed +" "+ newBool);
+            if (!isLocalPlayer)
+                return;
+            if (m_Killed == newBool)
 				return;
-			m_Killed = newBool;
-			m_Anim.SetBool ("Died", newBool);
-			if (!newBool) {//se killed for falso reset a posição
+            m_Killed = newBool;
+            //CmdCallDied(newBool);
+            m_Anim.SetBool("Died", newBool);
+            //m_Anim.SetBool ("Died", newBool);
+            if (!newBool) {//se killed for falso reset a posição
 				gameObject.GetComponent<SpriteRenderer> ().enabled = false; 
 				GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
 				transform.position = m_PlatChar2D.IniPoint;
 				wasKilled = true;
-				if (isServer) {
-					CmdLifeMinus ();
-					balls=ballsIni;
-				}
+				CmdLifeMinus ();
+				balls=ballsIni;
 			}
 		}
 

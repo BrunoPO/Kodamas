@@ -1,4 +1,4 @@
-Android
+WindowsStandalone
 7616079d6818685d84a43fde5abe2c36 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyMainMenu
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ControleVirtual
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset

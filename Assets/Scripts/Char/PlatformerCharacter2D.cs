@@ -82,24 +82,28 @@ namespace UnityStandardAssets._2D{
 
             m_Grounded = false;
             m_OnWall = false;
-            colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+            colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius/2, m_WhatIsGround);
             m_Grounded = (colliders != null && (colliders.Length > 0));
 
             //Verifica colisão com o muro na altura do pé ou da cabeça
-            collidersOnChest = Physics2D.OverlapCircleAll(transform.position, k_GroundedRadius, m_WhatIsWall);
-            if (collidersOnChest.Length < 1){
-                colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsWall);
+            //Peito
+            collidersOnChest = Physics2D.OverlapCircleAll(transform.position, k_GroundedRadius * 0.9f, m_WhatIsWall);
+            if (collidersOnChest.Length < 1)
+            {
+                //Ground
+                colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius*0.9f, m_WhatIsWall);
                 if (colliders.Length < 1)
-                    colliders = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius, m_WhatIsWall);
+                    colliders = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius * 0.9f, m_WhatIsWall);
+                    //Cabeça
             }
             else
+            {
                 colliders = collidersOnChest;
-            m_OnWall = (collidersOnChest != null && (collidersOnChest.Length > 0));
+            }
+            m_OnWall = (colliders != null && (colliders.Length > 0));
 
             m_Anim.SetBool("Ground", m_Grounded);
             if (!m_Grounded) {
-                m_Anim.SetBool("Wall", m_OnWall);
-
                 //Verificar se está pisando em alguém
                 if (m_Rigidbody2D.velocity.y < 0) {
                     colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
@@ -112,9 +116,12 @@ namespace UnityStandardAssets._2D{
                         }
                     }
                 }
-            } else {
-                m_Anim.SetBool("Wall", false);
-            }
+            }/* else {
+                m_OnWall = false;
+            }*/
+
+
+            m_Anim.SetBool("Wall", m_OnWall);
 
             Vector3 velo = m_Rigidbody2D.velocity;
             //Se passar do limite volte para -10
@@ -155,7 +162,9 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void Move(float move, bool jump){
-			
+            if (m_Anim.GetBool("Died")) {
+                return;
+            }
 			//Se não olhando para frente inverta.
 			if ((move < 0 && isFacingRight()) || (move > 0 && !isFacingRight())) {
 				InvertFacing ();
@@ -171,17 +180,19 @@ namespace UnityStandardAssets._2D{
 
             if (m_Grounded || m_AirControl){
 				m_Anim.SetFloat("Speed", Mathf.Abs(move));
+                //print(move);
 
 				if (m_Grounded && m_OnWall) {//Se estiver no chão e perto de um muro ande
 					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
 
 				//Se tiver perto de um muro pulando (E não no chão)
-				} else if (m_OnWall && Mathf.Abs (move) > 0.3f && jump && !m_Grounded && IniPulo <= 1) { 
-					bool facingWalls = false;
+				} else if (m_OnWall && jump && !m_Grounded && IniPulo <= 1) {
+                    print("Tentou escalar");
+					//bool facingWalls = false;
 
 
 					//Procura se está olhando para o muro
-					for (int i = 0; i < collidersOnChest.Length; i++) {
+					/*for (int i = 0; i < collidersOnChest.Length; i++) {
 						if (move > 0.3f && collidersOnChest [i].transform.position.x - transform.position.x > 0) {
 							facingWalls = true;
 							break;
@@ -191,17 +202,18 @@ namespace UnityStandardAssets._2D{
 						}
 					}
 
-					if (facingWalls ) {//Se olhando para um muro e está pulando
+					if (facingWalls ) {//Se olhando para um muro e está pulando*/
 						m_Grounded = false;
 						m_Anim.SetBool ("Ground", false);
-						if (move > 0) {
-							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
+
+						if (isFacingRight()) {
+							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce*1.6f , k_jumpWallForce/4), ForceMode2D.Impulse);
 						} else {
-							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce , k_jumpWallForce/3), ForceMode2D.Impulse);
+							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce*1.6f , k_jumpWallForce/4), ForceMode2D.Impulse);
 						}
                         IniPulo = 24;
                         return;
-					}
+					//}
 				}
 				//Se não voltou então passe a velocidade Horinzontal.
 				m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
@@ -210,7 +222,7 @@ namespace UnityStandardAssets._2D{
 
         }
 
-		public void Killed(){
+    public void Killed(){
 			if (isNet)
 				m_AttributesNet.CmdKilled();
 			else

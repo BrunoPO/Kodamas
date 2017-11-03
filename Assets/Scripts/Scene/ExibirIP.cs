@@ -12,12 +12,12 @@ public class ExibirIP : NetworkBehaviour {
 	void Update(){
 		meuip = Network.player.ipAddress;
 		if (meuip != "0.0.0.0") {
-			//print (transform.GetChild (0));
-			string converted = Convert.IPToHash(meuip);
-			transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = converted;
-			print (Convert.HashToIP (converted));
+            //print (transform.GetChild (0));
+                string converted = Convert.IPToHash(meuip);
+                transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = converted;
+                print(Convert.HashToIP(converted));
 
-			this.enabled = false;
+                this.enabled = false;
 		}
-	}
+    }
 }
