@@ -8,7 +8,7 @@ namespace Prototype.NetworkLobby
     public class LobbyMainMenu : MonoBehaviour 
     {
         public LobbyManager lobbyManager;
-		public GameObject ChooseScene;
+		//public GameObject ChooseScene;
         public RectTransform lobbyPanel;
         public InputField ipInput;
 
@@ -19,12 +19,12 @@ namespace Prototype.NetworkLobby
         }
 
         public void OnClickHost(){
-			ChooseScene.SetActive (true);
+			//ChooseScene.SetActive (true);
             lobbyManager.StartHost();
         }
 
         public void OnClickJoin(){
-			ChooseScene.SetActive (false);
+			//ChooseScene.SetActive (false);
             lobbyManager.ChangeTo(lobbyPanel);
 			print (ipInput.text);
 			print (Convert.HashToIP (ipInput.text));
