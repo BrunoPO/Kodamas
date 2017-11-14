@@ -56,6 +56,7 @@
      <Compile Include="Assets\AtackReleased.cs" />
      <Compile Include="Assets\AudioVerify.cs" />
      <Compile Include="Assets\Convert.cs" />
+     <Compile Include="Assets\IncreaseAttributes.cs" />
      <Compile Include="Assets\Scripts\Camera\Camera2DFollow.cs" />
      <Compile Include="Assets\Scripts\Char\CharAttributes.cs" />
      <Compile Include="Assets\Scripts\Char\CharAttributesNet.cs" />
@@ -105,9 +106,6 @@
  </Reference>
  <Reference Include="UnityEngine.Timeline">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
