@@ -436,7 +436,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &367777370
 MonoBehaviour:
@@ -1028,7 +1028,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4776832751517304, guid: 07d668f1f3ad89c42a13c35be4953ddf, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114839501123424412, guid: 07d668f1f3ad89c42a13c35be4953ddf,
         type: 2}
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_ScriptCRCCheck: 1
   m_MaxDelay: 0.01
   m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 1745564189404528, guid: 70a4ecbc9dd6b4c1c8671c8b2ebbdbf1,
+  m_PlayerPrefab: {fileID: 1458591419360630, guid: 6a725a0536f7b4ff08de9f2e60098c3e,
     type: 2}
   m_AutoCreatePlayer: 1
   m_PlayerSpawnMethod: 0

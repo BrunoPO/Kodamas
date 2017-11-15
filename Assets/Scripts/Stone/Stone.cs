@@ -49,7 +49,19 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
-		public void trageto(){
+        public void collisionDetected()
+        {
+            if (isNet)
+            {
+                m_attributesNet.CmdAniCollision();
+            }
+            else
+            {
+                //m_attributes.CmdAniCollision();
+            }
+        }
+
+        public void trageto(){
 			float velo = Mathf.Sin(Mathf.PI/indexSeno);
 			if (peso != 0 && !onTheGround) {
 				transform.position += transform.right * velo * peso / 10;
@@ -60,7 +72,7 @@ namespace UnityStandardAssets._2D{
 
 		//Controle da bola depois dela já estar no chão
 		public void flutuarNoChao(){
-			if (rigid.gravityScale != 0.2f)
+            if (rigid.gravityScale != 0.2f)
 				rigid.gravityScale = 0.2f;
 			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
 			rigid.AddForce (transform.up * peso * 10);
@@ -139,7 +151,7 @@ namespace UnityStandardAssets._2D{
 
 
 		public void DestroySelf(){
-			setKill (true);
+            setKill (true);
 		}
 	}
 }

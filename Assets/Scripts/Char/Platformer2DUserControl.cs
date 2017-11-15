@@ -56,10 +56,6 @@ namespace UnityStandardAssets._2D
             {
                 m_ControleVars = m_Controle.GetComponent<ControleVars>();
             }
-            else
-            {
-                //GetComponent<PlatformerCharacter2D>().m_JumpForce *= 3.6f;
-            }
 
             float k_jumpWallForce = GetComponent<PlatformerCharacter2D>().k_jumpWallForce;
 

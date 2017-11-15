@@ -39,7 +39,8 @@ namespace UnityStandardAssets._2D{
 				} else if (col.GetComponent<PlatformerCharacter2D> ().getHash() != paiHash) {
 					if(Commented) print ("Player Killed");
 					col.GetComponent<PlatformerCharacter2D> ().Killed();
-					pai.GetComponent<Stone> ().DestroySelf ();
+                    pai.GetComponent<Stone>().collisionDetected();//Mostra colisão de stones
+                    pai.GetComponent<Stone> ().DestroySelf ();
 					//Fall ();
 				} else {//Balls++ Ball on the air
 					end = col.GetComponent<Platformer2DUserControl> ().gainBall();
@@ -62,7 +63,8 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void Fall(){
-			pai.GetComponent<Stone> ().onTheGround = true;
+            pai.GetComponent<Stone>().collisionDetected();
+            pai.GetComponent<Stone> ().onTheGround = true;
 			pai.tag = "Respawn";
 			pai.layer = 12;
 			this.tag = "Respawn";

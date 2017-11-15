@@ -44,5 +44,15 @@ namespace UnityStandardAssets._2D{
 			if (transform.position.x > 45 || transform.position.x < -45 || transform.position.y < -35 || transform.position.y > 35)
 				NetworkServer.Destroy (gameObject);
 		}
-	}
+
+        [Command]
+        public void CmdAniCollision()
+        {
+
+            GameObject inst = Instantiate(GetComponent<Stone>().effect, transform.position, transform.rotation) as GameObject;
+            inst.name = "Effect";
+            NetworkServer.Spawn(inst);
+            inst.GetComponent<Animator>().SetBool("Collided", true);
+        }
+    }
 }
