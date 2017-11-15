@@ -7,7 +7,7 @@ namespace UnityStandardAssets._2D
 	public class Platformer2DUserControl : MonoBehaviour{
 
 
-        public bool onTestCell = true;
+        public bool onTestCell = false;
         public ControleVars m_ControleVars;
 		[SerializeField] private bool autoAttack = false;
 		[SerializeField] private bool Commented = false;
@@ -58,17 +58,17 @@ namespace UnityStandardAssets._2D
             }
             else
             {
-                GetComponent<PlatformerCharacter2D>().m_JumpForce *= 3.6f;
+                //GetComponent<PlatformerCharacter2D>().m_JumpForce *= 3.6f;
             }
 
-            float k_jumpWallForce;
+            float k_jumpWallForce = GetComponent<PlatformerCharacter2D>().k_jumpWallForce;
 
             if (!onTestCell){
                 GetComponent<PlatformerCharacter2D>().m_JumpForce *= 0.85f;
-                k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
+                //k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
             }
             else{
-                k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
+                //k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
                 k_jumpWallForce *= 4;
             }
 

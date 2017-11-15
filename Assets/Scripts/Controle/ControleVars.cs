@@ -18,10 +18,11 @@ public class ControleVars : MonoBehaviour {
 		atk = b;
 	}
 	public void alterPulo(bool b){
-		if (b) {
+        pulo = b;
+		/*if (b) {
 			pulo = true;
 			buttonPuloDelay = 10;
-		}
+		}*/
 	}
 
 	public bool getAtk(){
@@ -41,11 +42,11 @@ public class ControleVars : MonoBehaviour {
 	}
 
 	private void Update(){
-		if (buttonPuloDelay > 0) {
+        /*if (buttonPuloDelay > 0) {
 			buttonPuloDelay--;
 		}else if(pulo){
 			pulo = false;
-		}
-	}
+		}*/
+    }
 
 }

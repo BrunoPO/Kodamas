@@ -13,7 +13,7 @@ namespace UnityStandardAssets._2D{
 		private LayerMask m_WhatIsGround;
 		private LayerMask m_WhatIsWall;
 		private LayerMask m_WhatIsPlayer;
-		public float k_jumpWallForce;
+        [Range(0, 100)] public float k_jumpWallForce=37;
 		private bool isNet;
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -165,6 +165,7 @@ namespace UnityStandardAssets._2D{
             if (m_Anim.GetBool("Died")) {
                 return;
             }
+           
 			//Se não olhando para frente inverta.
 			if ((move < 0 && isFacingRight()) || (move > 0 && !isFacingRight())) {
 				InvertFacing ();
@@ -174,9 +175,21 @@ namespace UnityStandardAssets._2D{
 			if (m_Grounded && jump && m_Anim.GetBool ("Ground")) {
 				m_Grounded = false;
 				m_Anim.SetBool ("Ground", false);
-				m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
+                Vector3 velocity = m_Rigidbody2D.velocity;
+                velocity.y = m_JumpForce/20;
+                m_Rigidbody2D.velocity = velocity;
+                //print(velocity);
+                //m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
                 IniPulo = 24;
 			}
+
+            if (jump)
+               print("Pulando:" + m_JumpForce);
+                if (m_Grounded)
+                    print("m_Grounded");
+                if (m_OnWall)
+                    print("m_OnWall");
+            
 
             if (m_Grounded || m_AirControl){
 				m_Anim.SetFloat("Speed", Mathf.Abs(move));
@@ -219,6 +232,7 @@ namespace UnityStandardAssets._2D{
 				m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
 				
             }
+            
 
         }
 
