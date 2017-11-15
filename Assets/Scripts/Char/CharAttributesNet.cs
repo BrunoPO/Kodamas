@@ -45,6 +45,11 @@ namespace UnityStandardAssets._2D{
 
 				m_GameHUD.GetComponent<AlterImg> ().Alter (myOrder);
 				m_EndingImg.GetComponent<AlterImg> ().Alter (myOrder);
+                Transform t = transform.GetChild(3);
+                if (t.name == "Target")
+                {
+                    t.gameObject.SetActive(true);
+                }
 			} else {
 				GetComponent<Platformer2DUserControl>().enabled = false;
 			}
