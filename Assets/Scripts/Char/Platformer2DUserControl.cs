@@ -68,8 +68,8 @@ namespace UnityStandardAssets._2D
                 k_jumpWallForce *= 4;
             }
 
-            if(m_Controle == null)
-                k_jumpWallForce /= 3.6f;
+            /*if(m_Controle == null)
+                k_jumpWallForce /= 3.6f;*/
             print(k_jumpWallForce);
 
 

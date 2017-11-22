@@ -12,6 +12,7 @@ namespace UnityStandardAssets._2D{
 		[HideInInspector] public Vector3 IniPoint;
 		private LayerMask m_WhatIsGround;
 		private LayerMask m_WhatIsWall;
+		private LayerMask m_WhatIsWallAndGround;
 		private LayerMask m_WhatIsPlayer;
         [Range(0, 100)] public float k_jumpWallForce=37;
 		private bool isNet;
@@ -22,14 +23,14 @@ namespace UnityStandardAssets._2D{
         private Transform m_CeilingCheck;   // A position marking where to check for ceilings
         const float k_CeilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
        	private Collider2D[] colliders;
-		private Collider2D[] collidersOnChest;
+		private Collider2D[] collidersWall;
 		private CharAttributesNet m_AttributesNet; //var with refence to Attributes on the Net
 		private CharAttributes m_Attributes;	//var with refence to Attributes on the Local
 		private Animator m_Anim;            // Reference to the player's animator component.
 		private Rigidbody2D m_Rigidbody2D; // Reference to the player's rigidbody component.
 		private bool init = false ;
         private int IniPulo = 0;
-
+		private bool jumping = false;
 
         private void Awake(){
 			m_GroundCheck = transform.Find("GroundCheck");
@@ -60,12 +61,14 @@ namespace UnityStandardAssets._2D{
 				m_WhatIsGround = gm.whatIsGround;
 				m_WhatIsWall = gm.whatIsWall;
 				m_WhatIsPlayer = gm.whatIsPlayer;
+				m_WhatIsWallAndGround = m_WhatIsWall + m_WhatIsGround;
 			} else {
 				m_Attributes = GetComponent<CharAttributes> ();
 				GM gm = GameObject.Find ("GM").GetComponent<GM> ();
 				m_WhatIsGround = gm.whatIsGround;
 				m_WhatIsWall = gm.whatIsWall;
 				m_WhatIsPlayer = gm.whatIsPlayer;
+				m_WhatIsWallAndGround = m_WhatIsWall + m_WhatIsGround;
 			}
 		}
 
@@ -87,24 +90,36 @@ namespace UnityStandardAssets._2D{
 
             //Verifica colisão com o muro na altura do pé ou da cabeça
             //Peito
-            collidersOnChest = Physics2D.OverlapCircleAll(transform.position, k_GroundedRadius * 0.9f, m_WhatIsWall);
-            if (collidersOnChest.Length < 1)
+            collidersWall = Physics2D.OverlapCircleAll(transform.position, k_GroundedRadius * 1.1f, m_WhatIsWall);
+			if (collidersWall.Length < 1)
             {
-                //Ground
-                colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius*0.9f, m_WhatIsWall);
-                if (colliders.Length < 1)
-                    colliders = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius * 0.9f, m_WhatIsWall);
-                    //Cabeça
+				//Cabeça
+				collidersWall = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius*1.1f, m_WhatIsWall);
+				if (collidersWall.Length < 1) {
+					collidersWall = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius * 0.9f, m_WhatIsWallAndGround);
+					if(collidersWall.Length>1){
+						Boolean	OnGround=false;
+						foreach (Collider2D c in colliders) {
+							if (c.gameObject.tag == "Ground") {
+								Vector3 extension = c.bounds.extents;
+								if (c.bounds.center.y+extension.y < transform.position.y) {
+									if ((c.bounds.center.x-extension.x > transform.position.x)&&(c.bounds.center.x+extension.x < transform.position.x)) {
+										OnGround = true;
+										collidersWall = null;
+										break;
+									}
+								}
+							}
+						}
+					}
+				}
+                    //Ground
             }
-            else
-            {
-                colliders = collidersOnChest;
-            }
-            m_OnWall = (colliders != null && (colliders.Length > 0));
+			m_OnWall = (collidersWall != null && (collidersWall.Length > 0));
 
             m_Anim.SetBool("Ground", m_Grounded);
+			//Verificar se o char está pisando em alguém
             if (!m_Grounded) {
-                //Verificar se está pisando em alguém
                 if (m_Rigidbody2D.velocity.y < 0) {
                     colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
                     foreach (Collider2D collider in colliders) {
@@ -171,24 +186,26 @@ namespace UnityStandardAssets._2D{
 				InvertFacing ();
 			}
 
-			//Se tiver pulando e no chão pule
-			if (m_Grounded && jump && m_Anim.GetBool ("Ground")) {
+			//Se não estiver pulando e no chão pule
+			if (m_Grounded && jump && m_Anim.GetBool ("Ground") && !jumping) {
+				jumping = true;
 				m_Grounded = false;
 				m_Anim.SetBool ("Ground", false);
-                Vector3 velocity = m_Rigidbody2D.velocity;
-                velocity.y = m_JumpForce/20;
-                m_Rigidbody2D.velocity = velocity;
-                //print(velocity);
-                //m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
-                IniPulo = 24;
+				m_Rigidbody2D.velocity = Vector2.zero;
+				m_Rigidbody2D.AddForce (new Vector2 (0f, m_JumpForce));
+				IniPulo = 24;
+			} else if (!m_Grounded && jumping) {
+				jumping = false;
 			}
 
-            if (jump)
-               print("Pulando:" + m_JumpForce);
-                if (m_Grounded)
-                    print("m_Grounded");
-                if (m_OnWall)
-                    print("m_OnWall");
+
+
+			/*if (jump)
+               print("Pulando, JumpForce:" + m_JumpForce);
+            if (m_Grounded)
+                print("m_Grounded");
+            if (m_OnWall)
+                print("m_OnWall");*/
             
 
             if (m_Grounded || m_AirControl){
@@ -220,9 +237,9 @@ namespace UnityStandardAssets._2D{
 						m_Anim.SetBool ("Ground", false);
 
 						if (isFacingRight()) {
-							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce*1.6f , k_jumpWallForce/4), ForceMode2D.Impulse);
+							m_Rigidbody2D.AddForce (new Vector2 (-1 * k_jumpWallForce/3 , k_jumpWallForce/20), ForceMode2D.Impulse);
 						} else {
-							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce*1.6f , k_jumpWallForce/4), ForceMode2D.Impulse);
+							m_Rigidbody2D.AddForce (new Vector2 (1 * k_jumpWallForce/3 , k_jumpWallForce/20), ForceMode2D.Impulse);
 						}
                         IniPulo = 24;
                         return;
