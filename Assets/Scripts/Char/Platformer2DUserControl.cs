@@ -205,31 +205,6 @@ namespace UnityStandardAssets._2D
 
 		//Metodos chamados internamente
 		Vector3 Direcao(float h, float v){
-            if (Commented) print("h:" + h + "v: " + v);
-            if (h == 0 && v == 0)
-            {
-                if (Commented) print("Old Posi");
-                if (lastParamBall != Vector3.zero){
-                    if(lastParamBall.x < 0 && isFacingRight())
-                    {
-                        h = 1;v = lastParamBall.y;
-                    }
-                    else if (lastParamBall.x > 0 && !isFacingRight())
-                    {
-                        h = -1; v = lastParamBall.y;
-                    }
-                    else
-                    {
-                        return lastParamBall;
-                    }
-                }
-                else if (isFacingRight())
-                    return new Vector3(1f, 0f, 0);
-                else
-                    return new Vector3(-1f, 0f, 180f);
-
-            }
-
             if (h < 0 && v <0) {
 				if (Commented) print ("Esq Baixo");
 				return new Vector3 (-1f, -1f, 225f);
@@ -263,32 +238,6 @@ namespace UnityStandardAssets._2D
 		}
 
 		Vector3 DirecaoOnControl(float h, float v){
-            if (Commented) print("h:" + h + "v: " + v);
-            if (h == 0 && v == 0)
-            {
-                if (Commented) print("Old Posi");
-                if (lastParamBall != Vector3.zero)
-                {
-                    if (lastParamBall.x < 0 && isFacingRight())
-                    {
-                        h = 1; v = lastParamBall.y;
-                    }
-                    else if (lastParamBall.x > 0 && !isFacingRight())
-                    {
-                        h = -1; v = lastParamBall.y;
-                    }
-                    else
-                    {
-                        return lastParamBall;
-                    }
-                }
-                else if (isFacingRight())
-                    return new Vector3(1f, 0f, 0);
-                else
-                    return new Vector3(-1f, 0f, 180f);
-
-            }
-
             if (h < 0 && v >= -0.85 && v <= -0.3) {
 				if (Commented) print ("Esq Baixo");
 				return new Vector3 (-1f, -1f, 225f);
