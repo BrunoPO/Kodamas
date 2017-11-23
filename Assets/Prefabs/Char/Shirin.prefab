@@ -346,7 +346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlimitedBalls: 0
   SoulStone: {fileID: 1092874576488382, guid: 007ccda6557a84732bbfb3d6fa5f90c4, type: 2}
-  myOrder: 1
+  myOrder: 0
   m_FacingRight: 1
   m_Losed: 0
   balls: 0

@@ -96,7 +96,8 @@ namespace UnityStandardAssets._2D{
 				//Cabeça
 				collidersWall = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius*1.1f, m_WhatIsWall);
 				if (collidersWall.Length < 1) {
-					collidersWall = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius * 0.9f, m_WhatIsWallAndGround);
+					collidersWall = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius*0.9f, m_WhatIsWall);
+					/*collidersWall = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius * 0.9f, m_WhatIsWallAndGround);
 					if(collidersWall.Length>1){
 						Boolean	OnGround=false;
 						foreach (Collider2D c in colliders) {
@@ -111,7 +112,7 @@ namespace UnityStandardAssets._2D{
 								}
 							}
 						}
-					}
+					}*/
 				}
                     //Ground
             }
@@ -216,7 +217,7 @@ namespace UnityStandardAssets._2D{
 					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
 
 				//Se tiver perto de um muro pulando (E não no chão)
-				} else if (m_OnWall && jump && !m_Grounded && IniPulo <= 1) {
+				} else if (m_OnWall && jump && !m_Grounded && IniPulo <= 1 && Mathf.Abs(move)>0.3f) {
                     print("Tentou escalar");
 					//bool facingWalls = false;
 
