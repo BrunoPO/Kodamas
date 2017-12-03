@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Net/Lobby2/Fase0_Net.unity
+- path: Assets/Scenes/Net/Lobby2/Lobby.unity
   isLoaded: 1
   isActive: 1
