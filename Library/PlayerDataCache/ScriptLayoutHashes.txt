@@ -84,6 +84,7 @@ f61c0793411f10cf5fbfa1473fef5ef2 UnityEngine.UI.dll:UnityEngine.UI.ToggleGroup
 1b8c02d0aa82fbf036a2b9b2d713eec3 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 dc78624554e910c76d194ff50ce5b07a Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyServerEntry
 0916901694a4059bdd0859f1afe5e45f Assembly-CSharp.dll:UnityStandardAssets._2D.GM
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.QRCodeGnrtTexture
 124c5f527e420c71f9ea00eb625a6a8e Assembly-CSharp.dll:UnityStandardAssets._2D.GMNet
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 970a95104359198fe1a98ef48655de8c UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
@@ -125,7 +126,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 5afea70aaffa099d7410c1aabda8f41e Assembly-CSharp.dll:.AlterImg
 f671aa975974562917e3bf91d1444c4e Assembly-CSharp.dll:UnityStandardAssets._2D.Stone
 99d25eea6d0c6d4a41e007937ea3c979 Assembly-CSharp.dll:UnityStandardAssets._2D.CharAttributesNet
-a1267ded2fd5a4322b5cd95b6a421b60 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyManager
+93e0bb7b7fe58cb54c05a0ed352016a2 Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyManager
 7dc57e8b937226e7e14d16a72aab4051 Assembly-CSharp.dll:UnityStandardAssets._2D.Platformer2DUserControl
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ExibirIP
 abf10c6619d17fec1b7a4bac300aef9e Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyTopPanel
@@ -168,6 +169,7 @@ e20a31b96c493061d422ad18a2e8213b Assembly-CSharp.dll:.Btn_pulo
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ChooseChar
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.BallParticleDestroyNet
 23dc8d8a8fcf1e71dcf65501fd7b04f7 Assembly-CSharp.dll:UnityStandardAssets._2D.Camera2DFollow
+c34746665e8d479fa5343749c0e5b48a Assembly-CSharp.dll:.QRCodeReader
 01f7df3d21ad87206cb85eedb3bca425 Assembly-CSharp.dll:UnityStandardAssets._2D.StoneAttributesNet
 239d2cc8d353bbfcbefc27fa8f0221cc Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyServerList
 e374bb8897ba2bae7d86662ebcf65b69 Assembly-CSharp.dll:.ControleVars

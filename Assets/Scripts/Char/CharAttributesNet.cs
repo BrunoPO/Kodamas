@@ -178,13 +178,17 @@ namespace UnityStandardAssets._2D{
             //CmdCallDied(newBool);
             m_Anim.SetBool("Died", newBool);
             //m_Anim.SetBool ("Died", newBool);
-            if (!newBool) {//se killed for falso reset a posição
+			if (!newBool) {//se killed for falso reset a posição
 				gameObject.GetComponent<SpriteRenderer> ().enabled = false; 
 				GetComponent<Rigidbody2D> ().velocity = new Vector3 (0, 0, 0);
 				transform.position = m_PlatChar2D.IniPoint;
 				wasKilled = true;
 				CmdLifeMinus ();
-				balls=ballsIni;
+				balls = ballsIni;
+			} else {
+				#if UNITY_ANDROID || UNITY_IOS
+				Handheld.Vibrate();
+				#endif
 			}
 		}
 
