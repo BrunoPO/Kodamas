@@ -13,13 +13,6 @@ public class QRCodeGnrtTexture : MonoBehaviour {
 
 	private RawImage Image;
 	private String lastText;
-	// Use this for initialization
-	void Start () {
-		Image = GetComponent<RawImage> ();
-		print("QRCode Generate Start");
-		//Texture2D myQR = generateQR ("Texto padrão");
-		//Image.texture = myQR;		
-	}
 
 	private static Color32[] Encode(string textForEncoding, int width, int height) {
 		var writer = new BarcodeWriter {
@@ -40,6 +33,9 @@ public class QRCodeGnrtTexture : MonoBehaviour {
 		encoded.SetPixels32(color32);
 		encoded.Apply();
 		//Aplicar textura;
+		if (Image == null) {
+			Image = GetComponent<RawImage> ();
+		}
 		Image.texture = encoded;
 		return encoded;
 	}

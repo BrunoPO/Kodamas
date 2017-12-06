@@ -14,6 +14,7 @@ namespace Prototype.NetworkLobby
     public class LobbyManager : NetworkLobbyManager {
 		[Header("Game Stuff")]
 		public string[] nameScenesToLoad;
+		[SerializeField] private GameObject TopPanelGO;
 		[SerializeField] private GameObject partyAttributes;
 		public Button Btn_ChooseScene;
 		private InputField tfLife, tfStone;
@@ -85,7 +86,7 @@ namespace Prototype.NetworkLobby
 
 
         void Start(){
-			m_LobbyTopPanel = GameObject.Find("TopPanel").GetComponent<LobbyTopPanel>();
+			m_LobbyTopPanel = TopPanelGO.GetComponent<LobbyTopPanel>();
 			if(nameScenesToLoad.Length >0)
 				playScene = nameScenesToLoad[0];
 			currentPlayers = new Dictionary<int,int> ();
