@@ -1630,9 +1630,9 @@ MonoBehaviour:
   m_PlayScene: Fase0_Net
   lobbySlots: []
   nameScenesToLoad:
-  - Fase0_Net
-  - Fase1_Net
   - Fase_Dia
+  - Fase_Tarde
+  - Fase_Noite
   TopPanelGO: {fileID: 127378}
   partyAttributes: {fileID: 1003444692638318}
   Btn_ChooseScene: {fileID: 114982961195699264}
@@ -2491,7 +2491,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: -200}
+  m_AnchoredPosition: {x: 300, y: -199.99997}
   m_SizeDelta: {x: 585, y: 191}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &22475612
@@ -2566,7 +2566,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: 13.5}
+  m_AnchoredPosition: {x: -250.00002, y: 13.5}
   m_SizeDelta: {x: 125, y: 27}
   m_Pivot: {x: 0, y: 1}
 --- !u!1001 &100100000
@@ -3617,7 +3617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1746585368427102
 GameObject:
   m_ObjectHideFlags: 1
@@ -4740,7 +4740,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 6c96a9e802fd84b4ba92ed7f9173a695, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 267a5e5e680fce44492fa37759204cf2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5429,6 +5429,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114444244701513478}
+        m_MethodName: confirmarCena
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114327974172216004
@@ -5490,7 +5501,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Code
+  m_Text: 
 --- !u!114 &114349945582224760
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7497,9 +7508,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imgs:
-  - {fileID: 21300000, guid: 6c96a9e802fd84b4ba92ed7f9173a695, type: 3}
-  - {fileID: 21300000, guid: c3f7268c5f61ac7448e4034ebb4ca29a, type: 3}
-  - {fileID: 21300000, guid: be32b54412814b34fb6643572bf928f5, type: 3}
+  - {fileID: 21300000, guid: 267a5e5e680fce44492fa37759204cf2, type: 3}
+  - {fileID: 21300000, guid: a4794aac26081954e838512ca74661e9, type: 3}
+  - {fileID: 21300000, guid: 699b6ad65a46a0d458919f92cb63655c, type: 3}
 --- !u!114 &114759965682493074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9369,7 +9380,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 920, y: -138}
+  m_AnchoredPosition: {x: 919.9998, y: -138}
   m_SizeDelta: {x: -1216, y: 108}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224135453005162062
@@ -9461,7 +9472,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: -200}
+  m_AnchoredPosition: {x: -300, y: -199.99997}
   m_SizeDelta: {x: 585, y: 191}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224165481886915306
@@ -9739,7 +9750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -2591.0002, y: -69.5}
+  m_AnchoredPosition: {x: -2591.001, y: -69.5}
   m_SizeDelta: {x: 468, y: 1139}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224339243438543770
