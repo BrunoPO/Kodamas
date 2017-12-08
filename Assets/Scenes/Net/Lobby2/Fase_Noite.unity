@@ -1265,21 +1265,6 @@ Prefab:
       propertyPath: m_WinTxt
       value: 
       objectReference: {fileID: 2070849075}
-    - target: {fileID: 114839501123424412, guid: 07d668f1f3ad89c42a13c35be4953ddf,
-        type: 2}
-      propertyPath: Max.x
-      value: 22.76
-      objectReference: {fileID: 0}
-    - target: {fileID: 114839501123424412, guid: 07d668f1f3ad89c42a13c35be4953ddf,
-        type: 2}
-      propertyPath: Min.x
-      value: -3.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 114839501123424412, guid: 07d668f1f3ad89c42a13c35be4953ddf,
-        type: 2}
-      propertyPath: Max.y
-      value: 11.08
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07d668f1f3ad89c42a13c35be4953ddf, type: 2}
   m_IsPrefabParent: 0
