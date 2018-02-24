@@ -9,14 +9,20 @@ namespace UnityStandardAssets._2D{
 		[HideInInspector] [SyncVar] public bool fired = false;
 
 		private Rigidbody2D rigid;
+		private GameObject m_GM;
 		void Start(){
 			rigid = GetComponent<Rigidbody2D>();
+			m_GM = GameObject.Find ("GM");
 		}
 
 		public void SetFired(bool b){
 			if(!isServer)
 				fired = b;
 			CmdSetFired (b);
+		}
+
+		public void Killed(int myHash,int enemyHash){
+			m_GM.GetComponent<GMNet> ().countKill (myHash, enemyHash);
 		}
 
 		[Command]

@@ -49,6 +49,17 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
+		public void Killed(int enemyHash){
+			if (isNet)
+			{
+				m_attributesNet.Killed(paiHash, enemyHash);
+			}
+			else
+			{
+				//m_attributes.Killed();
+			}
+		}
+
         public void collisionDetected()
         {
             if (isNet)
@@ -109,11 +120,11 @@ namespace UnityStandardAssets._2D{
 			print ("Fired");
 
 			if (GetComponent<StoneAttributesNet> () != null) {
-				if(Commented) print("Online");
+				if(Commented) print("Online -- Fire");
 				m_attributesNet = GetComponent<StoneAttributesNet> ();
 				isNet = true;
 			}else if(GetComponent<StoneAttributes> () != null){
-				if(Commented) print("Offline");
+				if(Commented) print("Offline -- Fire");
 				m_attributes = GetComponent<StoneAttributes> ();
 				isNet = false;
 			}

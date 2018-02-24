@@ -32,7 +32,6 @@ namespace UnityStandardAssets._2D
 			Init ();
 		}
 		private void Init(){
-			print ("Tentou" + GameObject.Find ("GM"));
 			if (init || GameObject.Find ("GM") == null )
             {
                 return;

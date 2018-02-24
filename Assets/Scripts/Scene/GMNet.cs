@@ -21,13 +21,18 @@ namespace UnityStandardAssets._2D{
 		public Text m_LifeTxt;
 		public Text m_WinTxt;
 
-		[HideInInspector] [SyncVar] public bool m_Reset=false;
+		[HideInInspector] [SyncVar] public bool m_Reset=false;//Reset deprecated
 		List<GameObject> m_Players;
 		List<bool> m_PlayersAlive;
+		Dictionary<GameObject, bool> m_PlayersDic = new Dictionary<GameObject, bool> ();
 		private LobbyManager my_inst;
+		[SyncVar] private bool endOfMatch=false;
+		[SyncVar] private int teamWinner=-1;
 		[SyncVar] private int hashWinner=-1;
 		private int m_stones = 0;
 		private int m_lifes = 0;
+		private Dictionary<string, Dictionary<string, string> > matchHistory = new Dictionary<string, Dictionary<string, string> >();
+
 
 		private void Awake(){
 			endCount *= 60;
@@ -42,6 +47,30 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
+		public void countKill (int killer, int killed){
+			Dictionary<string, string> killlerHistory = matchHistory[killer.ToString()];
+			Dictionary<string, string> killledHistory = matchHistory[killed.ToString()];
+
+			if (killlerHistory != null) {
+				string KillsStri = (int.Parse (killlerHistory ["Kill"]) + 1).ToString ();//++1 Kills
+				matchHistory[killer.ToString()]["Kill"] = KillsStri;
+				print ("player:" + killer + " has " + KillsStri + " Kills");
+			}
+
+			if (killledHistory != null) {
+				string KilledStri = (int.Parse (killledHistory ["Death"]) + 1).ToString ();//++1 Kills
+				matchHistory[killed.ToString()]["Death"] = KilledStri;
+				print ("player:" + killed + " has " + KilledStri + " Deaths");
+			}
+
+		}
+
+		public bool getEnded(){
+			return endOfMatch;
+		}
+		public int getTeamWinner(){
+			return teamWinner;
+		}
 		public int getHashWinner(){
 			return hashWinner;
 		}
@@ -62,7 +91,7 @@ namespace UnityStandardAssets._2D{
 						alive++;
 					}
 				}
-				if (alive - 1 == m_PlayersAlive.Count - 1) {
+				if (alive - 1 == m_PlayersAlive.Count - 1) {//Pq dos -1?
 					m_Reset = false;
 				}
 				return;
@@ -95,25 +124,35 @@ namespace UnityStandardAssets._2D{
 			hashWinner=-1;
 		}
 
-
-
 		public void PlayerIn(GameObject ob){
 			print ("PlayerIn"+ob);
 			if (!isServer || ob.tag != "Player") 
 				return;
 			
-			if (m_Players == null) {
+			/*if (m_Players == null) {
 				m_Players = new List<GameObject> ();
 				m_PlayersAlive = new List<bool> ();
 			}
+
 			int i = m_Players.IndexOf (ob);
+
 			if(Commented) print ("Added Player:"+i);
 			if (i != -1) {
 				m_PlayersAlive [i] = true;
 			} else {
 				m_Players.Add (ob);
 				m_PlayersAlive.Add (true);
-			}
+			}*/
+			m_PlayersDic.Add(ob, true);
+			int hash = ob.GetComponent<PlatformerCharacter2D> ().getHash ();
+			Dictionary<string, string> history = new Dictionary<string, string> ();
+			history.Add ("Life",""+ob.GetComponent<PlatformerCharacter2D>().getLife());
+			history.Add ("Kill","0");
+			history.Add ("Death","0");
+			history.Add ("Colectable","0");
+			matchHistory.Add ("" + hash, history);
+
+
 		}
 
 		[Command]
@@ -127,20 +166,40 @@ namespace UnityStandardAssets._2D{
 			if (!isServer)
 				return;
 			
-			m_PlayersAlive[m_Players.IndexOf(ob)]=false;
+			//m_PlayersAlive[m_Players.IndexOf(ob)]=false;
+			m_PlayersDic [ob] = false;
 			CmdPlayerLosed (ob);
 
-			int alive = 0,lastAlive=0;
-			for(int i =0;i<m_PlayersAlive.Count;i++){
+			int alive = 0;
+			GameObject lastAlive = null;
+			/*for(int i =0;i<m_PlayersAlive.Count;i++){
 				if (m_PlayersAlive [i] == true) { 
 					lastAlive = i;
-					if (++alive >= 2)
-						break;
+					++alive;
+				}
+			}*/
+			foreach(KeyValuePair<GameObject,bool> player in m_PlayersDic)
+			{
+				if (player.Value) {
+					lastAlive = player.Key;
+					++alive;
 				}
 			}
 
-			if (alive <= 1) {
-				hashWinner = m_Players[lastAlive].GetComponent<CharAttributesNet> ().getHash ();
+			if (alive <= 1 && lastAlive != null) {//alterar lógica para team
+				endOfMatch = true;
+				hashWinner = lastAlive.GetComponent<CharAttributesNet> ().getHash ();
+			}
+
+			foreach(KeyValuePair<string, Dictionary<string, string> > player in matchHistory)
+			{
+				print ("------------------------------");
+				print ("Player:"+player.Key+"---------");
+				foreach(KeyValuePair<string, string> history in player.Value)
+				{
+					print (history.Key + ":" + history.Value);
+				}
+				print ("------------------------------");
 			}
 		}
 

@@ -28,9 +28,11 @@ namespace UnityStandardAssets._2D{
 			if (end)
 				return;
 			if (col.tag == "Player") {
-				if (col.gameObject.GetComponent<Platformer2DUserControl> () == null)
+				if (col.gameObject.GetComponent<Platformer2DUserControl> () == null)//se não possuir script ativo então volte
 					return;
-				print (col.name);
+				
+				if(Commented) print (col.name);
+
 				if (pai.GetComponent<Stone> ().onTheGround) {//Balls++ Ball on the ground
 					end = col.gameObject.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {
@@ -39,7 +41,8 @@ namespace UnityStandardAssets._2D{
 				} else if (col.GetComponent<PlatformerCharacter2D> ().getHash() != paiHash) {
 					if(Commented) print ("Player Killed");
 					col.GetComponent<PlatformerCharacter2D> ().Killed();
-                    pai.GetComponent<Stone>().collisionDetected();//Mostra colisão de stones
+					pai.GetComponent<Stone> ().Killed (col.GetComponent<PlatformerCharacter2D> ().getHash ());
+                    pai.GetComponent<Stone>().collisionDetected();//Mostra animação de colisão
                     pai.GetComponent<Stone> ().DestroySelf ();
 					//Fall ();
 				} else {//Balls++ Ball on the air
@@ -48,15 +51,16 @@ namespace UnityStandardAssets._2D{
 						pai.GetComponent<Stone> ().DestroySelf ();
 					}
 				}
-			}else if(pai.tag != "Respawn" ){
+
+			}else if(pai.tag != "Respawn" ){//Se for igual a stone
 				if (col.gameObject.tag == "Stone") {
 					if (col == null || col.GetComponent<Stone>() == null)
 						return;
-					if (col.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem
+					if (col.GetComponent<Stone> ().paiHash != paiHash) {//2 Stones adversárias se batem então as duas começam a cair
 						col.GetComponent<Stone> ().GetComponentInChildren<BallCollision>().Fall();
 						Fall ();
 					}
-				}else if(col.gameObject.tag == "Ground" || col.gameObject.tag == "Wall"){//Stone acerta o chão
+				}else if(col.gameObject.tag == "Ground" || col.gameObject.tag == "Wall"){//Stone acerta o chão então cai
 					Fall ();
 				}
 			}

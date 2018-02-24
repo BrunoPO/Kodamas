@@ -66,8 +66,9 @@ namespace UnityStandardAssets._2D{
 				return;
 			}
 
-			if (GameObject.Find ("GM") == null)
+			if (m_GM == null) 
 				return;
+			
 
 			if (GameObject.Find ("GM").GetComponent<GMNet> ().m_Reset) {
 				Reset ();
@@ -82,16 +83,26 @@ namespace UnityStandardAssets._2D{
 			if (isLocalPlayer) {
 				SetLifeText (life);
 				SetStonesText (balls);
-				int hashWinner = GameObject.Find ("GM").GetComponent<GMNet> ().getHashWinner ();
-				if (hashWinner != -1) {
-					if (hashWinner == getHash ()) {
-						youWon ();
-					} else {
-						youLose ();
-					}
+				if (m_GM.GetComponent<GMNet> ().getEnded ()) {
+					endOfMatch ();
 				}
 			}
 
+		}
+
+		private void endOfMatch(){
+			int hashWinner = m_GM.GetComponent<GMNet> ().getHashWinner ();
+			if (hashWinner != -1) {
+				if (hashWinner == getHash ()) {
+					youWon ();
+				} else {
+					youLose ();
+				}
+			}
+		}
+
+		public int getLife(){
+			return life;
 		}
 
 		public void SetStonesText(int i){
@@ -99,7 +110,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void SetLifeText(int i){
-			m_LifeTxt.text =  ""+i;//"Life:" +
+			m_LifeTxt.text =  ""+i;
 		}
 
 
@@ -170,7 +181,7 @@ namespace UnityStandardAssets._2D{
         private void OnKilled(bool newBool){
 
             //print (m_Killed +" "+ newBool);
-            if (!isLocalPlayer)
+            if (!isServer)//isLocalPlayer
                 return;
             if (m_Killed == newBool)
 				return;
@@ -280,7 +291,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		[Command] public void CmdKilled(){
-			print("Called Killed");
+			//print("Was Killed");
 			m_Killed = true;
 		}
 

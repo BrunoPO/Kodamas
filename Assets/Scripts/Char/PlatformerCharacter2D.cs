@@ -28,6 +28,7 @@ namespace UnityStandardAssets._2D{
 		private CharAttributes m_Attributes;	//var with refence to Attributes on the Local
 		private Animator m_Anim;            // Reference to the player's animator component.
 		private Rigidbody2D m_Rigidbody2D; // Reference to the player's rigidbody component.
+		private GameObject m_GM;
 		private bool init = false ;
         private int IniPulo = 0;
 		private bool jumping = false;
@@ -37,34 +38,34 @@ namespace UnityStandardAssets._2D{
 			m_CeilingCheck = transform.Find("CeilingCheck");
 			m_Anim = GetComponent<Animator>();
 			m_Rigidbody2D = GetComponent<Rigidbody2D>();
-
-
-            
-		    /*if (GetComponent<Platformer2DUserControl>().m_ControleVars != null)
-				k_jumpWallForce *= 4.5f;*/
-
-            
-
-            print (k_jumpWallForce);
 			Init ();
 		}
+
+		public int getLife(){
+			if (isNet) {
+				return GetComponent<CharAttributesNet> ().getLife ();
+			}else{
+				return 5;
+			}
+		}
+
 		private void Init(){
 			//print ("tentou");
 			if (GameObject.Find ("GM") == null)
 				return;
 			init = true;
-
+			m_GM = GameObject.Find ("GM");
 			isNet = (GetComponent<CharAttributesNet> () != null);
 			if (isNet) {
 				m_AttributesNet = GetComponent<CharAttributesNet> ();
-				GMNet gm = GameObject.Find ("GM").GetComponent<GMNet> ();
+				GMNet gm = m_GM.GetComponent<GMNet> ();
 				m_WhatIsGround = gm.whatIsGround;
 				m_WhatIsWall = gm.whatIsWall;
 				m_WhatIsPlayer = gm.whatIsPlayer;
 				m_WhatIsWallAndGround = m_WhatIsWall + m_WhatIsGround;
 			} else {
 				m_Attributes = GetComponent<CharAttributes> ();
-				GM gm = GameObject.Find ("GM").GetComponent<GM> ();
+				GM gm = m_GM.GetComponent<GM> ();
 				m_WhatIsGround = gm.whatIsGround;
 				m_WhatIsWall = gm.whatIsWall;
 				m_WhatIsPlayer = gm.whatIsPlayer;
@@ -125,6 +126,7 @@ namespace UnityStandardAssets._2D{
                     colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
                     foreach (Collider2D collider in colliders) {
                         if (collider.name == "CeilingCheck") {
+							Kill(collider.transform.parent.gameObject.GetComponent<PlatformerCharacter2D>().getHash());
                             collider.transform.parent.gameObject.GetComponent<PlatformerCharacter2D>().Killed();
                             m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x * m_JumpForce / 50, m_JumpForce / 50);
                             //m_Rigidbody2D.AddForce (new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/20, m_JumpForce));
@@ -254,7 +256,14 @@ namespace UnityStandardAssets._2D{
 
         }
 
-    public void Killed(){
+		private void Kill(int enemyhash){//Had Kill someone jumping on the head
+			if (isNet)
+				m_GM.GetComponent<GMNet> ().countKill (getHash(), enemyhash);
+			//else
+				//m_Attributes.CmdKill();
+		}
+
+    	public void Killed(){//get Killed
 			if (isNet)
 				m_AttributesNet.CmdKilled();
 			else
