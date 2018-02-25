@@ -39,6 +39,7 @@ namespace UnityStandardAssets._2D{
 
 			m_stones = 5;
 			m_lifes = 2;
+
 			if (GameObject.Find ("LobbyManager") != null) {
 				my_inst = GameObject.Find ("LobbyManager").GetComponent<LobbyManager> ();
 
@@ -180,9 +181,16 @@ namespace UnityStandardAssets._2D{
 			}*/
 			foreach(KeyValuePair<GameObject,bool> player in m_PlayersDic)
 			{
-				if (player.Value) {
+				string playerHash = "" + player.Key.GetComponent<PlatformerCharacter2D> ().getHash();
+				if (player.Value) {// se o player estiver vivo 
+					
+					matchHistory [playerHash] ["Life"] = //atualiza as vidas no historico
+					""+player.Key.GetComponent<PlatformerCharacter2D> ().getLife();
+					
 					lastAlive = player.Key;
 					++alive;
+				} else {
+					matchHistory[playerHash]["Life"] = "0";
 				}
 			}
 
