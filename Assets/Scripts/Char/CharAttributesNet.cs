@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 
 namespace UnityStandardAssets._2D{
-	public class CharAttributesNet : NetworkBehaviour {
+	public class CharAttributesNet : NetworkBehaviour,CharAttributesBase {
 		public bool unlimitedBalls = false;
 		public GameObject SoulStone;
 		public int myOrder=0;
@@ -105,16 +105,16 @@ namespace UnityStandardAssets._2D{
 			return life;
 		}
 
-		public void SetStonesText(int i){
+		private void SetStonesText(int i){
 			m_StonesTxt.text = ""+i;//"Stones:" + 
 		}
 
-		public void SetLifeText(int i){
+		private void SetLifeText(int i){
 			m_LifeTxt.text =  ""+i;
 		}
 
 
-		public void youLose(){
+		private void youLose(){
 			this.gameObject.SetActive (false);
 
 			if (!isLocalPlayer)
@@ -143,16 +143,10 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
-        public void Flip()
+        private void Flip()
         {
 
             Quaternion rot = transform.rotation;
-            /*print("Fliped----------------");
-
-            print(rot);
-            print(transform.rotation);
-
-            print(rot.y);*/
 
             if (rot.y <= 0.5f)
             {
@@ -164,9 +158,6 @@ namespace UnityStandardAssets._2D{
             }
 
             transform.rotation = rot;
-            /*print("After Flip --------------------");
-            print(rot);
-            print(transform.rotation);*/
         }
 
         public void OnLosed(bool newBool){
@@ -234,7 +225,13 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
+		public GameObject getSoulStone(){
+			return SoulStone;
+		}
 
+		public bool isFacingRight(){
+			return m_FacingRight;
+		}
 
 		public void youWon(){
 			if (!isLocalPlayer)

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 
 namespace UnityStandardAssets._2D{
-	public class CharAttributes : MonoBehaviour {
+	public class CharAttributes : MonoBehaviour,CharAttributesBase {
 		public bool unlimitedBalls = false;
 		public GameObject SoulStone;
 		public bool m_FacingRight = true;
@@ -146,6 +146,14 @@ namespace UnityStandardAssets._2D{
 
 		public void SetLifeText(int i){
 			m_LifeTxt.text = "Life:" + i;
+		}
+
+		public GameObject getSoulStone(){
+			return SoulStone;
+		}
+
+		public bool isFacingRight(){
+			return m_FacingRight;
 		}
 
 		public void youLose(){

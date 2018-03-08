@@ -21,6 +21,7 @@ namespace UnityStandardAssets._2D
 		private int autoAttackCounter=20;
 		private CharAttributesNet m_AttributesNet;
 		private CharAttributes m_Attributes;
+		private CharAttributesBase m_CharAttribute;
 		private bool isNet = false;
 		private bool init = false;
 		private GameObject gm;
@@ -41,15 +42,13 @@ namespace UnityStandardAssets._2D
 			m_Anim = GetComponent<Animator> ();
 			m_Character = GetComponent<PlatformerCharacter2D>();
 			isNet = (GetComponent<CharAttributesNet> () != null);
-			//print (isNet);
 			if (isNet) {
-				m_AttributesNet = GetComponent<CharAttributesNet> ();
-				SoulStone = m_AttributesNet.SoulStone;
+				m_CharAttribute = GetComponent<CharAttributesNet> ();
 			} else {
-				SoulStone = m_Attributes.SoulStone;
-				m_Attributes = GetComponent<CharAttributes> ();
+				m_CharAttribute = GetComponent<CharAttributes> ();
 			}
 
+			SoulStone = m_CharAttribute.getSoulStone();
 			GameObject m_Controle= GameObject.Find ("Controle");
             if (m_Controle != null)
             {
@@ -60,22 +59,11 @@ namespace UnityStandardAssets._2D
 
             if (!onTestCell){
                 GetComponent<PlatformerCharacter2D>().m_JumpForce *= 0.85f;
-                //k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
             }
             else{
-                //k_jumpWallForce = (GetComponent<PlatformerCharacter2D>().m_MaxSpeed * GetComponent<PlatformerCharacter2D>().m_JumpForce) / 90;
                 k_jumpWallForce *= 4;
             }
-
-            /*if(m_Controle == null)
-                k_jumpWallForce /= 3.6f;*/
-            print(k_jumpWallForce);
-
-
-
             GetComponent<PlatformerCharacter2D>().k_jumpWallForce = k_jumpWallForce;
-
-
         }
 
         private void Update() {
@@ -101,8 +89,6 @@ namespace UnityStandardAssets._2D
 				atck = m_ControleVars.getAtk ();
 			}
 
-			//if(Commented) print(v + " " + h);
-
 			//Ataca se estiver no automatico
 			if (autoAttack && !atck && autoAttackCounter>=100) {
 				autoAttackCounter = 0;
@@ -116,7 +102,6 @@ namespace UnityStandardAssets._2D
 
 
 			m_Anim.SetBool ("Atack", atck);
-			//print (atck);
 
 			//Se não estiver atacando
 			if (!atck) {
@@ -128,10 +113,7 @@ namespace UnityStandardAssets._2D
 					Vector3 position = (go_stone.transform.position + transform.position) / 2;//Alter position na hora de lançar
 					Quaternion rotation = go_stone.transform.rotation;
 					Destroy (go_stone);
-					if(isNet)
-						m_AttributesNet.CmdSpwnBall (position,rotation,m_Character.getHash());
-					else
-						m_Attributes.CmdSpwnBall (position,rotation,m_Character.getHash());
+					m_CharAttribute.CmdSpwnBall (position,rotation,m_Character.getHash());
 				}
 			//Se não estiver atacando e tem stone
 			}else if(getBalls()>0){
@@ -180,24 +162,15 @@ namespace UnityStandardAssets._2D
 
 		//Metodos chamados externamente
 		public bool gainBall(){
-			if (isNet)
-				return m_AttributesNet.gainBall();
-			else
-				return m_Attributes.gainBall();
+			return m_CharAttribute.gainBall();
 		}
 
 		private bool isFacingRight(){
-			if (isNet)
-				return m_AttributesNet.m_FacingRight;
-			else
-				return m_Attributes.m_FacingRight;
+			return m_CharAttribute.isFacingRight();
 		}
 
 		public int getBalls(){
-			if (isNet)
-				return m_AttributesNet.getBall();
-			else
-				return m_Attributes.getBall();
+			return m_CharAttribute.getBall();
 		}
 
 

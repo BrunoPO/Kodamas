@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace UnityStandardAssets._2D{
-	public class GM : MonoBehaviour {
+	public class GM :MonoBehaviour, GameMaster {
 		public bool Commented = false;
 
 		[Header("As camadas de cada")]
@@ -73,6 +73,26 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
+		public void countKill (int killer, int killed){
+			return;
+		}
+
+		public bool getEnded(){
+			return false;
+		}
+
+		public int getTeamWinner(){
+			return -1;
+		}
+
+		public int initStones(){
+			return 3;
+		}
+
+		public int initLife(){
+			return 3;
+		}
+
 		public void PlayerOut(GameObject ob){
 			print ("Died" + ob);
 			m_PlayersAlive[m_Players.IndexOf(ob)]=false;
@@ -88,6 +108,19 @@ namespace UnityStandardAssets._2D{
 			if (alive <= 1) {
 				hashWinner = hash;
 			}
+		}
+
+		public LayerMask whatIs(string s){
+			if (s == "Ground") {
+				return whatIsGround;
+			}else if (s == "Wall") {
+				return whatIsWall;
+			} else if (s == "WallAndGround") {
+				return whatIsGround+whatIsWall;
+			} else if (s == "Player") {
+				return whatIsPlayer;
+			}
+			return new LayerMask ();
 		}
 
 	}

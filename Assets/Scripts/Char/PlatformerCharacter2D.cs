@@ -29,6 +29,7 @@ namespace UnityStandardAssets._2D{
 		private Animator m_Anim;            // Reference to the player's animator component.
 		private Rigidbody2D m_Rigidbody2D; // Reference to the player's rigidbody component.
 		private GameObject m_GM;
+		private GameMaster gm;
 		private bool init = false ;
         private int IniPulo = 0;
 		private bool jumping = false;
@@ -56,21 +57,19 @@ namespace UnityStandardAssets._2D{
 			init = true;
 			m_GM = GameObject.Find ("GM");
 			isNet = (GetComponent<CharAttributesNet> () != null);
+
 			if (isNet) {
 				m_AttributesNet = GetComponent<CharAttributesNet> ();
-				GMNet gm = m_GM.GetComponent<GMNet> ();
-				m_WhatIsGround = gm.whatIsGround;
-				m_WhatIsWall = gm.whatIsWall;
-				m_WhatIsPlayer = gm.whatIsPlayer;
-				m_WhatIsWallAndGround = m_WhatIsWall + m_WhatIsGround;
+				gm = m_GM.GetComponent<GMNet> ();
 			} else {
 				m_Attributes = GetComponent<CharAttributes> ();
-				GM gm = m_GM.GetComponent<GM> ();
-				m_WhatIsGround = gm.whatIsGround;
-				m_WhatIsWall = gm.whatIsWall;
-				m_WhatIsPlayer = gm.whatIsPlayer;
-				m_WhatIsWallAndGround = m_WhatIsWall + m_WhatIsGround;
+				gm = m_GM.GetComponent<GM> ();
 			}
+
+			m_WhatIsGround = gm.whatIs("Ground");
+			m_WhatIsWall = gm.whatIs("Wall");
+			m_WhatIsPlayer = gm.whatIs("Player");
+			m_WhatIsWallAndGround = gm.whatIs("WallAndGround");
 		}
 
         private void Update() {//Fixed?
@@ -257,10 +256,12 @@ namespace UnityStandardAssets._2D{
         }
 
 		private void Kill(int enemyhash){//Had Kill someone jumping on the head
-			if (isNet)
+			gm.countKill(getHash(), enemyhash);
+			/*if (isNet)
 				m_GM.GetComponent<GMNet> ().countKill (getHash(), enemyhash);
 			//else
 				//m_Attributes.CmdKill();
+			*/
 		}
 
     	public void Killed(){//get Killed

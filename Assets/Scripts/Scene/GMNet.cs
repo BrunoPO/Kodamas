@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using Prototype.NetworkLobby;
 
 namespace UnityStandardAssets._2D{
-	public class GMNet : NetworkBehaviour {
+	public class GMNet : NetworkBehaviour, GameMaster {
 		
 		[SerializeField] private int endCount = 5;
 		public bool Commented = false;
@@ -209,6 +209,19 @@ namespace UnityStandardAssets._2D{
 				}
 				print ("------------------------------");
 			}
+		}
+
+		public LayerMask whatIs(string s){
+			if (s == "Ground") {
+				return whatIsGround;
+			}else if (s == "Wall") {
+				return whatIsWall;
+			} else if (s == "WallAndGround") {
+				return whatIsGround+whatIsWall;
+			} else if (s == "Player") {
+				return whatIsPlayer;
+			}
+			return new LayerMask ();
 		}
 
 	}
