@@ -7,7 +7,7 @@ namespace UnityStandardAssets._2D{
 		[Range(0, 50)] [SerializeField] public float m_MaxSpeed = 10f;                    // The fastest the player can travel in the x axis.
 		[Range(0, 1000)] [SerializeField] public float m_JumpForce = 400f;                  // Amount of force added when the player jumps.
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
-
+		[SerializeField] private int Team = 0; //which team the kodama is party of
 
 		[HideInInspector] public Vector3 IniPoint;
 		private LayerMask m_WhatIsGround;
@@ -49,9 +49,11 @@ namespace UnityStandardAssets._2D{
 				return 5;
 			}
 		}
+		public int getTeam(){
+			return Team;
+		}
 
 		private void Init(){
-			//print ("tentou");
 			if (GameObject.Find ("GM") == null)
 				return;
 			init = true;

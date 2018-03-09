@@ -270,6 +270,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114048316101023268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -320,6 +321,7 @@ MonoBehaviour:
   m_MaxSpeed: 5
   m_JumpForce: 550
   m_AirControl: 1
+  Team: 1
   IniPoint: {x: 0, y: 0, z: 0}
   k_jumpWallForce: 37
 --- !u!114 &114510482162947874
@@ -404,6 +406,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -448,6 +451,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:

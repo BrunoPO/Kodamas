@@ -20,6 +20,8 @@ namespace Prototype.NetworkLobby
 		private InputField tfLife, tfStone;
 		[HideInInspector] public int m_quantStones = 1;
 		[HideInInspector] public int m_quantLife = 1;
+        [HideInInspector] public int m_partyType= 1;
+        [HideInInspector] public int timeOfParty= 5;
 		[HideInInspector] public int m_tipoDeJogo = 0;
 		[HideInInspector] public int m_SceneNum = 0;
 		[HideInInspector] public int avatarIndex = 0;

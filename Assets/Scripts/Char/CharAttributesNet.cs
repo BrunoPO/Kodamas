@@ -28,6 +28,7 @@ namespace UnityStandardAssets._2D{
 		private int lifeIni;
 		private Animator m_Anim;
 		private PlatformerCharacter2D m_PlatChar2D;
+		private bool isTeamParty = false;
 
 		private void Start(){
 			m_PlatChar2D = GetComponent<PlatformerCharacter2D> ();
@@ -93,11 +94,20 @@ namespace UnityStandardAssets._2D{
 		private void endOfMatch(){
 			int hashWinner = m_GM.GetComponent<GMNet> ().getHashWinner ();
 			if (hashWinner != -1) {
-				if (hashWinner == getHash ()) {
-					youWon ();
-				} else {
-					youLose ();
+				if(isTeamParty){
+					if (hashWinner == getTeam()) {
+						youWon ();
+					} else {
+						youLose ();
+					}
+				}else{
+					if (hashWinner == getHash()) {
+						youWon ();
+					} else {
+						youLose ();
+					}
 				}
+
 			}
 		}
 
@@ -203,6 +213,8 @@ namespace UnityStandardAssets._2D{
 			}
 
 			GMNet m_GMNet = m_GM.GetComponent<GMNet>();
+
+			isTeamParty = m_GMNet.isTeamParty ();
 			toReset = false;
 			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 			balls = ballsIni = m_GMNet.initStones();
@@ -257,6 +269,9 @@ namespace UnityStandardAssets._2D{
 
 		public int getHash(){
 			return gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ();
+		}
+		public int getTeam(){
+			return gameObject.GetComponent<PlatformerCharacter2D> ().getTeam();
 		}
 
 		public int getBall(){

@@ -24,7 +24,7 @@ namespace UnityStandardAssets._2D{
 		[HideInInspector] [SyncVar] public bool m_Reset=false;//Reset deprecated
 		List<GameObject> m_Players;
 		List<bool> m_PlayersAlive;
-		Dictionary<GameObject, bool> m_PlayersDic = new Dictionary<GameObject, bool> ();
+		Dictionary<GameObject, bool> m_PlayersDicAlive = new Dictionary<GameObject, bool> ();
 		private LobbyManager my_inst;
 		[SyncVar] private bool endOfMatch=false;
 		[SyncVar] private int teamWinner=-1;
@@ -32,11 +32,14 @@ namespace UnityStandardAssets._2D{
 		private int m_stones = 0;
 		private int m_lifes = 0;
 		private Dictionary<string, Dictionary<string, string> > matchHistory = new Dictionary<string, Dictionary<string, string> >();
+		private Dictionary<string, GameObject> m_PlayersDicHashGO = new Dictionary<string, GameObject>();
 		private float timePassed = 0;
-		private int MaxTime = 2;
+		private int timeOfParty = 2;
 		private int alive = 0;
 		private	GameObject lastAlive = null;
-		private int partyType = 1;
+		private int partyType = 4;
+		private bool partyUseTimer = false;
+		private bool partyTeam = false;
 		private int lastTime = -1;
 
 
@@ -53,7 +56,12 @@ namespace UnityStandardAssets._2D{
 
 				m_stones = my_inst.m_quantStones;
 				m_lifes = my_inst.m_quantLife;
+				partyType = my_inst.m_partyType;
+				timeOfParty = my_inst.timeOfParty;
 			}
+
+			partyUseTimer = (partyType == 1 || partyType == 2 || partyType == 4 || partyType == 5);
+			partyTeam = (partyType == 3 || partyType == 4 || partyType == 5);
 		}
 
 		public void countKill (int killer, int killed){
@@ -76,6 +84,9 @@ namespace UnityStandardAssets._2D{
 
 		}
 
+		public bool isTeamParty(){
+			return partyTeam;
+		}
 		public bool getEnded(){
 			return endOfMatch;
 		}
@@ -133,7 +144,7 @@ namespace UnityStandardAssets._2D{
 			}
 
 			timePassed += Time.fixedDeltaTime;
-			AlterTimeText(MaxTime - timePassed);
+			AlterTimeText(timeOfParty - timePassed);
 		}
 
 		public void Reset(){
@@ -146,14 +157,18 @@ namespace UnityStandardAssets._2D{
 			if (!isServer || ob.tag != "Player") 
 				return;
 				
-			m_PlayersDic.Add(ob, true);
+			m_PlayersDicAlive.Add(ob, true);
 			int hash = ob.GetComponent<PlatformerCharacter2D> ().getHash ();
+
 			Dictionary<string, string> history = new Dictionary<string, string> ();
 			history.Add ("Life",""+ob.GetComponent<PlatformerCharacter2D>().getLife());
 			history.Add ("Kill","0");
 			history.Add ("Death","0");
 			history.Add ("Colectable","0");
 			matchHistory.Add ("" + hash, history);
+
+			m_PlayersDicHashGO.Add(""+hash, ob);
+
 
 
 		}
@@ -169,31 +184,60 @@ namespace UnityStandardAssets._2D{
 			if (!isServer)
 				return;
 			
-			m_PlayersDic [ob] = false;
+			m_PlayersDicAlive [ob] = false;
 			CmdPlayerLosed (ob);
-
-			alive = 0;
-			lastAlive = null;
-			foreach(KeyValuePair<GameObject,bool> player in m_PlayersDic)
-			{
-				string playerHash = "" + player.Key.GetComponent<PlatformerCharacter2D> ().getHash();
-				if (player.Value) {// se o player estiver vivo 
-					
-					matchHistory [playerHash] ["Life"] = //atualiza as vidas no historico
-					""+player.Key.GetComponent<PlatformerCharacter2D> ().getLife();
-					
-
-					lastAlive = player.Key;
-					++alive;
-				} else {
-					matchHistory[playerHash]["Life"] = "0";
-				}
+			
+			if(partyTeam){//Não há diferença na lógica da execução a variação está em como a variavel alive terá seu valor retornado.
+				updateLifeOnTeam();
+			}else{
+				updateLifeSolo();
 			}
 
 			bool isTheEnd = isEndOfTheGame();
 
 			if(isTheEnd){
 				showHistory();
+			}
+		}
+
+		private void updateLifeOnTeam(){
+			alive = 0;
+			lastAlive = null;
+			List<int> Teams = new List<int>();
+			foreach(KeyValuePair<GameObject,bool> player in m_PlayersDicAlive)
+			{
+
+				string playerHash = "" + player.Key.GetComponent<PlatformerCharacter2D> ().getHash();
+				if (player.Value) {// se o player estiver vivo 
+					matchHistory [playerHash] ["Life"] = //atualiza as vidas no historico
+					""+player.Key.GetComponent<PlatformerCharacter2D> ().getLife();
+					lastAlive = player.Key;
+					int Team = player.Key.GetComponent<PlatformerCharacter2D> ().getTeam();
+					if(!Teams.Contains(Team)){
+						Teams.Add(Team);
+						++alive;
+					}
+				} else {
+					matchHistory[playerHash]["Life"] = "0";
+				}
+			}
+		}
+
+		private void updateLifeSolo(){
+			alive = 0;
+			lastAlive = null;
+			foreach(KeyValuePair<GameObject,bool> player in m_PlayersDicAlive)
+			{
+				string playerHash = "" + player.Key.GetComponent<PlatformerCharacter2D> ().getHash();
+				if (player.Value) {// se o player estiver vivo 
+					
+					matchHistory [playerHash] ["Life"] = //atualiza as vidas no historico
+					""+player.Key.GetComponent<PlatformerCharacter2D> ().getLife();
+					lastAlive = player.Key;
+					++alive;
+				} else {
+					matchHistory[playerHash]["Life"] = "0";
+				}
 			}
 		}
 
@@ -209,8 +253,48 @@ namespace UnityStandardAssets._2D{
 				print ("------------------------------");
 			}
 		}
+		private string[] searchInHistoryTeam(string comparison, string searchedKey, bool unique){
+			string hash = "";
+			int searchedAux = -1;
+			bool higher = (comparison=="Highest");
+			int lastTeam = -1;
 
-		private string[] searchInHistory(string comparison, string searchedKey, bool unique){
+			if(higher){
+				searchedAux = -1;
+			}else{
+				searchedAux = 1000;
+			}
+
+			Dictionary<int,int> Teams = new Dictionary<int,int>();
+			foreach(KeyValuePair<string, Dictionary<string, string> > player in matchHistory)
+			{
+				int value = int.Parse(matchHistory [player.Key] [searchedKey]);
+				int team = m_PlayersDicHashGO[player.Key].GetComponent<PlatformerCharacter2D>().getTeam();
+				if(!Teams.ContainsKey(team)){
+					Teams.Add(team,value);
+				}else{
+					Teams[team] += value;
+				}
+			}
+
+			foreach(KeyValuePair<int, int > teamHist in Teams)
+			{
+				if(higher && teamHist.Value>searchedAux){
+					hash = teamHist.Key+"";
+					searchedAux = teamHist.Value;
+				}else if(unique && teamHist.Value == searchedAux){
+					hash="";
+				}else if(!higher && teamHist.Value<searchedAux){
+					hash = teamHist.Key+"";
+					searchedAux = teamHist.Value;
+				}
+			}
+
+
+			return new string[] {hash,searchedAux+""};
+		}
+
+		private string[] searchInHistorySolo(string comparison, string searchedKey, bool unique){
 			string hash = "";
 			int searchedAux = -1;
 			bool higher = (comparison=="Highest");
@@ -238,13 +322,8 @@ namespace UnityStandardAssets._2D{
 			return new string[] {hash,searchedAux+""};
 		}
 
-		private string hashWhoHasMoreLifes(){
-			string[] result = searchInHistory("Highest","Life",true);
-			return result[0];
-		}
-
 		private void AlterTimeText(float timer){
-			if(partyType == 1){
+			if(partyUseTimer){
 				if(timer <= 0){
 					timer = 0;
 				}else{
@@ -261,6 +340,8 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private bool isEndOfTheGame(){
+			string[] result;
+			string lastHash = "";
 			switch (partyType){
 				case 0://Estilo Last one standing
 					if (alive <= 1 && lastAlive != null) {
@@ -270,8 +351,43 @@ namespace UnityStandardAssets._2D{
 					}
 					break;
 				case 1://
-
-					string lastHash = hashWhoHasMoreLifes();
+					result = searchInHistorySolo("Highest","Life",true);
+					lastHash = result[0];//get hash
+					if (lastTime == 0 && lastHash != ""){
+						endOfMatch = true;
+						hashWinner = int.Parse(lastHash);
+						return true;
+					}
+					break;
+				case 2://
+					result = searchInHistorySolo("Lowest","Death",true);
+					lastHash = result[0];//get hash
+					if (lastTime == 0 && lastHash != ""){
+						endOfMatch = true;
+						hashWinner = int.Parse(lastHash);
+						return true;
+					}
+					break;
+				case 3://Ultimo time vivo
+					if (alive <= 1 && lastAlive != null) {
+						endOfMatch = true;
+						hashWinner = lastAlive.GetComponent<PlatformerCharacter2D> ().getTeam();
+						print(lastAlive+""+hashWinner);
+						return true;
+					}
+					break;
+				case 4://Time com mais vida
+					result = searchInHistoryTeam("Highest","Life",true);
+					lastHash = result[0];//get hash
+					if (lastTime == 0 && lastHash != ""){
+						endOfMatch = true;
+						hashWinner = int.Parse(lastHash);
+						return true;
+					}
+					break;
+				case 5://Time com menos mortes
+					result = searchInHistoryTeam("Highest","Life",true);
+					lastHash = result[0];//get hash
 					if (lastTime == 0 && lastHash != ""){
 						endOfMatch = true;
 						hashWinner = int.Parse(lastHash);
