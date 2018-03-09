@@ -32,9 +32,17 @@ namespace UnityStandardAssets._2D{
 		private int m_stones = 0;
 		private int m_lifes = 0;
 		private Dictionary<string, Dictionary<string, string> > matchHistory = new Dictionary<string, Dictionary<string, string> >();
+		private float timePassed = 0;
+		private int MaxTime = 2;
+		private int alive = 0;
+		private	GameObject lastAlive = null;
+		private int partyType = 1;
+		private int lastTime = -1;
+
 
 
 		private void Awake(){
+			timePassed=0;
 			endCount *= 60;
 
 			m_stones = 5;
@@ -60,8 +68,10 @@ namespace UnityStandardAssets._2D{
 
 			if (killledHistory != null) {
 				string KilledStri = (int.Parse (killledHistory ["Death"]) + 1).ToString ();//++1 Kills
+				string KilledLifeStri = (int.Parse (killledHistory ["Life"]) -1).ToString ();//--1 Life
 				matchHistory[killed.ToString()]["Death"] = KilledStri;
 				print ("player:" + killed + " has " + KilledStri + " Deaths");
+				matchHistory[killed.ToString()]["Life"] = KilledLifeStri;
 			}
 
 		}
@@ -86,6 +96,7 @@ namespace UnityStandardAssets._2D{
 		[ServerCallback]
 		public void Update(){
 			if (m_Reset) {
+				timePassed = 0;
 				int alive = 0;
 				for(int i =0;i<m_PlayersAlive.Count;i++){
 					if (m_PlayersAlive [i] == true) { 
@@ -100,7 +111,9 @@ namespace UnityStandardAssets._2D{
 			if (hashWinner != -1) {
 				if(endCount<=0 && isServer){
 					endCount = 1000;//Delay para não retornar denovo
-					my_inst.m_ServerReturnToLobby ();//cai o servidor
+					if(my_inst != null){
+						my_inst.m_ServerReturnToLobby ();//cai o servidor
+					}
 				}else{
 					endCount--;
 				}
@@ -118,6 +131,9 @@ namespace UnityStandardAssets._2D{
 				if(Commented) print ("N foi apertado");
 				my_inst.m_ServerReturnToLobby ();
 			}
+
+			timePassed += Time.fixedDeltaTime;
+			AlterTimeText(MaxTime - timePassed);
 		}
 
 		public void Reset(){
@@ -129,21 +145,7 @@ namespace UnityStandardAssets._2D{
 			print ("PlayerIn"+ob);
 			if (!isServer || ob.tag != "Player") 
 				return;
-			
-			/*if (m_Players == null) {
-				m_Players = new List<GameObject> ();
-				m_PlayersAlive = new List<bool> ();
-			}
-
-			int i = m_Players.IndexOf (ob);
-
-			if(Commented) print ("Added Player:"+i);
-			if (i != -1) {
-				m_PlayersAlive [i] = true;
-			} else {
-				m_Players.Add (ob);
-				m_PlayersAlive.Add (true);
-			}*/
+				
 			m_PlayersDic.Add(ob, true);
 			int hash = ob.GetComponent<PlatformerCharacter2D> ().getHash ();
 			Dictionary<string, string> history = new Dictionary<string, string> ();
@@ -167,18 +169,11 @@ namespace UnityStandardAssets._2D{
 			if (!isServer)
 				return;
 			
-			//m_PlayersAlive[m_Players.IndexOf(ob)]=false;
 			m_PlayersDic [ob] = false;
 			CmdPlayerLosed (ob);
 
-			int alive = 0;
-			GameObject lastAlive = null;
-			/*for(int i =0;i<m_PlayersAlive.Count;i++){
-				if (m_PlayersAlive [i] == true) { 
-					lastAlive = i;
-					++alive;
-				}
-			}*/
+			alive = 0;
+			lastAlive = null;
 			foreach(KeyValuePair<GameObject,bool> player in m_PlayersDic)
 			{
 				string playerHash = "" + player.Key.GetComponent<PlatformerCharacter2D> ().getHash();
@@ -187,6 +182,7 @@ namespace UnityStandardAssets._2D{
 					matchHistory [playerHash] ["Life"] = //atualiza as vidas no historico
 					""+player.Key.GetComponent<PlatformerCharacter2D> ().getLife();
 					
+
 					lastAlive = player.Key;
 					++alive;
 				} else {
@@ -194,11 +190,14 @@ namespace UnityStandardAssets._2D{
 				}
 			}
 
-			if (alive <= 1 && lastAlive != null) {//alterar lógica para team
-				endOfMatch = true;
-				hashWinner = lastAlive.GetComponent<CharAttributesNet> ().getHash ();
-			}
+			bool isTheEnd = isEndOfTheGame();
 
+			if(isTheEnd){
+				showHistory();
+			}
+		}
+
+		private void showHistory(){
 			foreach(KeyValuePair<string, Dictionary<string, string> > player in matchHistory)
 			{
 				print ("------------------------------");
@@ -209,6 +208,78 @@ namespace UnityStandardAssets._2D{
 				}
 				print ("------------------------------");
 			}
+		}
+
+		private string[] searchInHistory(string comparison, string searchedKey, bool unique){
+			string hash = "";
+			int searchedAux = -1;
+			bool higher = (comparison=="Highest");
+
+			if(higher){
+				searchedAux = -1;
+			}else{
+				searchedAux = 1000;
+			}
+
+			foreach(KeyValuePair<string, Dictionary<string, string> > player in matchHistory)
+			{
+				int value = int.Parse(matchHistory [player.Key] [searchedKey]);
+				if(Commented) print(player.Key+"("+searchedKey+")"+searchedAux+":"+value);
+				if(higher && value>searchedAux){
+					hash = player.Key;
+					searchedAux = value;
+				}else if(unique && value == searchedAux ){
+					hash="";
+				}else if(!higher && value<searchedAux){
+					hash = player.Key;
+					searchedAux = value;
+				}
+			}
+			return new string[] {hash,searchedAux+""};
+		}
+
+		private string hashWhoHasMoreLifes(){
+			string[] result = searchInHistory("Highest","Life",true);
+			return result[0];
+		}
+
+		private void AlterTimeText(float timer){
+			if(partyType == 1){
+				if(timer <= 0){
+					timer = 0;
+				}else{
+					timer = Mathf.Ceil(timer);
+				}
+				if(lastTime != timer){
+					lastTime = (int)timer;
+					print("Timer:"+timer);
+				}
+				if(lastTime == 0){
+					isEndOfTheGame();
+				}
+			}
+		}
+
+		private bool isEndOfTheGame(){
+			switch (partyType){
+				case 0://Estilo Last one standing
+					if (alive <= 1 && lastAlive != null) {
+						endOfMatch = true;
+						hashWinner = lastAlive.GetComponent<CharAttributesNet> ().getHash ();
+						return true;
+					}
+					break;
+				case 1://
+
+					string lastHash = hashWhoHasMoreLifes();
+					if (lastTime == 0 && lastHash != ""){
+						endOfMatch = true;
+						hashWinner = int.Parse(lastHash);
+						return true;
+					}
+					break;
+			}
+			return false;
 		}
 
 		public LayerMask whatIs(string s){
