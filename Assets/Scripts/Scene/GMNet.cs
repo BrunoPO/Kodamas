@@ -41,7 +41,7 @@ namespace UnityStandardAssets._2D{
 		private int timeOfParty = 2;
 		private int alive = 0;
 		private	GameObject lastAlive = null;
-		private int partyType = 3;
+		private int partyType = 0;//de 0 até 5
 		private bool partyUseTimer = false;
 		private bool partyTeam = false;
 		private int lastTime = -1;

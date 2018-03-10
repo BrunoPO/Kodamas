@@ -13,6 +13,7 @@ namespace UnityStandardAssets._2D{
 		private bool isNet ;
 		public bool teamParty = false;
 		private int hashTeam = 0;
+		private float intencityRot = 0.5f;
 
 		private void Start(){
 			rigid = GetComponent<Rigidbody2D> ();
@@ -82,24 +83,28 @@ namespace UnityStandardAssets._2D{
 			Vector3 dif;
 			Vector3 r = transform.rotation.eulerAngles;
 			float alter = 0;
-			if (r.z > 90 || r.z < 270) {
+			if (r.z > 90 && r.z < 270) {
 				if (col.transform.position.y > transform.position.y) {
-					alter = -0.3f;
+					alter = intencityRot;
 				} else if (col.transform.position.y < transform.position.y) {
-					alter = 0.3f;
+					alter = -intencityRot;
 				}
 			} else {
 				if (col.transform.position.y > transform.position.y) {
-					alter = 0.3f;
+					alter = intencityRot;
 				} else if (col.transform.position.y < transform.position.y) {
-					alter = -0.3f;
+					alter = -intencityRot;
 				}
 			}
 			r.z += alter;
 			if(r.z < 0){
-				r.z = 360-r.z;
+				r.z = 360+r.z;
+			}else if(r.z > 359){
+				r.z = r.z-360;
 			}
 			transform.rotation = Quaternion.Euler (r);
+			
+			//transform.Rotate(r );//* Time.deltaTime
 		}
 
 		void alterConfig(int stoneType){
@@ -115,7 +120,6 @@ namespace UnityStandardAssets._2D{
 					this.intecity *= 0.8f;
 					break;
 				case 3://Aumenta o radar
-					this.intecity *= 1.5f;
 					break;
 				case 4:
 					this.intecity *= 1.5f;
@@ -143,6 +147,17 @@ namespace UnityStandardAssets._2D{
 			child.GetComponent<Radar>().paiHash = hashTeam;
 			child.GetComponent<Radar>().paiHash = hash;
 			child.GetComponent<Radar> ().enabled = true;
+			if(stoneType == 3){
+				intencityRot = 3f;
+				Vector2[] radarArea = child.GetComponent<PolygonCollider2D> ().GetPath(0);
+
+				for(int i = 0; i<radarArea.Length ;i++){
+					radarArea[i] *= 1.4f;
+				}
+					
+
+				child.GetComponent<PolygonCollider2D> ().SetPath(0,radarArea);
+			}
 			child.layer = 9;
 			child.tag = "Stone";
 
