@@ -20,7 +20,6 @@ namespace UnityStandardAssets._2D
 		private Vector3 lastParamBall;//(v,h,rotation)
 		private int autoAttackCounter=20;
 		private CharAttributesNet m_AttributesNet;
-		private CharAttributes m_Attributes;
 		private CharAttributesBase m_CharAttribute;
 		private bool isNet = false;
 		private bool init = false;
@@ -42,11 +41,7 @@ namespace UnityStandardAssets._2D
 			m_Anim = GetComponent<Animator> ();
 			m_Character = GetComponent<PlatformerCharacter2D>();
 			isNet = (GetComponent<CharAttributesNet> () != null);
-			if (isNet) {
-				m_CharAttribute = GetComponent<CharAttributesNet> ();
-			} else {
-				m_CharAttribute = GetComponent<CharAttributes> ();
-			}
+			m_CharAttribute = GetComponent<CharAttributesNet> ();
 
 			SoulStone = m_CharAttribute.getSoulStone();
 			GameObject m_Controle= GameObject.Find ("Controle");

@@ -10,7 +10,6 @@ namespace UnityStandardAssets._2D{
 		public GameObject effect;
 		public int paiHash=0;
 		private StoneAttributesNet m_attributesNet;
-		private StoneAttributes m_attributes;
 		private bool isNet ;
 		public bool teamParty = false;
 		private int hashTeam = 0;
@@ -33,38 +32,19 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public bool wasFired(){
-			if (isNet) {
-				return m_attributesNet.fired;
-			} else {
-				return m_attributes.fired;
-			}
+			return m_attributesNet.fired;
 		}
 
 		private void setFired(bool b){
-			if (isNet) {
-				m_attributesNet.SetFired(b);
-			} else {
-				m_attributes.SetFired(b);
-			}
+			m_attributesNet.SetFired(b);
 		}
 
 		private void setKill(bool k){
-			if (isNet) {
-				m_attributesNet.kill = k;
-			} else {
-				m_attributes.kill = k;
-			}
+			m_attributesNet.kill = k;
 		}
 
 		public void Killed(int enemyHash){
-			if (isNet)
-			{
-				m_attributesNet.Killed(paiHash, enemyHash);
-			}
-			else
-			{
-				//m_attributes.Killed();
-			}
+			m_attributesNet.Killed(paiHash, enemyHash);
 		}
 
         public void collisionDetected()
@@ -126,15 +106,9 @@ namespace UnityStandardAssets._2D{
 
 			print ("Fired");
 
-			if (GetComponent<StoneAttributesNet> () != null) {
-				if(Commented) print("Online -- Fire");
-				m_attributesNet = GetComponent<StoneAttributesNet> ();
-				isNet = true;
-			}else if(GetComponent<StoneAttributes> () != null){
-				if(Commented) print("Offline -- Fire");
-				m_attributes = GetComponent<StoneAttributes> ();
-				isNet = false;
-			}
+			if(Commented) print("Online -- Fire");
+			m_attributesNet = GetComponent<StoneAttributesNet> ();
+			isNet = true;
 
 			this.paiHash = hash;
 			this.hashTeam = hashTeam;
@@ -163,11 +137,7 @@ namespace UnityStandardAssets._2D{
 			//Bug Prefab isn't enable at begin so Start wouln't run and because of that ani wouln't inicialize
 
 			this.peso = peso;
-			if (isNet) {
-				m_attributesNet = GetComponent<StoneAttributesNet> ();
-			} else {
-				m_attributes = GetComponent<StoneAttributes> ();
-			}
+			m_attributesNet = GetComponent<StoneAttributesNet> ();
 		}
 
 

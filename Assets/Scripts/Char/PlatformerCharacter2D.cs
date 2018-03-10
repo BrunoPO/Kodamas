@@ -25,7 +25,6 @@ namespace UnityStandardAssets._2D{
        	private Collider2D[] colliders;
 		private Collider2D[] collidersWall;
 		private CharAttributesNet m_AttributesNet; //var with refence to Attributes on the Net
-		private CharAttributes m_Attributes;	//var with refence to Attributes on the Local
 		private Animator m_Anim;            // Reference to the player's animator component.
 		private Rigidbody2D m_Rigidbody2D; // Reference to the player's rigidbody component.
 		private GameObject m_GM;
@@ -60,14 +59,8 @@ namespace UnityStandardAssets._2D{
 			init = true;
 			m_GM = GameObject.Find ("GM");
 			isNet = (GetComponent<CharAttributesNet> () != null);
-
-			if (isNet) {
-				m_AttributesNet = GetComponent<CharAttributesNet> ();
-				gm = m_GM.GetComponent<GMNet> ();
-			} else {
-				m_Attributes = GetComponent<CharAttributes> ();
-				gm = m_GM.GetComponent<GM> ();
-			}
+			m_AttributesNet = GetComponent<CharAttributesNet> ();
+			gm = m_GM.GetComponent<GMNet> ();
 			teamParty = gm.isTeamParty();
 			m_WhatIsGround = gm.whatIs("Ground");
 			m_WhatIsWall = gm.whatIs("Wall");
@@ -182,10 +175,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public int getHash(){
-			if (isNet)
-				return m_AttributesNet.getHash();
-			else
-				return m_Attributes.getHash();
+			return m_AttributesNet.getHash();
 		}
 
 		public void Move(float move, bool jump){
@@ -275,34 +265,19 @@ namespace UnityStandardAssets._2D{
 		}
 
     	public void Killed(){//get Killed
-			if (isNet)
-				m_AttributesNet.CmdKilled();
-			else
-				m_Attributes.CmdKilled();
+			m_AttributesNet.CmdKilled();
 		}
 
 		private bool isFacingRight(){
-			if (isNet) {
-				return m_AttributesNet.m_FacingRight;
-			} else {
-				return m_Attributes.m_FacingRight;
-			}
+			return m_AttributesNet.m_FacingRight;
 		}
 
 		private void InvertFacing(){
-			if (isNet) {
-				m_AttributesNet.InvertFlip();
-			} else {
-				m_Attributes.InvertFlip();
-			}
+			m_AttributesNet.InvertFlip();
 		}
 
 		public void ResetChar(){
-			if (isNet) {
-				m_AttributesNet.ResetAttributes ();
-			} else {
-				m_Attributes.ResetAttributes ();
-			}
+			m_AttributesNet.ResetAttributes ();
 		}
 
 		
