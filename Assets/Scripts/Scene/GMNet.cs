@@ -9,6 +9,9 @@ namespace UnityStandardAssets._2D{
 	public class GMNet : NetworkBehaviour, GameMaster {
 		
 		[SerializeField] private int endCount = 5;
+		[SerializeField] private GameObject itemBox;
+		[SerializeField] private GameObject itemBoxSpawnPoints;
+		[SerializeField] private float spawnItemTime = 0;
 		public bool Commented = false;
 
 		[Header("As camadas de cada")]
@@ -34,6 +37,7 @@ namespace UnityStandardAssets._2D{
 		private Dictionary<string, Dictionary<string, string> > matchHistory = new Dictionary<string, Dictionary<string, string> >();
 		private Dictionary<string, GameObject> m_PlayersDicHashGO = new Dictionary<string, GameObject>();
 		private float timePassed = 0;
+		private float timerSpawnItem = 0;
 		private int timeOfParty = 2;
 		private int alive = 0;
 		private	GameObject lastAlive = null;
@@ -152,8 +156,31 @@ namespace UnityStandardAssets._2D{
 				my_inst.m_ServerReturnToLobby ();
 			}
 
+			timerSpawnItem += Time.fixedDeltaTime;
+			if(spawnItemTime != 0 && timerSpawnItem > spawnItemTime){
+				spawnItemBox();
+			}
+
 			timePassed += Time.fixedDeltaTime;
 			AlterTimeText(timeOfParty - timePassed);
+		}
+
+		private void spawnItemBox(){
+			timerSpawnItem = 0;
+			if(itemBoxSpawnPoints == null)
+				return;
+			Quaternion rotation = new Quaternion(0f, 0f, 0f,0f);
+			int children = itemBoxSpawnPoints.transform.childCount;
+
+			if(children <= 0)
+				return;
+
+			int randomNum = Random.Range(0, children) ;
+			Vector3 posi = itemBoxSpawnPoints.transform.GetChild(randomNum).position;
+			posi.z = 0;
+			int randomItemType = Random.Range(0, improvePlayer.getImproves() - 1);
+			GameObject inst = Instantiate (itemBox,posi,rotation) as GameObject;
+			inst.GetComponent<itemBox>().itemType = randomItemType;
 		}
 
 		public void Reset(){

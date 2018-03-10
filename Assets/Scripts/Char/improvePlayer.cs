@@ -7,8 +7,13 @@ using UnityStandardAssets._2D;
 
 public class improvePlayer : NetworkBehaviour,improvePlayerBase {
 
+	int improves = 7;
+
 	[SerializeField] private int timeWithPower = 20;
 
+	public int getImproves(){
+		return improves;
+	}
 	public int perform(GameObject bo,int i){
 		this.CmdPerform(bo,i);
 		if(i<3)
@@ -48,10 +53,7 @@ public class improvePlayer : NetworkBehaviour,improvePlayerBase {
 			case 6:
 				charAttri.improved = 3;
 				break;
-			case 7:
-				charAttri.improved = 4;
-				break;
-			case 8://scene change
+			case 7://scene change
 				break;
 
 		}
