@@ -12,9 +12,16 @@ namespace UnityStandardAssets._2D{
 		private StoneAttributesNet m_attributesNet;
 		private StoneAttributes m_attributes;
 		private bool isNet ;
+		public bool teamParty = false;
+		private int hashTeam = 0;
 
 		private void Start(){
 			rigid = GetComponent<Rigidbody2D> ();
+			teamParty = GameObject.Find("GM").GetComponent<GMNet>().isTeamParty();
+		}
+
+		public bool isTeamParty(){
+			return teamParty;
 		}
 
 		private void Update(){
@@ -115,7 +122,7 @@ namespace UnityStandardAssets._2D{
 			transform.rotation = Quaternion.Euler (r);
 		}
 
-		public void Fire(float peso,int Hash){
+		public void Fire(float peso,int hash,int hashTeam){
 
 			print ("Fired");
 
@@ -129,7 +136,8 @@ namespace UnityStandardAssets._2D{
 				isNet = false;
 			}
 
-			this.paiHash = Hash;
+			this.paiHash = hash;
+			this.hashTeam = hashTeam;
 			setFired(true);
 
 			//Configurando Ball para interagir com o ambiente
@@ -137,13 +145,15 @@ namespace UnityStandardAssets._2D{
 			this.tag = "Stone";
 
 			GameObject child = this.transform.GetChild (0).gameObject;
-			child.GetComponent<Radar>().paiHash = Hash;
+			child.GetComponent<Radar>().paiHash = hashTeam;
+			child.GetComponent<Radar>().paiHash = hash;
 			child.GetComponent<Radar> ().enabled = true;
 			child.layer = 9;
 			child.tag = "Stone";
 
 			child = this.transform.GetChild (1).gameObject;
-			child.GetComponent<BallCollision>().paiHash = Hash;
+			child.GetComponent<BallCollision>().paiHash = hashTeam;
+			child.GetComponent<BallCollision>().paiHash = hash;
 			child.GetComponent<BallCollision> ().enabled = true;
 			child.layer = 9;
 			child.tag = "Stone";

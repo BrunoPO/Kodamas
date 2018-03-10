@@ -6,7 +6,8 @@ namespace UnityStandardAssets._2D{
 	public class Radar : MonoBehaviour {
 		private GameObject pai;
 		[HideInInspector] public int paiHash;
-
+		[HideInInspector] public int hashTeam=0;
+		
 		void Start(){
 			pai = this.transform.parent.gameObject;
 		}

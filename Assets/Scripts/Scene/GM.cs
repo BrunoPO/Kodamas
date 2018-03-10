@@ -73,6 +73,10 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
+		public bool isTeamParty(){
+			return false;
+		}
+
 		public void countKill (int killer, int killed){
 			return;
 		}

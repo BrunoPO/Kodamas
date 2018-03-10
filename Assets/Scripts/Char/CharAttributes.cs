@@ -234,11 +234,11 @@ namespace UnityStandardAssets._2D{
 			m_FacingRight = !m_FacingRight;
 		}
 
-		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int Hash){
+		public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int hash,int hashTeam){
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
 			inst.GetComponent<Stone> ().enabled = true;
 			GetComponent<CharAttributes>().CmdBallsMinus();
-			inst.GetComponent<Stone>().Fire (3,Hash);
+			inst.GetComponent<Stone>().Fire (3,hash,hashTeam);
 			//NetworkServer.Spawn (inst);
 
 			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;

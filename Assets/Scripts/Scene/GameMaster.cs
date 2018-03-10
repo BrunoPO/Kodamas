@@ -11,4 +11,5 @@ public interface GameMaster {
 	int initStones();
 	int initLife();
 	LayerMask whatIs(string s);
+	bool isTeamParty();
 }

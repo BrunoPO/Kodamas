@@ -37,12 +37,10 @@ namespace UnityStandardAssets._2D{
 		private int timeOfParty = 2;
 		private int alive = 0;
 		private	GameObject lastAlive = null;
-		private int partyType = 4;
+		private int partyType = 3;
 		private bool partyUseTimer = false;
 		private bool partyTeam = false;
 		private int lastTime = -1;
-
-
 
 		private void Awake(){
 			timePassed=0;

@@ -33,6 +33,7 @@ namespace UnityStandardAssets._2D{
 		private bool init = false ;
         private int IniPulo = 0;
 		private bool jumping = false;
+		private bool teamParty = false;
 
         private void Awake(){
 			m_GroundCheck = transform.Find("GroundCheck");
@@ -67,7 +68,7 @@ namespace UnityStandardAssets._2D{
 				m_Attributes = GetComponent<CharAttributes> ();
 				gm = m_GM.GetComponent<GM> ();
 			}
-
+			teamParty = gm.isTeamParty();
 			m_WhatIsGround = gm.whatIs("Ground");
 			m_WhatIsWall = gm.whatIs("Wall");
 			m_WhatIsPlayer = gm.whatIs("Player");
@@ -127,11 +128,14 @@ namespace UnityStandardAssets._2D{
                     colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
                     foreach (Collider2D collider in colliders) {
                         if (collider.name == "CeilingCheck") {
-							Kill(collider.transform.parent.gameObject.GetComponent<PlatformerCharacter2D>().getHash());
-                            collider.transform.parent.gameObject.GetComponent<PlatformerCharacter2D>().Killed();
-                            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x * m_JumpForce / 50, m_JumpForce / 50);
-                            //m_Rigidbody2D.AddForce (new Vector2 (m_Rigidbody2D.velocity.x*m_JumpForce/20, m_JumpForce));
-                            break;
+							GameObject otherChar = collider.transform.parent.gameObject;
+							int otherTeam = otherChar.GetComponent<PlatformerCharacter2D>().getTeam();
+							if(this.getTeam() != otherTeam || !this.isTeamParty()){
+								Kill(otherChar.GetComponent<PlatformerCharacter2D>().getHash());
+								otherChar.GetComponent<PlatformerCharacter2D>().Killed();
+								m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x * m_JumpForce / 50, m_JumpForce / 50);
+								break;
+							}
                         }
                     }
                 }
@@ -172,6 +176,10 @@ namespace UnityStandardAssets._2D{
 
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
         }
+
+		public bool isTeamParty(){
+			return teamParty;
+		}
 
 		public int getHash(){
 			if (isNet)
