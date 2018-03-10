@@ -15,6 +15,7 @@ namespace UnityStandardAssets._2D{
 		[SyncVar(hook = "OnLosed")] public bool m_Losed = false;
 		[SerializeField] [SyncVar] private int balls;
 		[SerializeField] [SyncVar] private int life;
+		[SerializeField] [SyncVar] public int improved = 0;
 		private bool wasKilled=false;
 		private Text m_StonesTxt;
 		private Text m_LifeTxt;
@@ -219,7 +220,7 @@ namespace UnityStandardAssets._2D{
 			gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 			balls = ballsIni = m_GMNet.initStones();
 
-			life = m_GMNet.initLife();
+			life = lifeIni = m_GMNet.initLife();
 
 			//print (balls + "b and l " + life);
 
@@ -286,6 +287,14 @@ namespace UnityStandardAssets._2D{
 			return false;
 		}
 
+		public bool gainLife(){
+			if(life<lifeIni*2){
+				CmdLifePlus();
+				return true;
+			}
+			return false;
+		}
+
 		[Command] public void CmdBallsMinus(){
 			if (!unlimitedBalls) {
 				balls--;
@@ -294,6 +303,10 @@ namespace UnityStandardAssets._2D{
 
 		[Command] public void CmdBallsPlus(){
 			balls++;
+		}
+
+		[Command] public void CmdLifePlus(){
+			life++;
 		}
 
 		[Command] public void CmdLifeMinus(){
@@ -336,7 +349,7 @@ namespace UnityStandardAssets._2D{
 			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
 			inst.GetComponent<Stone> ().enabled = true;
 			GetComponent<CharAttributesNet>().CmdBallsMinus();
-			inst.GetComponent<Stone>().Fire (5,hash,hashTeam);
+			inst.GetComponent<Stone>().Fire (improved,hash,hashTeam);
 			NetworkServer.Spawn (inst);
 
 			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;

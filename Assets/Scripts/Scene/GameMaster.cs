@@ -12,4 +12,5 @@ public interface GameMaster {
 	int initLife();
 	LayerMask whatIs(string s);
 	bool isTeamParty();
+	improvePlayerBase getImprovePlayer();
 }

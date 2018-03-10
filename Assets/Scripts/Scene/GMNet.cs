@@ -41,6 +41,7 @@ namespace UnityStandardAssets._2D{
 		private bool partyUseTimer = false;
 		private bool partyTeam = false;
 		private int lastTime = -1;
+		private improvePlayerBase improvePlayer; 
 
 		private void Awake(){
 			timePassed=0;
@@ -48,6 +49,8 @@ namespace UnityStandardAssets._2D{
 
 			m_stones = 5;
 			m_lifes = 2;
+
+			improvePlayer = GetComponent<improvePlayer>();
 
 			if (GameObject.Find ("LobbyManager") != null) {
 				my_inst = GameObject.Find ("LobbyManager").GetComponent<LobbyManager> ();
@@ -85,19 +88,27 @@ namespace UnityStandardAssets._2D{
 		public bool isTeamParty(){
 			return partyTeam;
 		}
+
+		public improvePlayerBase getImprovePlayer(){
+			return improvePlayer;
+		}
+
 		public bool getEnded(){
 			return endOfMatch;
 		}
+
 		public int getTeamWinner(){
 			return teamWinner;
 		}
+
 		public int getHashWinner(){
 			return hashWinner;
 		}
-
+		
 		public int initStones(){
 			return m_stones;
 		}
+
 		public int initLife(){
 			return m_lifes;
 		}

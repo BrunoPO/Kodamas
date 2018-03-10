@@ -33,6 +33,8 @@ namespace UnityStandardAssets._2D{
         private int IniPulo = 0;
 		private bool jumping = false;
 		private bool teamParty = false;
+		private improvePlayerBase improvePlayerScript;
+		private float timeOfImprovement = -1; 
 
         private void Awake(){
 			m_GroundCheck = transform.Find("GroundCheck");
@@ -61,6 +63,7 @@ namespace UnityStandardAssets._2D{
 			isNet = (GetComponent<CharAttributesNet> () != null);
 			m_AttributesNet = GetComponent<CharAttributesNet> ();
 			gm = m_GM.GetComponent<GMNet> ();
+			improvePlayerScript = gm.getImprovePlayer();
 			teamParty = gm.isTeamParty();
 			m_WhatIsGround = gm.whatIs("Ground");
 			m_WhatIsWall = gm.whatIs("Wall");
@@ -79,6 +82,14 @@ namespace UnityStandardAssets._2D{
                 IniPulo--;
             }
 
+			if(timeOfImprovement > -1){
+				if(timeOfImprovement <=1){
+					this.retornarParaPadrao();
+				}else{
+					timeOfImprovement -= Time.fixedDeltaTime;
+				}
+			}
+			
             m_Grounded = false;
             m_OnWall = false;
             colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius/2, m_WhatIsGround);
@@ -278,6 +289,15 @@ namespace UnityStandardAssets._2D{
 
 		public void ResetChar(){
 			m_AttributesNet.ResetAttributes ();
+		}
+
+		public void retornarParaPadrao(){
+			timeOfImprovement = -1;
+			improvePlayerScript.CmdReturnDefault(this.gameObject); 
+		}
+
+		public void improvePlayer(int i){
+			timeOfImprovement = improvePlayerScript.perform(this.gameObject,i); 
 		}
 
 		

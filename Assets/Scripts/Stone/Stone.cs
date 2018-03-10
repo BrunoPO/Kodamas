@@ -5,8 +5,8 @@ using UnityEngine;
 namespace UnityStandardAssets._2D{
 	public class Stone : MonoBehaviour {
 		private Rigidbody2D rigid;
-		public bool Commented=true,onTheGround = false;
-		private float horin,vert,indexSeno=0.5f,peso=0;
+		public bool Commented=false,onTheGround = false;
+		private float horin,vert,indexSeno=0.5f,intecity=0;
 		public GameObject effect;
 		public int paiHash=0;
 		private StoneAttributesNet m_attributesNet;
@@ -61,8 +61,8 @@ namespace UnityStandardAssets._2D{
 
         public void trageto(){
 			float velo = Mathf.Sin(Mathf.PI/indexSeno);
-			if (peso != 0 && !onTheGround) {
-				transform.position += transform.right * velo * peso / 10;
+			if (intecity != 0 && !onTheGround) {
+				transform.position += transform.right * velo * intecity / 10;
 			}
 			if(indexSeno<10)
 				indexSeno += 0.5f;
@@ -73,7 +73,7 @@ namespace UnityStandardAssets._2D{
             if (rigid.gravityScale != 0.2f)
 				rigid.gravityScale = 0.2f;
 			transform.rotation = Quaternion.Euler (new Vector3 (0, 0, 0));
-			rigid.AddForce (transform.up * peso * 10);
+			rigid.AddForce (transform.up * intecity * 10);
 		}
 
 		public void rotacionar(Collider2D col){
@@ -102,9 +102,30 @@ namespace UnityStandardAssets._2D{
 			transform.rotation = Quaternion.Euler (r);
 		}
 
-		public void Fire(float peso,int hash,int hashTeam){
+		void alterConfig(int stoneType){
+			switch (stoneType){
+				case 1://Mais rapido
+					this.intecity *= 1.5f;
+					break;
+				case 2://Maior
+					Vector3 scale = transform.localScale;
+					scale.x *= 1.3f;
+					scale.y *= 1.3f;
+					transform.localScale = scale;
+					this.intecity *= 0.8f;
+					break;
+				case 3://Aumenta o radar
+					this.intecity *= 1.5f;
+					break;
+				case 4:
+					this.intecity *= 1.5f;
+					break;
+			}
+		}
 
-			print ("Fired");
+		public void Fire(int stoneType,int hash,int hashTeam){
+
+			if(Commented) print ("Fired");
 
 			if(Commented) print("Online -- Fire");
 			m_attributesNet = GetComponent<StoneAttributesNet> ();
@@ -136,8 +157,9 @@ namespace UnityStandardAssets._2D{
 			GetComponent<Animator>().SetBool("Fired",true);//Solved Bug
 			//Bug Prefab isn't enable at begin so Start wouln't run and because of that ani wouln't inicialize
 
-			this.peso = peso;
+			this.intecity = 5;
 			m_attributesNet = GetComponent<StoneAttributesNet> ();
+			alterConfig(stoneType);
 		}
 
 
