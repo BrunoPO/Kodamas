@@ -30,13 +30,15 @@ namespace UnityStandardAssets._2D{
 		private Animator m_Anim;
 		private PlatformerCharacter2D m_PlatChar2D;
 		private bool isTeamParty = false;
+		private int myHash = -1;
+		private EnemyAI ai;
 
 		private void Start(){
 			m_PlatChar2D = GetComponent<PlatformerCharacter2D> ();
 			m_PlatChar2D.IniPoint = transform.position;
 			m_Anim = GetComponent<Animator> ();
 			m_GM = GameObject.Find ("GM");
-
+			
 			if (isLocalPlayer) {
 				Camera.main.GetComponent<Camera2DFollow> ().target = this.transform;
 				m_GameHUD = Camera.main.GetComponent<Camera2DFollow> ().m_GameHUD;
@@ -55,6 +57,7 @@ namespace UnityStandardAssets._2D{
 			} else {
 				GetComponent<Platformer2DUserControl>().enabled = false;
 			}
+			myHash = gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ();
 			Reset ();
         }
 
@@ -233,7 +236,11 @@ namespace UnityStandardAssets._2D{
 				SetStonesText (balls);
 				m_WinTxt.gameObject.SetActive (false);
 			}
-			if (isServer) {
+			
+			ai = GetComponent<EnemyAI> ();
+			if(ai != null && ai.enabled){
+				GetComponent<Platformer2DUserControl>().enabled = true;
+			}else if (isServer) {
 				GameObject.Find ("GM").GetComponent<GMNet> ().PlayerIn (gameObject);
 			}
 		}
@@ -269,7 +276,10 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public int getHash(){
-			return gameObject.GetComponent<NetworkIdentity> ().netId.GetHashCode ();
+			return myHash;
+		}
+		public void setHash(int h){
+			myHash = h;
 		}
 		public int getTeam(){
 			return gameObject.GetComponent<PlatformerCharacter2D> ().getTeam();
@@ -333,11 +343,11 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public void InvertFlip(){
-			if (!isLocalPlayer)
-				return;
+			if (isLocalPlayer || (isServer && ai != null && ai.enabled)){
+				m_FacingRight = !m_FacingRight;
+				CmdInvertFlip (m_FacingRight);
+			}
 
-            m_FacingRight = !m_FacingRight;
-            CmdInvertFlip (m_FacingRight);
         }
 
 		[Command] private void CmdInvertFlip(bool facing){

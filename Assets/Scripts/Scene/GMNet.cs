@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 using UnityEngine.Networking;
 using Prototype.NetworkLobby;
 
@@ -192,6 +193,15 @@ namespace UnityStandardAssets._2D{
 			print ("PlayerIn"+ob);
 			if (!isServer || ob.tag != "Player") 
 				return;
+			
+			EnemyAI ai = ob.GetComponent<EnemyAI>();
+			if((ai != null && ai.enabled) || m_PlayersDicHashGO.ContainsKey(""+ob.GetComponent<CharAttributesNet> ().getHash())){
+				int randomNum = Random.Range(100, 200) ;
+				while(m_PlayersDicHashGO.ContainsKey(randomNum+"")){
+					randomNum = Random.Range(100, 1000);
+				}
+				ob.GetComponent<CharAttributesNet> ().setHash(randomNum);
+			}
 				
 			m_PlayersDicAlive.Add(ob, true);
 			int hash = ob.GetComponent<PlatformerCharacter2D> ().getHash ();
@@ -375,6 +385,69 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
+		public Transform getEnemy(int hash){
+			GameObject go = m_PlayersDicHashGO[hash+""];
+			if(this.isTeamParty()){
+				int team = go.GetComponent<PlatformerCharacter2D>().getTeam();
+				int enemyTeam = (team == 0)?1:0;
+				string hashEnemy = ""+hash;
+				Dictionary<int,List<int>> Teams = new Dictionary<int,List<int>>();
+				int myIndex = -1;
+				foreach(KeyValuePair<GameObject, bool> player in m_PlayersDicAlive)
+				{
+					if(player.Key){
+						int teamAux = player.Key.GetComponent<PlatformerCharacter2D>().getTeam();
+						int hashAux = player.Key.GetComponent<PlatformerCharacter2D>().getTeam();
+						int indexAux = -1;
+						if(Teams.ContainsKey(team)){
+							Teams[team].Add(hashAux);
+							indexAux = Teams[team].Count -1;
+						}else{
+							List<int> teamate = new List<int>();
+							teamate.Add(hashAux);
+							Teams.Add(team,teamate);
+							indexAux = 0;
+						}
+						if(hashAux == hash){
+							myIndex = indexAux ;
+						}
+
+					}
+				}
+				for(int i = myIndex;i>-1;i--){
+					if(Teams[enemyTeam].Count > i){
+						return m_PlayersDicHashGO[(Teams[enemyTeam][i])+""].transform;
+					}
+				}
+			}else{
+				string[] players = m_PlayersDicHashGO.Keys.ToArray();
+				string lastHash = "-1";
+				for(int i = 0;i<players.Length;i++){
+					if(lastHash == "-2"){
+						lastHash =  players[i];
+						break;
+					}else if(players[i] == (hash+"")){
+						if(i%2 != 0){
+							if(lastHash == "-1"){
+								lastHash = "-2";
+							}else{
+								break;
+							}
+						}else{
+							lastHash = players[i];
+							break;
+						}
+					}else{
+						lastHash = players[i];
+					}
+				}
+				if(lastHash != "-1" && lastHash != "-2"){
+					return m_PlayersDicHashGO[lastHash].transform;
+				}
+			}
+			
+			return null;
+		}
 		private bool isEndOfTheGame(){
 			string[] result;
 			string lastHash = "";

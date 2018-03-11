@@ -45,11 +45,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		public int getLife(){
-			if (isNet) {
-				return GetComponent<CharAttributesNet> ().getLife ();
-			}else{
-				return 5;
-			}
+			return GetComponent<CharAttributesNet> ().getLife ();
 		}
 		public int getTeam(){
 			return Team;

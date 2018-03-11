@@ -8,7 +8,7 @@ namespace UnityStandardAssets._2D
 
 
         public bool onTestCell = false;
-        public ControleVars m_ControleVars;
+        public Joystick m_ControleVars;
 		[SerializeField] private bool autoAttack = false;
 		[SerializeField] private bool Commented = false;
 
@@ -44,11 +44,16 @@ namespace UnityStandardAssets._2D
 			m_CharAttribute = GetComponent<CharAttributesNet> ();
 
 			SoulStone = m_CharAttribute.getSoulStone();
-			GameObject m_Controle= GameObject.Find ("Controle");
-            if (m_Controle != null)
-            {
-                m_ControleVars = m_Controle.GetComponent<ControleVars>();
-            }
+
+			m_ControleVars = GetComponent<EnemyAI>();
+
+			if(m_ControleVars == null){
+				GameObject m_Controle= GameObject.Find ("Controle");
+				if (m_Controle != null)
+				{
+					m_ControleVars = m_Controle.GetComponent<ControleVars>();
+				}
+			}
 
             float k_jumpWallForce = GetComponent<PlatformerCharacter2D>().k_jumpWallForce;
 
