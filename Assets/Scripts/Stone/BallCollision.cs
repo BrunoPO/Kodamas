@@ -13,11 +13,19 @@ namespace UnityStandardAssets._2D{
 		private GameObject pai;
 		private bool end = false;
 		private bool isTeamParty = false;
+		private float timeToCanCollide = 1f;
+		private float counter_CanCollide = 0;
 
 		void Start(){
 			pai = this.transform.parent.gameObject;
 			isTeamParty = pai.GetComponent<Stone>().isTeamParty();
 		}
+
+		void Update()
+		{
+			counter_CanCollide += Time.deltaTime; 
+		}
+
 
 		//Detecção de colisões entre a Bola e Pesonagem ou outra bolsa
 		void OnTriggerEnter2D(Collider2D col) {
@@ -57,7 +65,7 @@ namespace UnityStandardAssets._2D{
                     pai.GetComponent<Stone>().collisionDetected();//Mostra animação de colisão
                     pai.GetComponent<Stone> ().DestroySelf ();
 					//Fall ();
-				} else {//Balls++ Ball on the air
+				} else if(timeToCanCollide < counter_CanCollide){//Balls++ Ball on the air
 					end = col.GetComponent<Platformer2DUserControl> ().gainBall();
 					if (end) {
 						pai.GetComponent<Stone> ().DestroySelf ();

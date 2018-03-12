@@ -79,7 +79,9 @@ namespace UnityStandardAssets._2D{
 		void AddBotChoosedFromUser(){
 			if(!isServer)
 				return;
-			List<int> Bots = my_inst.bots;
+			List<int> Bots = new List<int>();
+			if(my_inst != null)	
+				Bots =my_inst.bots;
 			if(Bots.Count < 1){
 				StartCoroutine(AutoAddBot());
 			}
