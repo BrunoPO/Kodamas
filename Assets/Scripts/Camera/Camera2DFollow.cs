@@ -49,6 +49,10 @@ namespace UnityStandardAssets._2D
 			print (raioDeVisao);
         }
 
+		public float getSceneDist(){
+			return Vector2.Distance(Min,Max);;
+		}
+
 		//Desenhando pontos delimitadores no momento de seleção do objeto para facilitar a vizualização do limites
 		void OnDrawGizmosSelected() {
 			if (target != null) {

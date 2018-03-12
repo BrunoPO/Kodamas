@@ -41,6 +41,7 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	private bool m_jump = false;
 	private bool m_atk = false;
 	private Vector2 m_arrow = Vector2.zero;
+	private float sceneDist = 20f;
 
 	void Start(){
 		m_seeker = GetComponent<Seeker>();
@@ -50,6 +51,8 @@ public class EnemyAI : MonoBehaviour, Joystick {
 		gm = GameObject.Find("GM").GetComponent<GMNet>();
 
 		StartCoroutine(PlayerIn());
+
+		sceneDist = Camera.main.GetComponent<Camera2DFollow>().getSceneDist();
 	}
 	IEnumerator PlayerIn(){
 		yield return new WaitForSeconds (5);
@@ -105,12 +108,12 @@ public class EnemyAI : MonoBehaviour, Joystick {
 
 		Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
 		
-		//Todo:Move
 		m_arrow.x = dir.x;
 		m_arrow.y = dir.x;
 		m_jump = (m_arrow.y > 0.3f);
 
 		float dist = Vector3.Distance(transform.position, target.position);
+		m_arrow.x *= Mathf.Abs(1 - (dist / sceneDist));//regula a intencidade da movimentação horizontal.
 
 		if(m_arrow.y < 0.3f && dist > distMax){
 			if(timerAtks > timeBtwnAtks*5){
@@ -126,8 +129,6 @@ public class EnemyAI : MonoBehaviour, Joystick {
 			m_atk=false;
 		}
 		timerAtks++;
-
-
 
 		dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
 		if(dist < nextWaypointDistance){
