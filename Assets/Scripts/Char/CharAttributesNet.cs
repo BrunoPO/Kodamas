@@ -193,6 +193,7 @@ namespace UnityStandardAssets._2D{
             m_Killed = newBool;
             //CmdCallDied(newBool);
             m_Anim.SetBool("Died", newBool);
+			GetComponent<PlatformerCharacter2D>().killed = newBool;
             //m_Anim.SetBool ("Died", newBool);
 			if (!newBool) {//se killed for falso reset a posição
 				gameObject.GetComponent<SpriteRenderer> ().enabled = false; 

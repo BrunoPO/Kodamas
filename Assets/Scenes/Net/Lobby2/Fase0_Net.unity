@@ -531,8 +531,8 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
 --- !u!114 &367777371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2319,7 +2319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1342065798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3075,7 +3075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACon+sXRgSvVgIAAN4EAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMziVjAwnQW0sI7SEhE9LpxZdFXmMNsuSR5ADJ8N+7kkXs0BPL26+3b1f+YELZGrnTZmVE/qhzZN8HzNvs24BB8L2AE5rglBBhdYXOCP5D7aSPTQhslCi0qZb5DhfaOktwAdIiuYx2PlsR9DFgR/oZzn3KiazR1FvvZM2TwZlMjsqh6ULnN3cx9C4GtnGN4hKqGvONeMcuPJ3F6DQNYYqmiRGeOtdSChu5MHeqw6ibukSDfthcAI0W+ic3oxEhJYpd6TzTfvq6KCy6OLqB070wJFJbl/3UrvTFKrD7ltkbyMZ3Gt/OJoFWW/Xxv4Bhy7owuvp1aZwmvokrBd+/wImDdT1t+/B9Rz4NCh1A7mEr8W+J6kmvjG5UTk5nGp/aWBzdd38/Z1uUyPcd3lK9Apu6k/yyyvRmOpul4/ndeDlMpnFZfqBz0OK4kKLaBmEnLbCROugfjgENbeo3sQ+nYmNdQj2lPxZfYde/qeh4EMY6csWRlee61Y3xoWwZBPSjNW6hjcIAxwlqVCDd6ZnKuOuFXvl6ba88D+BfTWwefZdHcZUS4C4+Sa5cz/rwuTlb6sMj2nLdOCkUdqS944l0Wmil2nuzX50+a9OYAngva9eI/OuZMcB5kULBp7djmKSzZLjdYppzmN4izNIJJCzcoVA0JsjnlmdUh5amuuKKbu7yuRisDNTh9HMDh5V4r3SPn1CF3nCDqNZthYtCFg01oUeaL3NB+mzQOaHCutlHxqTme8yzz0JZmHR5dAayrkrGavGmnUcytggfkYyd2fkfUEsDBBQAAAgIAACon+sSZ4bwbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz1DM00lFQSi9KLMgoBooYgjilmSkgdrRSYqplmmFiWrK5qXGiiaGFgW5SUqphSnKiuWlqooWhSaKBUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACon+sXRgSvVgIAAN4EAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACon+sSZ4bwbQAAAHgAAAAJACQAAAAAAAAAAAAAAKMCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAWwMAAAAA
+    dataString: UEsDBBQAAAgIAACon+vaUz9HVgIAAN8EAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlVE1z2jAQ/SuMziVjAwnQW0sI7SEhE9LpxZdFXmMNsuSR5ADJ8N+7kkXs0BPL26/3dlf+YELZGrnTZmVE/qhzZN8HzNvs24BB8L2AE5rglBBhdYXOCP5D7aSPTQhslCi0qZb5DhfaOktwAdIiuYx2PlsR9DFgR/oZzn3KiazR1FvvZM2TwZlMjsqh6ULnN3cx9C4GtnGN4hKqGvONeMcuPJ3F6DQNYYrUxAhPnWsphY1cmDvVQeqmLtGgF5sLIGmhf3IzGhFSotiVzjPtp6+LwqKL0g2c7oWhIbV12U/tSl+sArtvmb2BbHyn8e1sEmi1VR//Cxi2rAujq1+Xxmnim7hS8P0LnDhY15ttH77vyKdhQgeQe9hK/FuietIroxuVk9OZxqc2Fkf33d9PbYsS+b7DW6pXYFN3I7+sMr2ZzmbpeH43Xg6TaVyWF3QOszgupKi2YbCTFthIHeYfjgENbeo3sQ+nYmNdQj2lPxZfYde/qeh4EMY6ckXJynPd6sb4ULYMA/TSGrfQRmGAo4IaFUh3eqYy7nqhV75e2yvPA/hXE5tH3+VRXKUEuItPkivXsz58bs6W+vCItlw3TgqFHWnveKI5LbRS7b3Zr06ftWlMAbyXtWtE/vXMGOC8SKHg09sxTNJZMtxuMc05TG8RZukEEhbuUCiSCfK55RmnQ0tTXXFFN3f5XAxWBupw+rmBw0q8V7q/M6EKveEGUa3bEheHRUNd6JXmy1zQgDbonFBh3+wjY1LzPebZZ88sSF0enYGsq5KxWrxp55GMLcJXJGNndv4HUEsDBBQAAAgIAACon+sSZ4bwbQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz1DM00lFQSi9KLMgoBooYgjilmSkgdrRSYqplmmFiWrK5qXGiiaGFgW5SUqphSnKiuWlqooWhSaKBUixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACon+vaUz9HVgIAAN8EAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACon+sSZ4bwbQAAAHgAAAAJACQAAAAAAAAAAAAAAKMCAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAWwMAAAAA
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -3591,7 +3591,11 @@ Prefab:
     - target: {fileID: 224005334416968848, guid: 30b622b6540624d6f8d612e9ed2de0ed,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -490.9499
+      value: -563.2503
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642529372093202, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}

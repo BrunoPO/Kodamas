@@ -20,11 +20,12 @@ namespace Prototype.NetworkLobby
 		private InputField tfLife, tfStone;
 		[HideInInspector] public int m_quantStones = 1;
 		[HideInInspector] public int m_quantLife = 1;
-        [HideInInspector] public int m_partyType= 1;
+        [HideInInspector] public int m_partyType= 0;
         [HideInInspector] public int timeOfParty= 5;
 		[HideInInspector] public int m_tipoDeJogo = 0;
 		[HideInInspector] public int m_SceneNum = 0;
 		[HideInInspector] public int avatarIndex = 0;
+        [HideInInspector] public List<int> bots = new List<int>();
 
 		[HideInInspector] public LobbyTopPanel m_LobbyTopPanel ;
 
@@ -88,6 +89,9 @@ namespace Prototype.NetworkLobby
 
 
         void Start(){
+            //Teste Add 
+            bots.Add(1);
+
 			m_LobbyTopPanel = TopPanelGO.GetComponent<LobbyTopPanel>();
 			if(nameScenesToLoad.Length >0)
 				playScene = nameScenesToLoad[0];

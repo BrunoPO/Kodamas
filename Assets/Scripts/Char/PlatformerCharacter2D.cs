@@ -9,6 +9,8 @@ namespace UnityStandardAssets._2D{
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
 		[SerializeField] private int Team = 0; //which team the kodama is party of
 
+		
+		[HideInInspector] public bool killed = false;
 		[HideInInspector] public Vector3 IniPoint;
 		private LayerMask m_WhatIsGround;
 		private LayerMask m_WhatIsWall;
@@ -100,30 +102,13 @@ namespace UnityStandardAssets._2D{
 				collidersWall = Physics2D.OverlapCircleAll(m_CeilingCheck.position, k_GroundedRadius*1.1f, m_WhatIsWall);
 				if (collidersWall.Length < 1) {
 					collidersWall = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius*0.9f, m_WhatIsWall);
-					/*collidersWall = Physics2D.OverlapCircleAll (m_GroundCheck.position, k_GroundedRadius * 0.9f, m_WhatIsWallAndGround);
-					if(collidersWall.Length>1){
-						Boolean	OnGround=false;
-						foreach (Collider2D c in colliders) {
-							if (c.gameObject.tag == "Ground") {
-								Vector3 extension = c.bounds.extents;
-								if (c.bounds.center.y+extension.y < transform.position.y) {
-									if ((c.bounds.center.x-extension.x > transform.position.x)&&(c.bounds.center.x+extension.x < transform.position.x)) {
-										OnGround = true;
-										collidersWall = null;
-										break;
-									}
-								}
-							}
-						}
-					}*/
 				}
-                    //Ground
             }
 			m_OnWall = (collidersWall != null && (collidersWall.Length > 0));
 
             m_Anim.SetBool("Ground", m_Grounded);
 			//Verificar se o char está pisando em alguém
-            if (!m_Grounded) {
+            if (!m_Grounded && !killed) {
                 if (m_Rigidbody2D.velocity.y < 0) {
                     colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsPlayer);
                     foreach (Collider2D collider in colliders) {
@@ -139,24 +124,18 @@ namespace UnityStandardAssets._2D{
                         }
                     }
                 }
-            }/* else {
-                m_OnWall = false;
-            }*/
+            }
 
 
             m_Anim.SetBool("Wall", m_OnWall);
 
             Vector3 velo = m_Rigidbody2D.velocity;
+
             //Se passar do limite volte para -10
             if (velo.y < -15) {
                 velo.y = -10;
                 m_Rigidbody2D.velocity = velo;
             }
-
-            /*if ((m_Rigidbody2D.velocity.x < 0 && isFacingRight()) || (m_Rigidbody2D.velocity.x > 0 && !isFacingRight()))
-            {
-                InvertFacing();
-            }*/
 
             Quaternion rot = transform.rotation;
             if (rot.w!=0 || rot.w != 1) {
@@ -167,8 +146,6 @@ namespace UnityStandardAssets._2D{
                 {
                     rot = new Quaternion(0, 0, 0, 1);
                 }
-
-                //print(rot);
                 transform.rotation = rot;
             }
 
@@ -207,41 +184,15 @@ namespace UnityStandardAssets._2D{
 				jumping = false;
 			}
 
-
-
-			/*if (jump)
-               print("Pulando, JumpForce:" + m_JumpForce);
-            if (m_Grounded)
-                print("m_Grounded");
-            if (m_OnWall)
-                print("m_OnWall");*/
-            
-
             if (m_Grounded || m_AirControl){
 				m_Anim.SetFloat("Speed", Mathf.Abs(move));
-                //print(move);
-
-				if (m_Grounded && m_OnWall) {//Se estiver no chão e perto de um muro ande
+				
+				//Se estiver no chão e perto de um muro ande
+				if (m_Grounded && m_OnWall) {
 					m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
 
 				//Se tiver perto de um muro pulando (E não no chão)
 				} else if (m_OnWall && jump && !m_Grounded && IniPulo <= 1 && Mathf.Abs(move)>0.3f) {
-                    print("Tentou escalar");
-					//bool facingWalls = false;
-
-
-					//Procura se está olhando para o muro
-					/*for (int i = 0; i < collidersOnChest.Length; i++) {
-						if (move > 0.3f && collidersOnChest [i].transform.position.x - transform.position.x > 0) {
-							facingWalls = true;
-							break;
-						} else if (move < -0.3f && transform.position.x - collidersOnChest [i].transform.position.x > 0) {
-							facingWalls = true;
-							break;
-						}
-					}
-
-					if (facingWalls ) {//Se olhando para um muro e está pulando*/
 						m_Grounded = false;
 						m_Anim.SetBool ("Ground", false);
 
@@ -252,7 +203,6 @@ namespace UnityStandardAssets._2D{
 						}
                         IniPulo = 24;
                         return;
-					//}
 				}
 				//Se não voltou então passe a velocidade Horinzontal.
 				m_Rigidbody2D.velocity = new Vector2 (move * m_MaxSpeed, m_Rigidbody2D.velocity.y);
@@ -264,11 +214,6 @@ namespace UnityStandardAssets._2D{
 
 		private void Kill(int enemyhash){//Had Kill someone jumping on the head
 			gm.countKill(getHash(), enemyhash);
-			/*if (isNet)
-				m_GM.GetComponent<GMNet> ().countKill (getHash(), enemyhash);
-			//else
-				//m_Attributes.CmdKill();
-			*/
 		}
 
     	public void Killed(){//get Killed
@@ -295,10 +240,5 @@ namespace UnityStandardAssets._2D{
 		public void improvePlayer(int i){
 			timeOfImprovement = improvePlayerScript.perform(this.gameObject,i); 
 		}
-
-		
-
-
-        
     }
 }

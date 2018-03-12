@@ -7,11 +7,14 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	//What to chase?
 	public Transform target;
 	public GameObject targetGO;
-	public float distMin = 3f;
-	public float distMax = 7f;
-	public float timeBtwnAtks = 5;
+	private float distMin = 3f;
+	private float distMax = 7f;
+	private float timeBtwnAtks = 2f;
+	private float timeHoldingAtk = 1f;
+	private float distYMax  = 0.7f;
 
-	private float timerAtks=0;
+	private float timerHoldingAtk=0;
+	private float timerBtwnAtks=0;
 	private GMNet gm;
 
 	// How many secs is need to wait until recaculate the path
@@ -48,17 +51,36 @@ public class EnemyAI : MonoBehaviour, Joystick {
 		m_rb = GetComponent<Rigidbody>();
 
 		m_arrow.x = 1f;
+		if(GameObject.Find("GM"))
 		gm = GameObject.Find("GM").GetComponent<GMNet>();
 
 		StartCoroutine(PlayerIn());
 		GetComponent<Platformer2DUserControl>().setController(this);
 		sceneDist = Camera.main.GetComponent<Camera2DFollow>().getSceneDist();
 	}
-	IEnumerator PlayerIn(){
+
+	IEnumerator enemyAlive(){
+		if(target != null){
+			if(!targetGO.activeSelf){
+				target = null;
+			}
+		}
 		yield return new WaitForSeconds (3);
-		gm.PlayerIn (gameObject);
-		StartCoroutine(UpdatePath());
+		StartCoroutine(enemyAlive());
 	}
+	IEnumerator PlayerIn(){
+		yield return new WaitForSeconds (1);
+		if(gm == null){
+			gm = GameObject.Find("GM").GetComponent<GMNet>();
+			StartCoroutine(PlayerIn());
+		}else{
+			gm.PlayerIn (gameObject);
+			StartCoroutine(UpdatePath());
+			StartCoroutine(enemyAlive());
+		}
+		
+	}
+
 	IEnumerator UpdatePath(){
 		if(target == null){
 			searchTarget();
@@ -72,7 +94,10 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	}
 
 	private void searchTarget(){
-		target = gm.getEnemy(GetComponent<PlatformerCharacter2D>().getHash());
+		targetGO = gm.getEnemy(GetComponent<PlatformerCharacter2D>().getHash());
+		if(targetGO != null){
+			target = targetGO.transform;
+		}
 	}
 
 	public void OnPathComplete(Path p){
@@ -86,13 +111,11 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	}
 
 	public void FixedUpdate(){
-		if(target == null){
-			timerAtks=timeBtwnAtks;
-			return;
-		}
-
-		if(path == null){
-			timerAtks=timeBtwnAtks;
+		if(target == null || path == null){
+			timerBtwnAtks=timeBtwnAtks;
+			m_arrow = Vector2.zero;
+			m_jump = false;
+			m_atk = false;
 			return;
 		}
 
@@ -106,32 +129,42 @@ public class EnemyAI : MonoBehaviour, Joystick {
 		}
 		pathIsEnded = false;
 
-		Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-		
-		m_arrow.x = dir.x;
-		m_arrow.y = dir.x;
-		m_jump = (m_arrow.y > 0.3f);
-
-		float dist = Vector3.Distance(transform.position, target.position);
-		m_arrow.x *= Mathf.Abs(1 - (dist / sceneDist));//regula a intencidade da movimentação horizontal.
-
-		if(m_arrow.y < 0.3f && dist > distMax){
-			if(timerAtks > timeBtwnAtks*5){
-				m_atk = true;
-				timerAtks=0;
-			}
-		}else if(dist>distMin && dist <distMax){
-			if(timerAtks > timeBtwnAtks*5){
-				m_atk = true;
-				timerAtks=0;
-			}
+		Vector3 dir = new Vector3();
+		if(m_atk && timerHoldingAtk < timeHoldingAtk){
+			dir = (target.position - transform.position).normalized;
+			timerHoldingAtk+=Time.fixedDeltaTime;
+			timerBtwnAtks=0;
+			m_jump=false;
 		}else{
+			dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
 			m_atk=false;
+			timerBtwnAtks+=Time.fixedDeltaTime;
+			m_jump = (m_arrow.y > 0.3f);
 		}
-		timerAtks++;
 
-		dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
-		if(dist < nextWaypointDistance){
+		float dist3D = Vector3.Distance(transform.position, target.position);
+		m_arrow.y = dir.y;
+		m_arrow.x = dir.x;
+		m_arrow.x *= Mathf.Abs(1 - (dist3D / sceneDist));//regula a intencidade da movimentação horizontal.
+		
+
+		float distY = Mathf.Abs(transform.position.y - target.position.y);
+		if(!m_atk && timerBtwnAtks > timeBtwnAtks){
+			if(m_arrow.y < 0.3f && dist3D > distMax && distY < distYMax){
+				m_atk = true;
+				timerBtwnAtks=0;
+			}else if( dist3D>distMin && dist3D <distMax && distY < distYMax){
+				m_atk = true;
+				timerBtwnAtks=0;
+			}
+		}
+
+		if(!m_atk && dist3D<distMin){
+			m_jump=true;
+		}
+
+		dist3D = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+		if(dist3D < nextWaypointDistance){
 			currentWaypoint++;
 			return;
 		}
@@ -141,9 +174,7 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	}
 
 	public bool getAtk(){
-		bool m_auxAtk = m_atk;
-		m_atk = false;
-		return m_auxAtk;
+		return m_atk;
 	}
 	public bool getPulo(){
 		return m_jump;

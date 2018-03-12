@@ -167,24 +167,25 @@ namespace Prototype.NetworkLobby
 					if (controle == null)
 						return;
 				}
+                int c = avatarIndex;
+                if(controle.activeSelf){
+                    c = controle.GetComponent<ChooseChar> ().getChoosed ();
+                    if (c != avatarIndex) {
+                        AvatarPicker (c);
+                    }
+                }
 
-				int c = controle.GetComponent<ChooseChar> ().getChoosed ();
-
-				if (c != avatarIndex) {
-					AvatarPicker (c);
-				}
-
-				if (isServer) {
-					int s = m_LobbyManager.m_SceneNum;
-					if (s != m_SceneNum) {
-						print ("Scene"+s);
-						CmdChangeSceneNum (s);
+                if (isServer) {
+                    int s = m_LobbyManager.m_SceneNum;
+                    if (s != m_SceneNum) {
+                        print ("Scene"+s);
+                        CmdChangeSceneNum (s);
                         if (c != avatarIndex)
                         {
                             AvatarPicker(c);
                         }
                     }
-				}
+                }
 
 			} 
 

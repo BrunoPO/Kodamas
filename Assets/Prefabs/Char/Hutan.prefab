@@ -286,9 +286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   targetGO: {fileID: 0}
-  distMin: 1
-  distMax: 2
-  timeBtwnAtks: 30
   waitTillUpdate: 1
   speed: 300
   FMode: 0
@@ -346,6 +343,7 @@ MonoBehaviour:
   m_JumpForce: 550
   m_AirControl: 1
   Team: 1
+  killed: 0
   IniPoint: {x: 0, y: 0, z: 0}
   k_jumpWallForce: 37
 --- !u!114 &114132724146629616

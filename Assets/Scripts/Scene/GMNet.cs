@@ -65,13 +65,29 @@ namespace UnityStandardAssets._2D{
 
 				m_stones = my_inst.m_quantStones;
 				m_lifes = my_inst.m_quantLife;
-				partyType = my_inst.m_partyType;
+				partyType = 0;//my_inst.m_partyType;
 				timeOfParty = my_inst.timeOfParty;
 			}
 
 			partyUseTimer = (partyType == 1 || partyType == 2 || partyType == 4 || partyType == 5);
 			partyTeam = (partyType == 3 || partyType == 4 || partyType == 5);
 		}
+		void Start(){
+			AddBotChoosedFromUser();
+		}
+		
+		void AddBotChoosedFromUser(){
+			if(!isServer)
+				return;
+			List<int> Bots = my_inst.bots;
+			if(Bots.Count < 1){
+				StartCoroutine(AutoAddBot());
+			}
+			foreach(int bot in Bots){
+				this.AddBot(my_inst.spawnPrefabs[bot]);
+			}
+		}
+		
 
 		public void countKill (int killer, int killed){
 			Dictionary<string, string> killlerHistory = matchHistory[killer.ToString()];
@@ -195,23 +211,24 @@ namespace UnityStandardAssets._2D{
 		IEnumerator AutoAddBot(){
 			yield return new WaitForSeconds (5);
 			if(m_PlayersDicHashGO.Count<2){
-				
-				Transform SpawnsGO = GameObject.Find("Spawns").transform;
-				int children = SpawnsGO.childCount;
-
-				if(children>0){
-					int randomNum = Random.Range(0, children);
-					Vector3 posi = itemBoxSpawnPoints.transform.GetChild(randomNum).position;
-					GameObject inst = Instantiate (Bot,posi,new Quaternion(0, 0, 0, 0)) as GameObject;
-					inst.GetComponent<EnemyAI> ().enabled = true;
-					NetworkServer.Spawn (inst);
-					if(partyTeam){
-						timeOfParty = 0;
-						partyUseTimer = false;
-						partyTeam = false;
-					}
+				this.AddBot(Bot);
+				if(partyTeam){
+					timeOfParty = 0;
+					partyUseTimer = false;
+					partyTeam = false;
 				}
+			}
+		}
 
+		private void AddBot(GameObject go){
+			Transform SpawnsGO = GameObject.Find("Spawns").transform;
+			int children = SpawnsGO.childCount;
+			if(children>0){
+				int randomNum = Random.Range(0, children);
+				Vector3 posi = SpawnsGO.transform.GetChild(randomNum).position;
+				GameObject inst = Instantiate (go,posi,new Quaternion(0, 0, 0, 0)) as GameObject;
+				inst.GetComponent<EnemyAI> ().enabled = true;
+				NetworkServer.Spawn (inst);
 			}
 		}
 
@@ -219,10 +236,6 @@ namespace UnityStandardAssets._2D{
 			print ("PlayerIn"+ob);
 			if (!isServer || ob.tag != "Player") 
 				return;
-			
-			if(m_PlayersDicHashGO.Count == 0){
-				StartCoroutine(AutoAddBot());
-			}
 
 			EnemyAI ai = ob.GetComponent<EnemyAI>();
 			if((ai != null && ai.enabled) || m_PlayersDicHashGO.ContainsKey(""+ob.GetComponent<CharAttributesNet> ().getHash())){
@@ -415,7 +428,7 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
-		public Transform getEnemy(int hash){
+		public GameObject getEnemy(int hash){
 			GameObject go = m_PlayersDicHashGO[hash+""];
 			if(this.isTeamParty()){
 				int team = go.GetComponent<PlatformerCharacter2D>().getTeam();
@@ -446,11 +459,18 @@ namespace UnityStandardAssets._2D{
 				}
 				for(int i = myIndex;i>-1;i--){
 					if(Teams[enemyTeam].Count > i){
-						return m_PlayersDicHashGO[(Teams[enemyTeam][i])+""].transform;
+						return m_PlayersDicHashGO[(Teams[enemyTeam][i])+""];
 					}
 				}
 			}else{
-				string[] players = m_PlayersDicHashGO.Keys.ToArray();
+				//string[] playersAlive = m_PlayersDicHashGO.Keys.ToArray();
+				List<string> playersAlive = new List<string>();
+				foreach(KeyValuePair<GameObject, bool> player in m_PlayersDicAlive){
+					if(player.Value){
+						playersAlive.Add(player.Key.GetComponent<CharAttributesNet>().getHash()+"");
+					}
+				}
+				string[] players = playersAlive.ToArray();
 				string lastHash = "-1";
 				for(int i = 0;i<players.Length;i++){
 					if(lastHash == "-2"){
@@ -471,8 +491,8 @@ namespace UnityStandardAssets._2D{
 						lastHash = players[i];
 					}
 				}
-				if(lastHash != "-1" && lastHash != "-2"){
-					return m_PlayersDicHashGO[lastHash].transform;
+				if(lastHash != "-1" && lastHash != "-2" && lastHash != (hash+"")){
+					return m_PlayersDicHashGO[lastHash];
 				}
 			}
 			
