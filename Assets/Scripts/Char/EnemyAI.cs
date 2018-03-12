@@ -51,11 +51,11 @@ public class EnemyAI : MonoBehaviour, Joystick {
 		gm = GameObject.Find("GM").GetComponent<GMNet>();
 
 		StartCoroutine(PlayerIn());
-
+		GetComponent<Platformer2DUserControl>().setController(this);
 		sceneDist = Camera.main.GetComponent<Camera2DFollow>().getSceneDist();
 	}
 	IEnumerator PlayerIn(){
-		yield return new WaitForSeconds (5);
+		yield return new WaitForSeconds (3);
 		gm.PlayerIn (gameObject);
 		StartCoroutine(UpdatePath());
 	}

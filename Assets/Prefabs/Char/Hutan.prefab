@@ -22,7 +22,7 @@ GameObject:
   m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
-  m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 114129736212274810}
   - component: {fileID: 114510482162947874}
   - component: {fileID: 114048316101023268}
+  - component: {fileID: 114132724146629616}
+  - component: {fileID: 114028997463117634}
   m_Layer: 8
   m_Name: Hutan
   m_TagString: Player
@@ -95,7 +97,7 @@ GameObject:
   m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
-  m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -271,6 +273,29 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114028997463117634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1745564189404528}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10866c613cf294fe39d72388c0e16f21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetGO: {fileID: 0}
+  distMin: 1
+  distMax: 2
+  timeBtwnAtks: 30
+  waitTillUpdate: 1
+  speed: 300
+  FMode: 0
+  Commented: 0
+  pathIsEnded: 0
+  nextWaypointDistance: 3
+  currentWaypoint: 0
 --- !u!114 &114048316101023268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,7 +308,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onTestCell: 1
-  m_ControleVars: {fileID: 0}
   autoAttack: 0
   Commented: 0
 --- !u!114 &114051101790999512
@@ -324,6 +348,32 @@ MonoBehaviour:
   Team: 1
   IniPoint: {x: 0, y: 0, z: 0}
   k_jumpWallForce: 37
+--- !u!114 &114132724146629616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1745564189404528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask: -1
 --- !u!114 &114510482162947874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -342,6 +392,7 @@ MonoBehaviour:
   m_Losed: 0
   balls: 0
   life: 0
+  improved: 0
 --- !u!114 &114780781016806876
 MonoBehaviour:
   m_ObjectHideFlags: 1

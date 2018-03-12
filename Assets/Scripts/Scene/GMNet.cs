@@ -13,6 +13,7 @@ namespace UnityStandardAssets._2D{
 		[SerializeField] private GameObject itemBox;
 		[SerializeField] private GameObject itemBoxSpawnPoints;
 		[SerializeField] private float spawnItemTime = 0;
+		[SerializeField] private GameObject Bot;
 		public bool Commented = false;
 
 		[Header("As camadas de cada")]
@@ -24,6 +25,8 @@ namespace UnityStandardAssets._2D{
 		public Text m_StonesTxt;
 		public Text m_LifeTxt;
 		public Text m_WinTxt;
+
+
 
 		[HideInInspector] [SyncVar] public bool m_Reset=false;//Reset deprecated
 		List<GameObject> m_Players;
@@ -189,11 +192,38 @@ namespace UnityStandardAssets._2D{
 			hashWinner=-1;
 		}
 
+		IEnumerator AutoAddBot(){
+			yield return new WaitForSeconds (5);
+			if(m_PlayersDicHashGO.Count<2){
+				
+				Transform SpawnsGO = GameObject.Find("Spawns").transform;
+				int children = SpawnsGO.childCount;
+
+				if(children>0){
+					int randomNum = Random.Range(0, children);
+					Vector3 posi = itemBoxSpawnPoints.transform.GetChild(randomNum).position;
+					GameObject inst = Instantiate (Bot,posi,new Quaternion(0, 0, 0, 0)) as GameObject;
+					inst.GetComponent<EnemyAI> ().enabled = true;
+					NetworkServer.Spawn (inst);
+					if(partyTeam){
+						timeOfParty = 0;
+						partyUseTimer = false;
+						partyTeam = false;
+					}
+				}
+
+			}
+		}
+
 		public void PlayerIn(GameObject ob){
 			print ("PlayerIn"+ob);
 			if (!isServer || ob.tag != "Player") 
 				return;
 			
+			if(m_PlayersDicHashGO.Count == 0){
+				StartCoroutine(AutoAddBot());
+			}
+
 			EnemyAI ai = ob.GetComponent<EnemyAI>();
 			if((ai != null && ai.enabled) || m_PlayersDicHashGO.ContainsKey(""+ob.GetComponent<CharAttributesNet> ().getHash())){
 				int randomNum = Random.Range(100, 200) ;

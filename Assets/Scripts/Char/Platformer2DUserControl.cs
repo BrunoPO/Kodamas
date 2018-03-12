@@ -45,14 +45,10 @@ namespace UnityStandardAssets._2D
 
 			SoulStone = m_CharAttribute.getSoulStone();
 
-			m_ControleVars = GetComponent<EnemyAI>();
-
-			if(m_ControleVars == null){
-				GameObject m_Controle= GameObject.Find ("Controle");
-				if (m_Controle != null)
-				{
-					m_ControleVars = m_Controle.GetComponent<ControleVars>();
-				}
+			GameObject m_Controle= GameObject.Find ("Controle");
+			if (m_Controle != null)
+			{
+				m_ControleVars = m_Controle.GetComponent<ControleVars>();
 			}
 
             float k_jumpWallForce = GetComponent<PlatformerCharacter2D>().k_jumpWallForce;
@@ -65,6 +61,10 @@ namespace UnityStandardAssets._2D
             }
             GetComponent<PlatformerCharacter2D>().k_jumpWallForce = k_jumpWallForce;
         }
+
+		public void setController(Joystick j){
+			m_ControleVars = j;
+		}
 
         private void Update() {
 			if (!init) {
