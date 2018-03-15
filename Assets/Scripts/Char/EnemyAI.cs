@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	public Transform targetSec;
 	private float distYMin = 2f;
 	private float distXMin = 2f;
-	private float distMax = 7f;
+	private float distXMax = 5f;
 	private float timeBtwnAtks = 2f;
 	private float timeHoldingAtk = 1f;
 	private float distYMax  = 0.7f;
@@ -47,7 +47,7 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	private bool m_atk = false;
 	private Vector2 m_arrow = Vector2.zero;
 	private float sceneDist = 20f;
-	private bool isTaggingTargetMain = true;
+	public bool isTaggingTargetMain = true;
 
 	void Start(){
 		m_seeker = GetComponent<Seeker>();
@@ -161,13 +161,18 @@ public class EnemyAI : MonoBehaviour, Joystick {
 
 		float distY = Mathf.Abs(transform.position.y - target.position.y);
 		if(!m_atk && timerBtwnAtks > timeBtwnAtks){
-			if(m_arrow.y < 0.3f && dist3D > distMax && distY < distYMax){
+			if(m_arrow.y < 0.3f && dist3D > distXMax && distY < distYMax){
 				m_atk = true;
 				timerBtwnAtks=0;
-			}else if( dist3D>distXMin && dist3D <distMax && distY < distYMax){
+			}else if( dist3D>distXMin && dist3D <distXMax && distY < distYMax){
 				m_atk = true;
 				timerBtwnAtks=0;
 			}
+		}
+
+		isTaggingTargetMain = true;
+		if(targetSec == null && dist3D>distXMax*1.2f){
+			targetSec = gm.randomAvailablePoint("All");
 		}
 
 		if(!m_atk && dist3D<distXMin){

@@ -78,7 +78,7 @@ namespace UnityStandardAssets._2D{
 			AddBotChoosedFromUser();
 		}
 
-		Transform randomAvailablePoint(string type){
+		public Transform randomAvailablePoint(string type){
 			int children = 0;
 			int m_type = 0;
 			float radius = 3f;
@@ -267,7 +267,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		IEnumerator AutoAddBot(){
-			yield return new WaitForSeconds (1);
+			yield return new WaitForSeconds (2);
 			if(m_PlayersDicHashGO.Count<2){
 				this.AddBot(Bot);
 				if(partyTeam){

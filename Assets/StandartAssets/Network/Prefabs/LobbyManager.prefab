@@ -1638,9 +1638,12 @@ MonoBehaviour:
   Btn_ChooseScene: {fileID: 114982961195699264}
   m_quantStones: 2
   m_quantLife: 2
+  m_partyType: 0
+  timeOfParty: 5
   m_tipoDeJogo: 0
   m_SceneNum: 0
   avatarIndex: 0
+  bots: 
   m_LobbyTopPanel: {fileID: 0}
   prematchCountdown: 0
   topPanel: {fileID: 11424994}

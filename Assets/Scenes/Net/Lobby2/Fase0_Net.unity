@@ -487,6 +487,8 @@ MonoBehaviour:
   m_StonesTxt: {fileID: 2070849077}
   m_LifeTxt: {fileID: 2070849076}
   m_WinTxt: {fileID: 2070849075}
+  SpawnsGO: {fileID: 1208792437}
+  SpawnsItem: {fileID: 1678171780}
   m_Reset: 0
 --- !u!4 &367777369
 Transform:
@@ -2319,7 +2321,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1342065798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3591,7 +3593,7 @@ Prefab:
     - target: {fileID: 224005334416968848, guid: 30b622b6540624d6f8d612e9ed2de0ed,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -563.2503
+      value: -663.4165
       objectReference: {fileID: 0}
     - target: {fileID: 1642529372093202, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
       propertyPath: m_IsActive
