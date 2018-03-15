@@ -202,7 +202,7 @@ namespace UnityStandardAssets._2D{
 				wasKilled = true;
 				CmdLifeMinus ();
 				balls = ballsIni;
-			} else {
+			} else if(isLocalPlayer){
 				#if UNITY_ANDROID || UNITY_IOS
 				Handheld.Vibrate();
 				#endif

@@ -26,7 +26,9 @@ namespace UnityStandardAssets._2D{
 		public Text m_LifeTxt;
 		public Text m_WinTxt;
 
-
+		[Header("Tranforms dos Spawn points")]
+		public Transform SpawnsGO;
+		public Transform SpawnsItem;
 
 		[HideInInspector] [SyncVar] public bool m_Reset=false;//Reset deprecated
 		List<GameObject> m_Players;
@@ -75,13 +77,67 @@ namespace UnityStandardAssets._2D{
 		void Start(){
 			AddBotChoosedFromUser();
 		}
+
+		Transform randomAvailablePoint(string type){
+			int children = 0;
+			int m_type = 0;
+			float radius = 3f;
+			Transform retorno = null;
+
+			if(type == "Player"){
+				children = SpawnsGO.childCount;
+				m_type = 1;
+			}else if(type == "Item"){
+				children = SpawnsItem.childCount;
+				m_type = 2;
+			}else{
+				children = SpawnsItem.childCount + SpawnsGO.childCount;
+			}
+
+			if(children == 0){
+				return retorno;
+			}
+			List<int> nums = Enumerable.Range(0,children-1).ToList();
+			while(retorno == null){
+				int range = nums.Count;
+				if(range <= 0){
+					break;
+				}
+				int index = Random.Range(0, range);
+				int num = nums[index];
+				Transform point = null;
+				if(m_type == 1 ){
+					point = SpawnsGO.GetChild(num);
+				}else if(m_type == 2){
+					point = SpawnsItem.GetChild(num);
+				}else if(num < SpawnsGO.childCount){
+					point = SpawnsGO.GetChild(num);
+				}else{
+					num = num - SpawnsGO.childCount;
+					point = SpawnsItem.GetChild(num);
+				}
+
+				if(point == null){
+					return point;
+				}
+				
+				Collider2D c = Physics2D.OverlapCircle(point.position, radius,whatIsPlayer);
+				if(c == null){
+					retorno = point;
+				}else{
+					nums.RemoveAt(index);
+				}
+
+			}
+			return retorno;
+		}
 		
 		void AddBotChoosedFromUser(){
 			if(!isServer)
 				return;
 			List<int> Bots = new List<int>();
 			if(my_inst != null)	
-				Bots =my_inst.bots;
+				Bots=my_inst.bots;
 			if(Bots.Count < 1){
 				StartCoroutine(AutoAddBot());
 			}
@@ -211,7 +267,7 @@ namespace UnityStandardAssets._2D{
 		}
 
 		IEnumerator AutoAddBot(){
-			yield return new WaitForSeconds (5);
+			yield return new WaitForSeconds (1);
 			if(m_PlayersDicHashGO.Count<2){
 				this.AddBot(Bot);
 				if(partyTeam){
@@ -223,12 +279,9 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void AddBot(GameObject go){
-			Transform SpawnsGO = GameObject.Find("Spawns").transform;
-			int children = SpawnsGO.childCount;
-			if(children>0){
-				int randomNum = Random.Range(0, children);
-				Vector3 posi = SpawnsGO.transform.GetChild(randomNum).position;
-				GameObject inst = Instantiate (go,posi,new Quaternion(0, 0, 0, 0)) as GameObject;
+			Transform t = randomAvailablePoint("Player");
+			if(t != null){
+				GameObject inst = Instantiate (go,t.position,new Quaternion(0, 0, 0, 0)) as GameObject;
 				inst.GetComponent<EnemyAI> ().enabled = true;
 				NetworkServer.Spawn (inst);
 			}

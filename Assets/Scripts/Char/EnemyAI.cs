@@ -7,7 +7,9 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	//What to chase?
 	public Transform target;
 	public GameObject targetGO;
-	private float distMin = 3f;
+	public Transform targetSec;
+	private float distYMin = 2f;
+	private float distXMin = 2f;
 	private float distMax = 7f;
 	private float timeBtwnAtks = 2f;
 	private float timeHoldingAtk = 1f;
@@ -45,6 +47,7 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	private bool m_atk = false;
 	private Vector2 m_arrow = Vector2.zero;
 	private float sceneDist = 20f;
+	private bool isTaggingTargetMain = true;
 
 	void Start(){
 		m_seeker = GetComponent<Seeker>();
@@ -86,7 +89,10 @@ public class EnemyAI : MonoBehaviour, Joystick {
 			searchTarget();
 		}else{
 			//Start a new path to the target position, return the result to OnPathComplete method
-			m_seeker.StartPath (transform.position,target.position,OnPathComplete);
+			if(isTaggingTargetMain)
+				m_seeker.StartPath (transform.position,target.position,OnPathComplete);
+			else if(targetSec != null)
+				m_seeker.StartPath (transform.position,targetSec.position,OnPathComplete);
 		}
 
 		yield return new WaitForSeconds (waitTillUpdate);
@@ -123,6 +129,8 @@ public class EnemyAI : MonoBehaviour, Joystick {
 			if(pathIsEnded)
 				return;
 
+			isTaggingTargetMain=true;
+			targetSec = null;
 			if(Commented) Debug.Log("End of path reached");
 			pathIsEnded = true;
 			return;
@@ -130,21 +138,24 @@ public class EnemyAI : MonoBehaviour, Joystick {
 		pathIsEnded = false;
 
 		Vector3 dir = new Vector3();
+		Vector3 dirNormalized = new Vector3();
 		if(m_atk && timerHoldingAtk < timeHoldingAtk){
 			dir = (target.position - transform.position).normalized;
 			timerHoldingAtk+=Time.fixedDeltaTime;
 			timerBtwnAtks=0;
 			m_jump=false;
 		}else{
-			dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+			dir = (path.vectorPath[currentWaypoint] - transform.position);
+			dirNormalized = dir.normalized;
 			m_atk=false;
 			timerBtwnAtks+=Time.fixedDeltaTime;
+			if(dir.y > distYMin)
 			m_jump = (m_arrow.y > 0.3f);
 		}
 
 		float dist3D = Vector3.Distance(transform.position, target.position);
-		m_arrow.y = dir.y;
-		m_arrow.x = dir.x;
+		m_arrow.y = dirNormalized.y;
+		m_arrow.x = dirNormalized.x;
 		m_arrow.x *= Mathf.Abs(1 - (dist3D / sceneDist));//regula a intencidade da movimentação horizontal.
 		
 
@@ -153,15 +164,22 @@ public class EnemyAI : MonoBehaviour, Joystick {
 			if(m_arrow.y < 0.3f && dist3D > distMax && distY < distYMax){
 				m_atk = true;
 				timerBtwnAtks=0;
-			}else if( dist3D>distMin && dist3D <distMax && distY < distYMax){
+			}else if( dist3D>distXMin && dist3D <distMax && distY < distYMax){
 				m_atk = true;
 				timerBtwnAtks=0;
 			}
 		}
 
-		if(!m_atk && dist3D<distMin){
+		if(!m_atk && dist3D<distXMin){
 			m_jump=true;
+		}else if(targetSec != null){
+			float distSec = Vector3.Distance(transform.position, targetSec.position);
+			if((distSec/dist3D)<=0.7f){
+				isTaggingTargetMain = false;
+			}
 		}
+
+
 
 		dist3D = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
 		if(dist3D < nextWaypointDistance){
