@@ -9,16 +9,13 @@ namespace UnityStandardAssets._2D
 
         public bool onTestCell = false;
         public Joystick m_ControleVars;
-		[SerializeField] private bool autoAttack = false;
 		[SerializeField] private bool Commented = false;
-
-
+		
         private PlatformerCharacter2D m_Character;
 		private bool m_Jump,atck;
 		private Transform t_stone;
 		private GameObject go_stone;
 		private Vector3 lastParamBall;//(v,h,rotation)
-		private int autoAttackCounter=20;
 		private CharAttributesNet m_AttributesNet;
 		private CharAttributesBase m_CharAttribute;
 		private bool isNet = false;
@@ -87,17 +84,6 @@ namespace UnityStandardAssets._2D
 					m_Jump = m_ControleVars.getPulo ();
 				}
 				atck = m_ControleVars.getAtk ();
-			}
-
-			//Ataca se estiver no automatico
-			if (autoAttack && !atck && autoAttackCounter>=100) {
-				autoAttackCounter = 0;
-				atck = true;
-				m_Jump = false;h = 0;v = 0;
-			} else if(autoAttack){
-				atck = false;
-				autoAttackCounter++;
-				m_Jump = false;h = 0;v = 0;
 			}
 
 
