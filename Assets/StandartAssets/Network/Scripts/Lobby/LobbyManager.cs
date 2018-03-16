@@ -25,7 +25,7 @@ namespace Prototype.NetworkLobby
 		[HideInInspector] public int m_tipoDeJogo = 0;
 		[HideInInspector] public int m_SceneNum = 0;
 		[HideInInspector] public int avatarIndex = 0;
-        [HideInInspector] public List<int> bots = new List<int>();
+        [HideInInspector] public List<int[]> bots = new List<int[]>();
 
 		[HideInInspector] public LobbyTopPanel m_LobbyTopPanel ;
 
@@ -89,8 +89,9 @@ namespace Prototype.NetworkLobby
 
 
         void Start(){
-            //Teste Add 
-            bots.Add(1);
+            //Add a random Enemy and it is a random type
+            int[] i = {Random.Range(0,2),Random.Range(0,botType.Length())};
+            bots.Add(i);
 
 			m_LobbyTopPanel = TopPanelGO.GetComponent<LobbyTopPanel>();
 			if(nameScenesToLoad.Length >0)

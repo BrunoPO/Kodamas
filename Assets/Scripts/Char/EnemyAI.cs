@@ -8,46 +8,56 @@ public class EnemyAI : MonoBehaviour, Joystick {
 	public Transform target;
 	public GameObject targetGO;
 	public Transform targetSec;
-	private float distYMin = 2f;
-	private float distXMin = 2f;
-	private float distXMax = 5f;
+
+	public int typeOfBot = 0;
+
+	private Vector2 distMin = new Vector2(1f,1f);
+	private Vector2 distMax = new Vector2(5f,3f);
 	private float timeBtwnAtks = 2f;
 	private float timeHoldingAtk = 1f;
-	private float distYMax  = 0.7f;
-
+	private bool ignoreSec = false;
+	private bool searchRandomPoints = true;
+	
 	private float timerHoldingAtk=0;
 	private float timerBtwnAtks=0;
 	private GMNet gm;
 
 	// How many secs is need to wait until recaculate the path
-	public float waitTillUpdate = 1f;
+	private float waitTillUpdate = 1f;
 
 	//Caching
 	private Seeker m_seeker;
 	private Rigidbody m_rb;
 
 	//The calculated path
-	public Path path;
-
-	//The Ai's speed per sec
-	public float speed = 300f;
-	public ForceMode2D FMode;
+	private Path path;
 
 	public bool Commented = false;
 
 	[HideInInspector]
-	public bool pathIsEnded = false;
+	private bool pathIsEnded = false;
 
 	//The max distance from the AI to a waypoint for it to continue to the next waypoint
-	public float nextWaypointDistance = 3f;
+	private float nextWaypointDistance = 3f;
 
-	public int currentWaypoint = 0;
+	private int currentWaypoint = 0;
 
 	private bool m_jump = false;
 	private bool m_atk = false;
 	private Vector2 m_arrow = Vector2.zero;
 	private float sceneDist = 20f;
-	public bool isTaggingTargetMain = true;
+	private bool isTaggingTargetMain = true;
+
+	public void setBotType(int c){
+		botConfig botConfig = botType.getBotByType(c);
+		this.distMin = botConfig.distMin;
+		this.distMax = botConfig.distMax;;
+		this. timeBtwnAtks = botConfig.timeBtwnAtks;
+		this.timeHoldingAtk = botConfig.timeHoldingAtk;
+		this.ignoreSec = botConfig.ignoreSec;
+		this.searchRandomPoints = botConfig.searchRandomPoints;
+		typeOfBot = c;
+	}
 
 	void Start(){
 		m_seeker = GetComponent<Seeker>();
@@ -139,55 +149,55 @@ public class EnemyAI : MonoBehaviour, Joystick {
 
 		Vector3 dir = new Vector3();
 		Vector3 dirNormalized = new Vector3();
-		if(m_atk && timerHoldingAtk < timeHoldingAtk){
+		float distFromTarget = Vector3.Distance(transform.position, target.position);
+		float intecityFromDistance = Mathf.Abs(1 - (distFromTarget / sceneDist));
+
+		if(m_atk && timerHoldingAtk < timeHoldingAtk*(2 - intecityFromDistance)){//Quando estiver atirando mire no target
 			dir = (target.position - transform.position).normalized;
 			timerHoldingAtk+=Time.fixedDeltaTime;
 			timerBtwnAtks=0;
 			m_jump=false;
-		}else{
+		}else{//se não direcione-se para o proximo ponto
 			dir = (path.vectorPath[currentWaypoint] - transform.position);
 			dirNormalized = dir.normalized;
 			m_atk=false;
 			timerBtwnAtks+=Time.fixedDeltaTime;
-			if(dir.y > distYMin)
-			m_jump = (m_arrow.y > 0.3f);
+			if(dir.y > distMin.y && dir.y < distMax.y)
+				m_jump = true;
 		}
-
-		float dist3D = Vector3.Distance(transform.position, target.position);
 		m_arrow.y = dirNormalized.y;
 		m_arrow.x = dirNormalized.x;
-		m_arrow.x *= Mathf.Abs(1 - (dist3D / sceneDist));//regula a intencidade da movimentação horizontal.
+		m_arrow.x *= intecityFromDistance;//regula a intencidade da movimentação horizontal.
 		
 
-		float distY = Mathf.Abs(transform.position.y - target.position.y);
+		float distFromTargetOnY = Mathf.Abs(transform.position.y - target.position.y);
 		if(!m_atk && timerBtwnAtks > timeBtwnAtks){
-			if(m_arrow.y < 0.3f && dist3D > distXMax && distY < distYMax){
+			if(m_arrow.y < 0.3f && distFromTarget > distMax.x && distFromTargetOnY < distMax.y){
 				m_atk = true;
 				timerBtwnAtks=0;
-			}else if( dist3D>distXMin && dist3D <distXMax && distY < distYMax){
+			}else if( distFromTarget>distMin.x && distFromTarget <distMax.x && distFromTargetOnY < distMax.y){
 				m_atk = true;
 				timerBtwnAtks=0;
 			}
 		}
 
 		isTaggingTargetMain = true;
-		if(targetSec == null && dist3D>distXMax*1.2f){
+		if(searchRandomPoints && targetSec == null && distFromTarget>distMax.x*1.2f){
 			targetSec = gm.randomAvailablePoint("All");
 		}
 
-		if(!m_atk && dist3D<distXMin){
-			m_jump=true;
+		if(!m_atk && distFromTarget<distMin.x){
+			m_jump = true;
 		}else if(targetSec != null){
 			float distSec = Vector3.Distance(transform.position, targetSec.position);
-			if((distSec/dist3D)<=0.7f){
+			if(!ignoreSec && (distSec/distFromTarget)<=0.7f){
 				isTaggingTargetMain = false;
 			}
 		}
 
-
-
-		dist3D = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
-		if(dist3D < nextWaypointDistance){
+		
+		float distFromPoint = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+		if(distFromPoint < nextWaypointDistance){
 			currentWaypoint++;
 			return;
 		}
@@ -195,12 +205,29 @@ public class EnemyAI : MonoBehaviour, Joystick {
 
 
 	}
+	private void OnDrawGizmosSelected() {
+		Gizmos.color = Color.blue;
+		Vector3 IniX = transform.position;
+		IniX.x += distMin.x;
+		Vector3 FimX = transform.position;
+		FimX.x += distMax.x;
+		Gizmos.DrawLine(IniX, FimX);
+
+		Gizmos.color = Color.green;
+		Vector3 IniY = transform.position;
+		IniY.y += distMin.y;
+		Vector3 FimY = transform.position;
+		FimY.y += distMax.y;
+		Gizmos.DrawLine(IniY, FimY);
+    }
 
 	public bool getAtk(){
 		return m_atk;
 	}
 	public bool getPulo(){
-		return m_jump;
+		bool auxJump = m_jump;
+		m_jump = false;
+		return auxJump;
 	}
 	public float getHorizontal(){
 		return m_arrow.x;

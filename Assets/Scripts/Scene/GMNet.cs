@@ -135,14 +135,18 @@ namespace UnityStandardAssets._2D{
 		void AddBotChoosedFromUser(){
 			if(!isServer)
 				return;
-			List<int> Bots = new List<int>();
+			List<int[]> Bots = new List<int[]>();
 			if(my_inst != null)	
 				Bots=my_inst.bots;
 			if(Bots.Count < 1){
 				StartCoroutine(AutoAddBot());
 			}
-			foreach(int bot in Bots){
-				this.AddBot(my_inst.spawnPrefabs[bot]);
+			foreach(int[] bot in Bots){
+				int botType = 0;
+				if(bot.Length > 1){
+					botType = bot[1];
+				}
+				this.AddBot(my_inst.spawnPrefabs[bot[0]],botType);
 			}
 		}
 		
@@ -253,8 +257,7 @@ namespace UnityStandardAssets._2D{
 			if(children <= 0)
 				return;
 
-			int randomNum = Random.Range(0, children) ;
-			Vector3 posi = itemBoxSpawnPoints.transform.GetChild(randomNum).position;
+			Vector3 posi = randomAvailablePoint("Item").position;
 			posi.z = 0;
 			int randomItemType = Random.Range(0, improvePlayer.getImproves() - 1);
 			GameObject inst = Instantiate (itemBox,posi,rotation) as GameObject;
@@ -269,7 +272,8 @@ namespace UnityStandardAssets._2D{
 		IEnumerator AutoAddBot(){
 			yield return new WaitForSeconds (2);
 			if(m_PlayersDicHashGO.Count<2){
-				this.AddBot(Bot);
+				int randomBotType = Random.Range(0,botType.Length()-1);
+				this.AddBot(Bot,randomBotType);
 				if(partyTeam){
 					timeOfParty = 0;
 					partyUseTimer = false;
@@ -278,11 +282,12 @@ namespace UnityStandardAssets._2D{
 			}
 		}
 
-		private void AddBot(GameObject go){
+		private void AddBot(GameObject go, int botType){
 			Transform t = randomAvailablePoint("Player");
 			if(t != null){
 				GameObject inst = Instantiate (go,t.position,new Quaternion(0, 0, 0, 0)) as GameObject;
 				inst.GetComponent<EnemyAI> ().enabled = true;
+				inst.GetComponent<EnemyAI> ().setBotType(botType);
 				NetworkServer.Spawn (inst);
 			}
 		}
