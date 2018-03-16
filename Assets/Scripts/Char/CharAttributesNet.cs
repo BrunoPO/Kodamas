@@ -32,6 +32,8 @@ namespace UnityStandardAssets._2D{
 		private bool isTeamParty = false;
 		private int myHash = -1;
 		private EnemyAI ai;
+		private float timeInviciAfterBeBorn = 3f;
+		private float timerAfterBeBorn = 0;
 
 		private void Start(){
 			m_PlatChar2D = GetComponent<PlatformerCharacter2D> ();
@@ -91,6 +93,10 @@ namespace UnityStandardAssets._2D{
 				if (m_GM.GetComponent<GMNet> ().getEnded ()) {
 					endOfMatch ();
 				}
+			}
+
+			if(isServer){
+				timerAfterBeBorn += Time.fixedDeltaTime;
 			}
 
 		}
@@ -328,6 +334,9 @@ namespace UnityStandardAssets._2D{
 
 		[Command] public void CmdKilled(){
 			//print("Was Killed");
+			if(timerAfterBeBorn <= timeInviciAfterBeBorn)
+				return;
+			timerAfterBeBorn = 0;
 			m_Killed = true;
 		}
 
