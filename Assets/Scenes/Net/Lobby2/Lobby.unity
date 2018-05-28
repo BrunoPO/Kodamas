@@ -450,9 +450,8 @@ MonoBehaviour:
   lobbySlots: []
   nameScenesToLoad:
   - Scene_Morning
-  - Fase_Tarde
+  - Scene_Afternoon
   - Fase_Noite
-  - Fase_Dia
   TopPanelGO: {fileID: 1839846920}
   partyAttributes: {fileID: 342318135}
   Btn_ChooseScene: {fileID: 1868529208}
@@ -1776,18 +1775,14 @@ RectTransform:
 --- !u!114 &234051325
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114998727302055970, guid: c0978251ff7b10d4fb954a4b56acd9f0,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 234051323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d17c9f1a79cf43479d9ac49a7e77a12, type: 3}
+  m_Script: {fileID: 11500000, guid: 34d241b26dfc94a98af99ffd720a9280, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoText: {fileID: 0}
-  buttonText: {fileID: 0}
-  singleButton: {fileID: 0}
 --- !u!114 &234051326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8711,7 +8706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1612816108
 RectTransform:
   m_ObjectHideFlags: 0
