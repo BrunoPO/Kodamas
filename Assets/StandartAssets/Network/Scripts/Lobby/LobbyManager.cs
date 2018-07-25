@@ -86,7 +86,11 @@ namespace Prototype.NetworkLobby
 				playScene = nameScenesToLoad [s];
 			}
 		}
-
+        
+        public string IPAddress(){
+            string ip = Network.player.ipAddress;
+            return ip;
+        }
 
         void Start(){
             //Add a random Enemy and it is a random type

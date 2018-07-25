@@ -1,28 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
+using Prototype.NetworkLobby;
 
-public class ExibirIP : NetworkBehaviour {
+public class ExibirIP : MonoBehaviour {
 	string meuip;
 	void Start() {
-		meuip = Network.player.ipAddress;
+		AlterIp();
+	}
+	private void AlterIp(){
+		
+		GameObject Lobby = GameObject.Find("LobbyManager");
+		if(Lobby == null){
+			return;
+		}
+		meuip = Lobby.GetComponent<LobbyManager>().IPAddress();
+		if (meuip != "0.0.0.0") {
+			transform.GetChild (2).gameObject.SetActive(true);
+			string converted = Convert.IPToHash(meuip);
+			transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = converted;
+			print(Convert.HashToIP(converted));
+			transform.GetChild (2).gameObject.GetComponent<QRCodeGnrtTexture> ().generateQR (converted);
+			this.enabled = false;
+		}
 	}
 	void Update(){
-		meuip = Network.player.ipAddress;
-		if (meuip != "0.0.0.0") {
-
-			transform.GetChild (2).gameObject.SetActive(true);
-            //print (transform.GetChild (0));
-                string converted = Convert.IPToHash(meuip);
-                transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = converted;
-                print(Convert.HashToIP(converted));
-
-
-			transform.GetChild (2).gameObject.GetComponent<QRCodeGnrtTexture> ().generateQR (converted);
-
-                this.enabled = false;
-		}
+		AlterIp();
     }
 }
