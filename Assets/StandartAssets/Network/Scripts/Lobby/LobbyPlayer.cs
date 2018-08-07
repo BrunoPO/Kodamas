@@ -101,7 +101,11 @@ namespace Prototype.NetworkLobby
 		}
 		public void Start(){
 			OnMyChar (avatarIndex);
-		}
+            string localIP = "";
+
+            if (isServer)
+                 m_LobbyManager.setIP();
+        }
 
         public override void OnStartAuthority()
         {

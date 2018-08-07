@@ -15,8 +15,8 @@ public class ExibirIP : MonoBehaviour {
 		if(Lobby == null){
 			return;
 		}
-		meuip = Lobby.GetComponent<LobbyManager>().IPAddress();
-		if (meuip != "0.0.0.0") {
+		meuip = Lobby.GetComponent<LobbyManager>().getIP();
+		if (meuip != "0.0.0.0" && meuip != "") {
 			transform.GetChild (2).gameObject.SetActive(true);
 			string converted = Convert.IPToHash(meuip);
 			transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = converted;

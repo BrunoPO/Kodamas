@@ -5,5 +5,5 @@ public interface CharAttributesBase {
 	bool gainBall();
 	bool isFacingRight();
 	int getBall();
-	void CmdSpwnBall(Vector3 posi,Quaternion rotation,int hash,int hashTeam);
+	void FireBall(Vector3 posi,Quaternion rotation,int hash,int hashTeam);
 }

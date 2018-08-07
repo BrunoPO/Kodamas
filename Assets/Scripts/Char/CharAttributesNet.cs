@@ -360,23 +360,30 @@ namespace UnityStandardAssets._2D{
 
         }
 
-		[Command] private void CmdInvertFlip(bool facing){
+        [Command]
+        private void CmdInvertFlip(bool facing){
 			m_FacingRight = facing;
 		}
 
-		[Command] public void CmdSpwnBall(Vector3 posi,Quaternion rotation,int hash,int hashTeam){
-			
-			GameObject inst = Instantiate (SoulStone,posi,rotation) as GameObject;
-			inst.GetComponent<Stone> ().enabled = true;
-			GetComponent<CharAttributesNet>().CmdBallsMinus();
-			inst.GetComponent<Stone>().Fire (improved,hash,hashTeam);
-			NetworkServer.Spawn (inst);
+        public void FireBall(Vector3 posi, Quaternion rotation, int hash, int hashTeam)
+        {
+            CmdSpwnBall(posi, rotation, hash, hashTeam);
+        }
 
-			GameObject inst2 = Instantiate (inst.GetComponent<Stone>().effect,posi,rotation) as GameObject;
-			inst2.name = "Effect";
-			NetworkServer.Spawn (inst2);
-			inst2.GetComponent<Animator> ().SetBool ("Fired", true);
-		}
+        [Command]
+        private void CmdSpwnBall(Vector3 posi,Quaternion rotation, int hash, int hashTeam)
+        {
+            GameObject inst = Instantiate(SoulStone, posi, rotation) as GameObject;
+            inst.GetComponent<Stone>().enabled = true;
+            GetComponent<CharAttributesNet>().CmdBallsMinus();
+            inst.GetComponent<Stone>().Fire(improved, hash, hashTeam);
+            NetworkServer.Spawn(inst);
+
+            GameObject inst2 = Instantiate(inst.GetComponent<Stone>().effect, posi, rotation) as GameObject;
+            inst2.name = "Effect";
+            NetworkServer.Spawn(inst2);
+            inst2.GetComponent<Animator>().SetBool("Fired", true);
+        }
 
 	}
 }

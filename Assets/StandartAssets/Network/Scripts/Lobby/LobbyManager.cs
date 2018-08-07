@@ -7,18 +7,19 @@ using UnityEngine.Networking.Match;
 using System.Collections;
 using UnityEngine.Networking.NetworkSystem;
 using System.Collections.Generic;
-
+using System.Net;
+using System.Net.Sockets;
 
 namespace Prototype.NetworkLobby
 {
     public class LobbyManager : NetworkLobbyManager {
 		[Header("Game Stuff")]
-		public string[] nameScenesToLoad;
 		[SerializeField] private GameObject TopPanelGO;
 		[SerializeField] private GameObject partyAttributes;
 		public Button Btn_ChooseScene;
 		private InputField tfLife, tfStone;
-		[HideInInspector] public int m_quantStones = 1;
+        private string m_ip = "";
+        [HideInInspector] public int m_quantStones = 1;
 		[HideInInspector] public int m_quantLife = 1;
         [HideInInspector] public int m_partyType= 0;
         [HideInInspector] public int timeOfParty= 5;
@@ -81,25 +82,45 @@ namespace Prototype.NetworkLobby
 		}
 			
 		public void ChangeScene(int s){
-			if (nameScenesToLoad != null && nameScenesToLoad.Length>s) {
-				m_SceneNum = s;
-				playScene = nameScenesToLoad [s];
-			}
+            s++;//First Scene is the Lobby
+            string sceneName = NameFromIndex(s);
+            if (sceneName != null && sceneName != "") {
+				playScene = NameFromIndex(s);
+            }
+            else
+            {
+                sceneName = NameFromIndex(1);
+                if (sceneName != null && sceneName != "")
+                {
+                    playScene = NameFromIndex(s);
+                }
+            }
 		}
         
-        public string IPAddress(){
-            string ip = Network.player.ipAddress;
-            return ip;
+        public void setIP()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    m_ip = ip.ToString();
+                }
+            }
+        }
+
+        public string getIP(){
+            return m_ip;
         }
 
         void Start(){
             //Add a random Enemy and it is a random type
-            int[] i = {Random.Range(0,2),Random.Range(0,botType.Length())};
-            bots.Add(i);
+            /*int[] i = {Random.Range(0,2),Random.Range(0,botType.Length())};
+            bots.Add(i);*/
 
-			m_LobbyTopPanel = TopPanelGO.GetComponent<LobbyTopPanel>();
-			if(nameScenesToLoad.Length >0)
-				playScene = nameScenesToLoad[0];
+            m_LobbyTopPanel = TopPanelGO.GetComponent<LobbyTopPanel>();
+			if(NameFromIndex(1) != null)
+				playScene = NameFromIndex(1);
 			currentPlayers = new Dictionary<int,int> ();
 
             s_Singleton = this;
@@ -125,8 +146,7 @@ namespace Prototype.NetworkLobby
 				Debug.Log ((object)"ServerReturnToLobby called on client");
 			}else {
 				this.ServerChangeScene (this.lobbyScene);
-				int tryNum = (m_SceneNum+1) % nameScenesToLoad.Length;
-				this.ChangeScene (tryNum);
+				this.ChangeScene (m_SceneNum+1);
 			}
 		}
 
@@ -138,7 +158,15 @@ namespace Prototype.NetworkLobby
 			return playerPrefab;
 		}
 
-		//-------------My Funcs-------------//
+        private static string NameFromIndex(int BuildIndex)
+        {
+            string path = SceneUtility.GetScenePathByBuildIndex(BuildIndex);
+            int slash = path.LastIndexOf('/');
+            string name = path.Substring(slash + 1);
+            int dot = name.LastIndexOf('.');
+            return name.Substring(0, dot);
+        }
+        //-------------My Funcs-------------//
 
 
         public override void OnLobbyClientSceneChanged(NetworkConnection conn)

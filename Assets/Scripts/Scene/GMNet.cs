@@ -43,7 +43,7 @@ namespace UnityStandardAssets._2D{
 		private Dictionary<string, Dictionary<string, string> > matchHistory = new Dictionary<string, Dictionary<string, string> >();
 		private Dictionary<string, GameObject> m_PlayersDicHashGO = new Dictionary<string, GameObject>();
 		private float timePassed = 0;
-		private float timerSpawnItem = 0;
+        [SyncVar] private float timerSpawnItem = 0;
 		private int timeOfParty = 2;
 		private int alive = 0;
 		private	GameObject lastAlive = null;
@@ -146,7 +146,7 @@ namespace UnityStandardAssets._2D{
 				if(bot.Length > 1){
 					botType = bot[1];
 				}
-				this.AddBot(my_inst.spawnPrefabs[bot[0]],botType);
+				this.CmdAddBot(my_inst.spawnPrefabs[bot[0]],botType);
 			}
 		}
 		
@@ -236,6 +236,9 @@ namespace UnityStandardAssets._2D{
 			}else if (isServer && Input.GetKeyDown(KeyCode.N)) {//Volta ao lobby
 				if(Commented) print ("N foi apertado");
 				my_inst.m_ServerReturnToLobby ();
+			}else if (Input.GetKey(KeyCode.Y)) {//Resetar sem voltar ao lobby
+				if(Commented) print ("T foi apertado");
+				print (NetworkServer.active);
 			}
 
 			timerSpawnItem += Time.fixedDeltaTime;
@@ -248,23 +251,49 @@ namespace UnityStandardAssets._2D{
 		}
 
 		private void spawnItemBox(){
-			timerSpawnItem = 0;
-			if(itemBoxSpawnPoints == null)
-				return;
-			Quaternion rotation = new Quaternion(0f, 0f, 0f,0f);
-			int children = itemBoxSpawnPoints.transform.childCount;
+            this.CmdSpawnItemBox();
 
-			if(children <= 0)
-				return;
+        }
 
-			Vector3 posi = randomAvailablePoint("Item").position;
-			posi.z = 0;
-			int randomItemType = Random.Range(0, improvePlayer.getImproves() - 1);
-			GameObject inst = Instantiate (itemBox,posi,rotation) as GameObject;
-			inst.GetComponent<itemBox>().itemType = randomItemType;
-		}
+        [Command]
+         private void CmdSpawnItemBox() {
+            if (!isServer)
+                return;
 
-		public void Reset(){
+            timerSpawnItem = 0;
+            if (itemBoxSpawnPoints == null)
+                return;
+            Quaternion rotation = new Quaternion(0f, 0f, 0f, 0f);
+            int children = itemBoxSpawnPoints.transform.childCount;
+
+            if (children <= 0)
+                return;
+            Vector3 posi = randomAvailablePoint("Item").position;
+            posi.z = 0;
+            int randomItemType = Random.Range(0, improvePlayer.getImproves() - 1);
+            GameObject inst = Instantiate(itemBox, posi, rotation) as GameObject;
+            inst.GetComponent<itemBox>().itemType = randomItemType;
+            NetworkServer.Spawn(inst);
+        }
+
+        [Command]
+        private void CmdAddBot(GameObject go, int botType)
+        {
+            if (!isServer)
+                return;
+            Transform t = randomAvailablePoint("Player");
+            if (t != null)
+            {
+                GameObject inst = Instantiate(go, t.position, new Quaternion(0, 0, 0, 0)) as GameObject;
+                inst.GetComponent<EnemyAI>().enabled = true;
+                inst.GetComponent<EnemyAI>().setBotType(botType);
+                NetworkServer.Spawn(inst);
+            }
+        }
+
+
+
+        public void Reset(){
 			m_Reset=true;
 			hashWinner=-1;
 		}
@@ -273,22 +302,12 @@ namespace UnityStandardAssets._2D{
 			yield return new WaitForSeconds (2);
 			if(m_PlayersDicHashGO.Count<2){
 				int randomBotType = Random.Range(0,botType.Length()-1);
-				this.AddBot(Bot,randomBotType);
+				this.CmdAddBot(Bot,randomBotType);
 				if(partyTeam){
 					timeOfParty = 0;
 					partyUseTimer = false;
 					partyTeam = false;
 				}
-			}
-		}
-
-		private void AddBot(GameObject go, int botType){
-			Transform t = randomAvailablePoint("Player");
-			if(t != null){
-				GameObject inst = Instantiate (go,t.position,new Quaternion(0, 0, 0, 0)) as GameObject;
-				inst.GetComponent<EnemyAI> ().enabled = true;
-				inst.GetComponent<EnemyAI> ().setBotType(botType);
-				NetworkServer.Spawn (inst);
 			}
 		}
 

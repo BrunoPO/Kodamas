@@ -99,7 +99,7 @@ namespace UnityStandardAssets._2D
 					Vector3 position = (go_stone.transform.position + transform.position) / 2;//Alter position na hora de lançar
 					Quaternion rotation = go_stone.transform.rotation;
 					Destroy (go_stone);
-					m_CharAttribute.CmdSpwnBall(position,rotation,m_Character.getHash(),m_Character.getTeam());
+					m_CharAttribute.FireBall(position,rotation,m_Character.getHash(),m_Character.getTeam());
 				}
 			//Se não estiver atacando e tem stone
 			}else if(getBalls()>0){
