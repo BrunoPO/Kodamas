@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Net/Lobby2/Scene_Afternoon.unity
     guid: 1811ddd8e0419044aa7015572f473551
+  - enabled: 1
+    path: Assets/Scenes/Net/Lobby2/Scene_Night.unity
+    guid: 2bc043effaf701f43a5604b1d5b40ee4
   - enabled: 0
     path: Assets/Scenes/Net/Lobby2/Fase0_Net.unity
     guid: 483ec7e6ea1514f10a58aefd4c8377ce
@@ -29,6 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Net/Lobby2/Fase_Tarde.unity
     guid: aceba485639eca744888941a4d410449
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Net/Lobby2/Fase_Noite.unity
     guid: 63f000e8e07df2c43b512f07ad2e5e04
+  m_configObjects: {}
