@@ -142,7 +142,7 @@ namespace UnityStandardAssets._2D{
 			Camera.main.GetComponent<Camera2DFollow> ().target = Camera.main.transform;
 			clearTxt ();
 			m_WinTxt.gameObject.SetActive (true);
-			m_WinTxt.text = "     Você Perdeu!";
+			m_WinTxt.text = "    VOCÊ PERDEU!";
 			GetComponent<Platformer2DUserControl>().enabled = false;
 			m_PlatChar2D.Move (0, false);
 		}
@@ -266,7 +266,7 @@ namespace UnityStandardAssets._2D{
 			clearTxt ();
 			gameObject.SetActive (false);
 			m_WinTxt.gameObject.SetActive (true);
-			m_WinTxt.text = "     Você Ganhou!";
+			m_WinTxt.text = "    VOCÊ GANHOU!";
 			GetComponent<Platformer2DUserControl>().enabled = false;
 			m_PlatChar2D.Move (0, false);
 		}

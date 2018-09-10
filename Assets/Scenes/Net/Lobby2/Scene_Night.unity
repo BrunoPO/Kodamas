@@ -2557,7 +2557,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1342065798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3453,64 +3453,6 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 380989401}
-    - target: {fileID: 1272483334217556, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224538459225527826, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224538459225527826, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224090349704203072, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224090349704203072, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224650616102585226, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224650616102585226, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005334416968848, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224233520818953986, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224233520818953986, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005334416968848, guid: 30b622b6540624d6f8d612e9ed2de0ed,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -663.4165
-      objectReference: {fileID: 0}
-    - target: {fileID: 1642529372093202, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30b622b6540624d6f8d612e9ed2de0ed, type: 2}
   m_IsPrefabAsset: 0
